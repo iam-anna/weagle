@@ -33,5 +33,12 @@ val Typography = Typography(
         fontSize = 16.sp,
         lineHeight = 19.sp,
         letterSpacing = 0.sp
+    ),
+    labelLarge = TextStyle(
+        fontFamily = Lunasima,
+        fontWeight = FontWeight.Bold,
+        fontSize = 18.sp,
+        lineHeight = 21.sp,
+        letterSpacing = 0.sp
     )
 )
