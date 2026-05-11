@@ -1,11 +1,21 @@
 package com.fiapos.weagle.ui.theme
 
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+val NavyBlue = Color(0xFF162130)
+var DarkGrey = Color(0xFF56667C)
+var LighBlueyGrey = Color(0xFFD7E2F2)
+val LightBlue = Color(0xFF3F6EA8)
+val Background = Color(0xFFF6FAFF)
+val White = Color(0xFFFFFFFF)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val AppColorScheme = lightColorScheme(
+    primary = NavyBlue,
+    secondary = DarkGrey,
+    background = Background,
+    surface = White,
+    onPrimary = White,
+    onBackground = NavyBlue,
+    outline = LighBlueyGrey
+)

@@ -4,44 +4,35 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModel
+import com.fiapos.weagle.auth.login.AuthRepository
+import com.fiapos.weagle.auth.login.LoginScreen
+import com.fiapos.weagle.auth.login.LoginViewModel
+import com.fiapos.weagle.auth.session.SessionManager
+import com.fiapos.weagle.domain.models.User
 import com.fiapos.weagle.ui.theme.WeagleTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        var auth = AuthRepository()
+        var session  = SessionManager()
+
+        var user: User
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             WeagleTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                LoginScreen(
+                    viewModel = LoginViewModel(auth, session),
+                    onLoginSuccess = { loggedUser ->
+                        user = loggedUser
+                    }
+                )
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    WeagleTheme {
-        Greeting("Android")
     }
 }
