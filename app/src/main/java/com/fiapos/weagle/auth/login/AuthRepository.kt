@@ -1,12 +1,12 @@
 package com.fiapos.weagle.auth.login
 
 import com.fiapos.weagle.domain.models.User
-import com.fiapos.weagle.domain.permissions.UserRole
+import com.fiapos.weagle.domain.models.UserRole
 
 class AuthRepository {
     fun login(
         email: String,
-        passward: String
+        password: String
     ): User? {
 
         return when (email) {

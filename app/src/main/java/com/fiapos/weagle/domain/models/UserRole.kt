@@ -1,4 +1,4 @@
-package com.fiapos.weagle.domain.permissions
+package com.fiapos.weagle.domain.models
 
 enum class UserRole {
     OPERATOR,
