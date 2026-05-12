@@ -1,5 +1,7 @@
 package com.fiapos.weagle.domain.permissions
 
+import com.fiapos.weagle.domain.models.UserRole
+
 object Permissions {
     fun canManageStrategies(role: UserRole): Boolean {
         return role == UserRole.LEADER

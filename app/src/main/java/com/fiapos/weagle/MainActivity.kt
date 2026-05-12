@@ -13,12 +13,13 @@ import com.fiapos.weagle.auth.login.LoginScreen
 import com.fiapos.weagle.auth.login.LoginViewModel
 import com.fiapos.weagle.auth.session.SessionManager
 import com.fiapos.weagle.domain.models.User
+import com.fiapos.weagle.presentation.navigation.AppNavGraph
 import com.fiapos.weagle.ui.theme.WeagleTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        var auth = AuthRepository()
-        var session  = SessionManager()
+        val auth = AuthRepository()
+        val session  = SessionManager()
 
         var user: User
 
@@ -26,11 +27,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             WeagleTheme {
-                LoginScreen(
-                    viewModel = LoginViewModel(auth, session),
-                    onLoginSuccess = { loggedUser ->
-                        user = loggedUser
-                    }
+                AppNavGraph(
+                    authRepository = auth,
+                    sessionManager = session
                 )
             }
         }
