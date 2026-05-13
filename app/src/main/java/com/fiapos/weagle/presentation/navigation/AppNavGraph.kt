@@ -11,15 +11,20 @@ import com.fiapos.weagle.auth.login.LoginScreen
 import com.fiapos.weagle.auth.login.LoginViewModel
 import com.fiapos.weagle.auth.login.LoginViewModelFactory
 import com.fiapos.weagle.auth.session.SessionManager;
+import com.fiapos.weagle.data.IdeaRepository
 import com.fiapos.weagle.domain.models.UserRole
+import com.fiapos.weagle.features.ideas.presentation.CreateIdeaScreen
+import com.fiapos.weagle.features.ideas.presentation.CreateIdeaViewModel
+import com.fiapos.weagle.features.ideas.presentation.CreateIdeaViewModelFactory
 import com.fiapos.weagle.presentation.LeaderHomeScreen
 import com.fiapos.weagle.presentation.ManagerHomeScreen
 import com.fiapos.weagle.presentation.OperatorHomeScreen
 
 @Composable
 fun AppNavGraph(
-    authRepository:AuthRepository,
-    sessionManager:SessionManager
+    authRepository: AuthRepository,
+    ideaRepository: IdeaRepository,
+    sessionManager: SessionManager
 ) {
     val navController = rememberNavController()
 
@@ -42,11 +47,7 @@ fun AppNavGraph(
                         UserRole.OPERATOR -> {
                             navController.navigate(
                                 Routes.OPERATOR_HOME
-                            ) {
-                                popUpTo(Routes.LOGIN) {
-                                    inclusive = true
-                                }
-                            }
+                            )
                         }
 
                         UserRole.MANAGER -> {
@@ -75,6 +76,17 @@ fun AppNavGraph(
 
         composable(Routes.LEADER_HOME) {
             LeaderHomeScreen()
+        }
+
+        composable(Routes.OPERATOR_HOME) {
+            val vm: CreateIdeaViewModel = viewModel(
+                factory = CreateIdeaViewModelFactory(
+                    ideaRepository,
+                    sessionManager
+                )
+            )
+
+            CreateIdeaScreen(vm, navController)
         }
     }
 }

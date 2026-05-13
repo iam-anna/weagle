@@ -9,4 +9,6 @@ object Routes {
 
     const val LEADER_HOME = "leader_home"
 
+    const val CREATE_IDEA = "create_idea"
+
 }
