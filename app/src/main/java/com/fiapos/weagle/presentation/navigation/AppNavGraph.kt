@@ -18,6 +18,7 @@ import com.fiapos.weagle.features.ideas.presentation.CreateIdeaViewModel
 import com.fiapos.weagle.features.ideas.presentation.CreateIdeaViewModelFactory
 import com.fiapos.weagle.presentation.LeaderHomeScreen
 import com.fiapos.weagle.presentation.ManagerHomeScreen
+import com.fiapos.weagle.presentation.OperatorHomeScreen
 
 @Composable
 fun AppNavGraph(
@@ -46,11 +47,7 @@ fun AppNavGraph(
                         UserRole.OPERATOR -> {
                             navController.navigate(
                                 Routes.OPERATOR_HOME
-                            ) {
-                                popUpTo(Routes.LOGIN) {
-                                    inclusive = true
-                                }
-                            }
+                            )
                         }
 
                         UserRole.MANAGER -> {
@@ -69,9 +66,9 @@ fun AppNavGraph(
             )
         }
 
-//        composable(Routes.OPERATOR_HOME) {
-//            CreateIdea()
-//        }
+        composable(Routes.OPERATOR_HOME) {
+            OperatorHomeScreen()
+        }
 
         composable(Routes.MANAGER_HOME) {
             ManagerHomeScreen()
@@ -89,7 +86,7 @@ fun AppNavGraph(
                 )
             )
 
-            CreateIdeaScreen(vm)
+            CreateIdeaScreen(vm, navController)
         }
     }
 }

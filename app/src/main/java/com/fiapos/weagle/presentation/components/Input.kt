@@ -23,7 +23,8 @@ fun Input(
     placeholder: String = "",
     value: String,
     onValueChange: (String) -> Unit,
-    isSecure: Boolean = false
+    isSecure: Boolean = false,
+    minLines: Int = 1
 ) {
     Text(
         text = label,
@@ -45,6 +46,7 @@ fun Input(
         value = value,
         onValueChange = onValueChange,
         placeholder = { Text(placeholder) },
+        minLines = minLines,
         visualTransformation =
             if (isSecure) {
                 PasswordVisualTransformation()
