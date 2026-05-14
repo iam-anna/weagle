@@ -55,6 +55,7 @@ fun TopNavigation(
 
         Box(modifier = Modifier
             .size(size = 44.dp)
+            .clip(RoundedCornerShape(4.dp))
             .clickable {
                 onActionablePressed()
             },
