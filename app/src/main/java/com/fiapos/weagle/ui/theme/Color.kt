@@ -7,8 +7,11 @@ val NavyBlue = Color(0xFF162130)
 var DarkGrey60 = Color(0xFF64748B)
 var DarkGrey80 = Color(0xFF56667C)
 var LighBlueyGrey = Color(0xFFD7E2F2)
-val LightBlue = Color(0xFF3F6EA8)
 
+object CombinatedColor {
+    val lightBlue = Color(0xFF87BAF3)
+    val lightBlueForeground = Color(0xFF001F3E)
+}
 
 val Background = Color(0xFFF6FAFF)
 val White = Color(0xFFFFFFFF)

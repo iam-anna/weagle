@@ -22,8 +22,13 @@ class LoginViewModel (
     ) {
         loginState = LoginState.Loading
 
+//        val user = authRepository.login(
+//            email,
+//            password
+//        )
+
         val user = authRepository.login(
-            email,
+            "operator@test.com",
             password
         )
 

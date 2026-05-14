@@ -27,6 +27,13 @@ val Typography = Typography(
         lineHeight = 28.sp,
         letterSpacing = 0.sp
     ),
+    bodySmall = TextStyle(
+        fontFamily = Lunasima,
+        fontWeight = FontWeight.Normal,
+        fontSize = 13.sp,
+        lineHeight = 15.sp,
+        letterSpacing = 0.sp
+    ),
     bodyMedium = TextStyle(
         fontFamily = Lunasima,
         fontWeight = FontWeight.Normal,

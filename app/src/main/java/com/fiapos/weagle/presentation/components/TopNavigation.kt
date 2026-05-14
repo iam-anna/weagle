@@ -62,7 +62,7 @@ fun TopNavigation(
         ) {
             if (actionable) {
                 Image(
-                    painter = painterResource(id = R.drawable.angle_left),
+                    painter = painterResource(id = R.drawable.squares_vertical),
                     contentDescription = "Back"
                 )
             }
