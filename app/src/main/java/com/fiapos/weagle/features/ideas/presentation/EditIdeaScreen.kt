@@ -8,35 +8,35 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.fiapos.weagle.domain.models.IdeaType
-import androidx.compose.material3.Text
-import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
+import com.fiapos.weagle.domain.models.IdeaType
 import com.fiapos.weagle.presentation.components.CustomButton
 import com.fiapos.weagle.presentation.components.Dropdown
 import com.fiapos.weagle.presentation.components.Input
 import com.fiapos.weagle.presentation.components.TitleInput
 import com.fiapos.weagle.presentation.components.TopNavigation
-import com.fiapos.weagle.presentation.navigation.Routes
 
 @Composable
-fun CreateIdeaScreen(
-    viewModel: CreateIdeaViewModel,
+fun EditIdeaScreen(
+    ideaId: String,
+    viewModel: EditIdeaViewModel,
     navController: NavController
-) {
+){
     var title by remember {
-        mutableStateOf("")
+        mutableStateOf("Ideia maneira")
     }
 
     var description by remember {
-        mutableStateOf("")
+        mutableStateOf("Descrição legal")
     }
 
     var selectedType by remember {
@@ -52,7 +52,7 @@ fun CreateIdeaScreen(
             .padding(vertical = 32.dp, horizontal = 24.dp)
     ) {
         TopNavigation(
-            title = "Criar Ideia",
+            title = "Editar Ideia",
             onBackPressed = {
                 navController.popBackStack();
             }
@@ -98,9 +98,10 @@ fun CreateIdeaScreen(
         Spacer(modifier = Modifier.height(80.dp))
 
         CustomButton(
-            text = "Criar ideia",
+            text = "Atualizar ideia",
             onClick = {
-                viewModel.createIdea(
+                viewModel.editIdea(
+                    id = ideaId,
                     title,
                     description,
                     selectedType
@@ -110,11 +111,11 @@ fun CreateIdeaScreen(
 
         when(state) {
 
-            is CreateIdeaUiState.Loading -> {
+            is EditIdeaUiState.Loading -> {
                 CircularProgressIndicator()
             }
 
-            is CreateIdeaUiState.Error -> {
+            is EditIdeaUiState.Error -> {
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(state.message)
             }
@@ -123,7 +124,7 @@ fun CreateIdeaScreen(
         }
 
         LaunchedEffect(state) {
-            if (state is CreateIdeaUiState.Success) {
+            if (state is EditIdeaUiState.Success) {
                 // TODO: change for ideas list
                 navController.popBackStack()
             }

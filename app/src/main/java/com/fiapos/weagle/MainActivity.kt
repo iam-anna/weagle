@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.navigation.NavController
 import com.fiapos.weagle.auth.login.AuthRepository
 import com.fiapos.weagle.auth.session.SessionManager
 import com.fiapos.weagle.data.IdeaRepository
