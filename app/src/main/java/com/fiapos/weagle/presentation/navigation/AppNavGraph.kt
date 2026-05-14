@@ -93,7 +93,7 @@ fun AppNavGraph(
         }
 
 //        composable("${Routes.OPERATOR_HOME}/{ideaId}") { backStackEntry ->
-        composable(Routes.OPERATOR_HOME) { backStackEntry ->
+        composable(Routes.VIEW_IDEA) { backStackEntry ->
             val ideaId = backStackEntry.arguments?.getString("ideaId") ?: ""
 
             val vm: ViewIdeaViewModel = viewModel(

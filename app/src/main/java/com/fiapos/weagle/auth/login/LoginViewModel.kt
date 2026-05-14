@@ -22,15 +22,15 @@ class LoginViewModel (
     ) {
         loginState = LoginState.Loading
 
-//        val user = authRepository.login(
-//            email,
-//            password
-//        )
-
         val user = authRepository.login(
-            "operator@test.com",
+            email,
             password
         )
+
+//        val user = authRepository.login(
+//            "operator@test.com",
+//            password
+//        )
 
         if (user != null) {
             sessionManager.saveUser(user)
