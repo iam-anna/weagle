@@ -49,7 +49,7 @@ fun EditIdeaScreen(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
-            .padding(vertical = 32.dp, horizontal = 24.dp)
+            .padding(vertical = 64.dp, horizontal = 24.dp)
     ) {
         TopNavigation(
             title = "Editar Ideia",
