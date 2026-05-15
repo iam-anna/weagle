@@ -1,9 +1,9 @@
-package com.fiapos.weagle.features.ideas.presentation
+package com.fiapos.weagle.features.ideas.presentation.edit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.fiapos.weagle.auth.session.SessionManager
-import com.fiapos.weagle.data.IdeaRepository
+import com.fiapos.weagle.features.ideas.data.IdeaRepository
 
 class EditIdeaViewModelFactory(
     private val ideaRepository: IdeaRepository,

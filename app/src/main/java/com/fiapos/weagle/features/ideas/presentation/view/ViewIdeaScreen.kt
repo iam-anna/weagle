@@ -53,7 +53,8 @@ fun ViewIdeaScreen(
             return
         }
 
-        TopNavigation("Visualizar Ideia",
+        TopNavigation(
+            title = "Visualizar Ideia",
             onBackPressed = {
                 navController.popBackStack();
             },

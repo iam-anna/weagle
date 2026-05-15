@@ -2,7 +2,7 @@ package com.fiapos.weagle.features.ideas.data
 
 import com.fiapos.weagle.domain.models.Idea
 
-object IdeaRepository {
+class IdeaRepository {
     private val ideas = mutableListOf<Idea>()
 
     fun createIdea(idea: Idea): Idea {
@@ -10,7 +10,7 @@ object IdeaRepository {
         return idea
     }
 
-    fun getIdeaId(id: String): Idea? {
+    fun getIdea(id: String): Idea? {
         return ideas.find {
             it.id == id
         }
