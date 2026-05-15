@@ -1,4 +1,4 @@
-package com.fiapos.weagle.features.ideas.presentation
+package com.fiapos.weagle.features.ideas.presentation.edit
 
 sealed class EditIdeaUiState {
     object Idle : EditIdeaUiState()

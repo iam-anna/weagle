@@ -1,13 +1,14 @@
-package com.fiapos.weagle.features.ideas.presentation
+package com.fiapos.weagle.features.ideas.presentation.edit
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.fiapos.weagle.auth.session.SessionManager
-import com.fiapos.weagle.data.IdeaRepository
 import com.fiapos.weagle.domain.models.Idea
 import com.fiapos.weagle.domain.models.IdeaType
+import com.fiapos.weagle.features.ideas.data.IdeaRepository
+import java.time.LocalDate
 
 class EditIdeaViewModel(
     private val repository: IdeaRepository,
@@ -42,7 +43,8 @@ class EditIdeaViewModel(
             title = title,
             description = description,
             type = type,
-            createdBy = user.id
+            createdBy = user.id,
+            createdAt = LocalDate.now()
         )
 
         repository.editIdea(updatedIdea)

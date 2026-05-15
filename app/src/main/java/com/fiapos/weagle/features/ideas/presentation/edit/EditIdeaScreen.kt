@@ -1,4 +1,4 @@
-package com.fiapos.weagle.features.ideas.presentation
+package com.fiapos.weagle.features.ideas.presentation.edit
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

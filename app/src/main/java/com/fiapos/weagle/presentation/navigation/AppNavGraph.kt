@@ -19,6 +19,10 @@ import com.fiapos.weagle.features.ideas.presentation.create.CreateIdeaViewModelF
 import com.fiapos.weagle.features.ideas.presentation.view.ViewIdeaScreen
 import com.fiapos.weagle.features.ideas.presentation.view.ViewIdeaViewModel
 import com.fiapos.weagle.features.ideas.presentation.view.ViewIdeaViewModelFactory
+import com.fiapos.weagle.features.so.data.StrategicOrientationRepository
+import com.fiapos.weagle.features.so.presentation.listview.ListViewStrategicOrientationScreen
+import com.fiapos.weagle.features.so.presentation.listview.ListViewStrategicOrientationViewModel
+import com.fiapos.weagle.features.so.presentation.listview.ListViewStrategicOrientationViewModelFactory
 import com.fiapos.weagle.presentation.LeaderHomeScreen
 import com.fiapos.weagle.presentation.ManagerHomeScreen
 import com.fiapos.weagle.presentation.OperatorHomeScreen
@@ -27,6 +31,7 @@ import com.fiapos.weagle.presentation.OperatorHomeScreen
 fun AppNavGraph(
     authRepository: AuthRepository,
     ideaRepository: IdeaRepository,
+    strategicOrientationRepository: StrategicOrientationRepository,
     sessionManager: SessionManager
 ) {
     val navController = rememberNavController()
@@ -104,6 +109,16 @@ fun AppNavGraph(
             )
 
             ViewIdeaScreen(vm, navController)
+        }
+
+        composable(Routes.OPERATOR_HOME) {
+            val vm: ListViewStrategicOrientationViewModel = viewModel(
+                factory = ListViewStrategicOrientationViewModelFactory(
+                    strategicOrientationRepository
+                )
+            )
+
+            ListViewStrategicOrientationScreen(vm, navController)
         }
     }
 }
