@@ -1,8 +1,8 @@
-package com.fiapos.weagle.data
+package com.fiapos.weagle.features.ideas.data
 
 import com.fiapos.weagle.domain.models.Idea
 
-class IdeaRepository {
+object IdeaRepository {
     private val ideas = mutableListOf<Idea>()
 
     fun createIdea(idea: Idea): Idea {
@@ -10,8 +10,10 @@ class IdeaRepository {
         return idea
     }
 
-    fun getIdeas(): List<Idea> {
-        return ideas
+    fun getIdeaId(id: String): Idea? {
+        return ideas.find {
+            it.id == id
+        }
     }
 
     fun editIdea(idea: Idea): Idea {

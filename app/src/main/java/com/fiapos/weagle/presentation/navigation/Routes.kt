@@ -11,4 +11,6 @@ object Routes {
 
     const val CREATE_IDEA = "create_idea"
 
+    const val VIEW_IDEA = "view_idea"
+
 }

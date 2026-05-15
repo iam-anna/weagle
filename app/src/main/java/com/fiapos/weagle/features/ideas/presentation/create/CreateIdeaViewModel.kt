@@ -1,13 +1,16 @@
-package com.fiapos.weagle.features.ideas.presentation
+package com.fiapos.weagle.features.ideas.presentation.create
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.fiapos.weagle.auth.session.SessionManager
-import com.fiapos.weagle.data.IdeaRepository
+import com.fiapos.weagle.features.ideas.data.IdeaRepository
 import com.fiapos.weagle.domain.models.Idea
 import com.fiapos.weagle.domain.models.IdeaType
+import java.time.LocalDate
+import java.util.Date
+import java.util.UUID
 
 class CreateIdeaViewModel(
     private val repository: IdeaRepository,
@@ -42,14 +45,18 @@ class CreateIdeaViewModel(
         uiState = CreateIdeaUiState.Loading
 
         val idea = Idea(
+            id = UUID.randomUUID().toString(),
             title = title,
             description = description,
             type = type,
-            createdBy = user.id
+            createdBy = user.name,
+            createdAt = LocalDate.now()
         )
 
         repository.createIdea(idea)
 
-        uiState = CreateIdeaUiState.Success
+        uiState = CreateIdeaUiState.Success(
+            user.id
+        )
     }
 }

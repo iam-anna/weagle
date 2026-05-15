@@ -1,8 +1,8 @@
 package com.fiapos.weagle.domain.models
 
 enum class IdeaType(
-    label: String
+    val label: String
 ) {
-    IDEA("Ideia"),
+    IDEA(label = "Ideia"),
     PROBLEM(label = "Problema")
 }

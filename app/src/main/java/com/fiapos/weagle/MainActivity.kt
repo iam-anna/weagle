@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.navigation.NavController
 import com.fiapos.weagle.auth.login.AuthRepository
 import com.fiapos.weagle.auth.session.SessionManager
-import com.fiapos.weagle.data.IdeaRepository
+import com.fiapos.weagle.features.ideas.data.IdeaRepository
 import com.fiapos.weagle.presentation.navigation.AppNavGraph
 import com.fiapos.weagle.ui.theme.WeagleTheme
 
@@ -16,8 +16,6 @@ class MainActivity : ComponentActivity() {
         val auth = AuthRepository()
         val session  = SessionManager()
 
-        val ideaRepo = IdeaRepository()
-
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
@@ -25,7 +23,7 @@ class MainActivity : ComponentActivity() {
                 AppNavGraph(
                     authRepository = auth,
                     sessionManager = session,
-                    ideaRepository = ideaRepo
+                    ideaRepository = IdeaRepository
                 )
             }
         }

@@ -27,6 +27,11 @@ class LoginViewModel (
             password
         )
 
+//        val user = authRepository.login(
+//            "operator@test.com",
+//            password
+//        )
+
         if (user != null) {
             sessionManager.saveUser(user)
 

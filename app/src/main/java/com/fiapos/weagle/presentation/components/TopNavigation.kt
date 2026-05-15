@@ -55,6 +55,7 @@ fun TopNavigation(
 
         Box(modifier = Modifier
             .size(size = 44.dp)
+            .clip(RoundedCornerShape(4.dp))
             .clickable {
                 onActionablePressed()
             },
@@ -62,7 +63,7 @@ fun TopNavigation(
         ) {
             if (actionable) {
                 Image(
-                    painter = painterResource(id = R.drawable.angle_left),
+                    painter = painterResource(id = R.drawable.squares_vertical),
                     contentDescription = "Back"
                 )
             }

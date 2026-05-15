@@ -1,4 +1,4 @@
-package com.fiapos.weagle.features.ideas.presentation
+package com.fiapos.weagle.features.ideas.presentation.create
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -49,8 +49,9 @@ fun CreateIdeaScreen(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
-            .padding(vertical = 32.dp, horizontal = 24.dp)
+            .padding(vertical = 64.dp, horizontal = 24.dp)
     ) {
+
         TopNavigation(
             title = "Criar Ideia",
             onBackPressed = {
@@ -125,7 +126,13 @@ fun CreateIdeaScreen(
         LaunchedEffect(state) {
             if (state is CreateIdeaUiState.Success) {
                 // TODO: change for ideas list
-                navController.popBackStack()
+                navController.navigate(
+                    "${Routes.VIEW_IDEA}/${state.ideaId}"
+                ) {
+                    popUpTo(Routes.CREATE_IDEA) {
+                        inclusive = true
+                    }
+                }
             }
         }
     }
