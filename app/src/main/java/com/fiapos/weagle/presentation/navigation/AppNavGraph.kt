@@ -23,6 +23,9 @@ import com.fiapos.weagle.features.so.data.StrategicOrientationRepository
 import com.fiapos.weagle.features.so.presentation.listview.ListViewStrategicOrientationScreen
 import com.fiapos.weagle.features.so.presentation.listview.ListViewStrategicOrientationViewModel
 import com.fiapos.weagle.features.so.presentation.listview.ListViewStrategicOrientationViewModelFactory
+import com.fiapos.weagle.features.so.presentation.view.ViewStrategicOrientationScreen
+import com.fiapos.weagle.features.so.presentation.view.ViewStrategicOrientationViewModel
+import com.fiapos.weagle.features.so.presentation.view.ViewStrategicOrientationViewModelFactory
 import com.fiapos.weagle.presentation.LeaderHomeScreen
 import com.fiapos.weagle.presentation.ManagerHomeScreen
 import com.fiapos.weagle.presentation.OperatorHomeScreen
@@ -97,7 +100,7 @@ fun AppNavGraph(
             CreateIdeaScreen(vm, navController)
         }
 
-//        composable("${Routes.OPERATOR_HOME}/{ideaId}") { backStackEntry ->
+//        composable("${Routes.VIEW_IDEA}/{ideaId}") { backStackEntry ->
         composable(Routes.VIEW_IDEA) { backStackEntry ->
             val ideaId = backStackEntry.arguments?.getString("ideaId") ?: ""
 
@@ -111,7 +114,7 @@ fun AppNavGraph(
             ViewIdeaScreen(vm, navController)
         }
 
-        composable(Routes.OPERATOR_HOME) {
+        composable(Routes.LIST_STRATEGIC_ORIENTATION) {
             val vm: ListViewStrategicOrientationViewModel = viewModel(
                 factory = ListViewStrategicOrientationViewModelFactory(
                     strategicOrientationRepository
@@ -119,6 +122,20 @@ fun AppNavGraph(
             )
 
             ListViewStrategicOrientationScreen(vm, navController)
+        }
+
+//        composable("${Routes.VIEW_STRATEGIC_ORIENTATION}/{strategicOrientationId}") { backStackEntry ->
+        composable(Routes.OPERATOR_HOME) { backStackEntry ->
+            val orientationId = backStackEntry.arguments?.getString("strategicOrientationId") ?: ""
+
+            val vm: ViewStrategicOrientationViewModel = viewModel(
+            factory = ViewStrategicOrientationViewModelFactory(
+                    strategicOrientationRepository,
+                    orientationId
+                )
+            )
+
+            ViewStrategicOrientationScreen(vm, navController)
         }
     }
 }

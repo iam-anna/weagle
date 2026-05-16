@@ -34,6 +34,12 @@ fun ViewIdeaScreen(
         mutableStateOf(0)
     }
 
+    if(idea == null) {
+        // TODO: navigate to 404
+        return
+    }
+
+
 
     Column(
         modifier = Modifier
@@ -41,18 +47,6 @@ fun ViewIdeaScreen(
             .fillMaxSize()
             .padding(vertical = 64.dp, horizontal = 24.dp)
     ) {
-
-        if(idea == null) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text("Idea not found")
-            }
-
-            return
-        }
-
         TopNavigation(
             title = "Visualizar Ideia",
             onBackPressed = {
@@ -139,7 +133,7 @@ fun ViewIdeaScreen(
             Spacer(modifier = Modifier.height(32.dp))
 
             VoteFragment(
-                votes = viewModel.votes,
+                votes = votes,
                 onUpvote = {
                     viewModel.upvoteIdea()
                 },
