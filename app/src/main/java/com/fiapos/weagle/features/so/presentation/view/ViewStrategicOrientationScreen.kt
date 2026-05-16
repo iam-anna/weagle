@@ -1,15 +1,23 @@
 package com.fiapos.weagle.features.so.presentation.view
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.fiapos.weagle.features.so.data.StrategicOrientationRepository
+import com.fiapos.weagle.presentation.components.Tag
 import com.fiapos.weagle.presentation.components.TopNavigation
 import com.fiapos.weagle.ui.theme.toColor
 
@@ -38,6 +46,89 @@ fun ViewStrategicOrientationScreen(
                 navController.popBackStack()
             }
         )
+
+        Spacer(modifier = Modifier.height(120.dp))
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(
+                        text = "Publicado em",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.secondary
+                    )
+
+                    Text(
+                        text = orientation.createdAt.toString(),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+
+                Tag(
+                    label = if (orientation.isActive) "Ativa" else "Inativa",
+                    background = Color(0xFF5EE851),
+                    foreground = Color(0xFF0F350B),
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = orientation.title,
+                style = MaterialTheme.typography.titleLarge,
+                color = orientation.category.toColor().foreground
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = orientation.description,
+                style = MaterialTheme.typography.bodyLarge,
+                color = orientation.category.toColor().foreground
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Tag(
+                label = orientation.category.name,
+                background = orientation.category.toColor().accent,
+                foreground = Color(0xFF0F350B),
+            )
+
+            if (orientation.isEdited) {
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = "Editado",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.tertiary
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(
+                    text = "Criado por",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.secondary
+                )
+
+                Text(
+                    text = orientation.createdBy,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+        }
 
     }
 }

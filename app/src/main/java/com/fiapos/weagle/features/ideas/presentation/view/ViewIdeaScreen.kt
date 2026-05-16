@@ -39,8 +39,6 @@ fun ViewIdeaScreen(
         return
     }
 
-
-
     Column(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
@@ -60,7 +58,6 @@ fun ViewIdeaScreen(
         )
 
         Spacer(modifier = Modifier.height(120.dp))
-
 
         Column(
             modifier = Modifier

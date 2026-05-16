@@ -27,7 +27,8 @@ class ViewStrategicOrientationViewModel(
             title = "Automação de Processos Internos",
             description = "A empresa busca automatizar tarefas repetitivas para reduzir tempo operacional.",
             category = OrientationCategory.INNOVATION,
-            isActive = true
+            isActive = true,
+            createdBy = "John Doe",
         )
     }
 }

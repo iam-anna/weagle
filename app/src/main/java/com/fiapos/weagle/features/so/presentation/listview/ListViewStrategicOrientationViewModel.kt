@@ -25,31 +25,36 @@ class ListViewStrategicOrientationViewModel(
                 id = "1",
                 title = "Estimular automação de processos",
                 description = "Inovação",
-                category = OrientationCategory.INNOVATION
+                category = OrientationCategory.INNOVATION,
+                createdBy = "John Doe",
             ),
             StrategicOrientation(
                 id = "2",
                 title = "Diminuir desperdícios operacionais",
                 description = "Redução de Custos",
-                category = OrientationCategory.COST_REDUCTION
+                category = OrientationCategory.COST_REDUCTION,
+                createdBy = "John Doe",
             ),
             StrategicOrientation(
                 id = "3",
                 title = "Aumentar eficiência do atendimento",
                 description = "Produtividade",
-                category = OrientationCategory.PRODUCTIVITY
+                category = OrientationCategory.PRODUCTIVITY,
+                createdBy = "John Doe",
             ),
             StrategicOrientation(
                 id = "4",
                 title = "Reduzir consumo de papel",
                 description = "Sustentabilidade",
-                category = OrientationCategory.SUSTAINABILITY
+                category = OrientationCategory.SUSTAINABILITY,
+                createdBy = "John Doe",
             ),
             StrategicOrientation(
                 id = "5",
                 title = "Migrar sistemas legados",
                 description = "Tecnologia",
-                category = OrientationCategory.TECHNOLOGY
+                category = OrientationCategory.TECHNOLOGY,
+                createdBy = "John Doe",
             ),
         )
     }
