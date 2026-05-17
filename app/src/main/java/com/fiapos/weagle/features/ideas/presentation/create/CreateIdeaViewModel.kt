@@ -1,15 +1,12 @@
 package com.fiapos.weagle.features.ideas.presentation.create
 
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import com.fiapos.weagle.auth.session.SessionManager
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
 import com.fiapos.weagle.domain.models.Idea
 import com.fiapos.weagle.domain.models.IdeaType
 import java.time.LocalDate
-import java.util.Date
 import java.util.UUID
 
 class CreateIdeaViewModel(
