@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import com.fiapos.weagle.auth.login.AuthRepository
 import com.fiapos.weagle.auth.session.SessionManager
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
+import com.fiapos.weagle.features.projects.data.ProjectRepository
 import com.fiapos.weagle.features.so.data.StrategicOrientationRepository
 import com.fiapos.weagle.presentation.navigation.AppNavGraph
 import com.fiapos.weagle.ui.theme.WeagleTheme
@@ -19,6 +20,7 @@ class MainActivity : ComponentActivity() {
 
         val ideaRepository = IdeaRepository()
         val strategicOrientationRepository = StrategicOrientationRepository()
+        val projectRepository = ProjectRepository()
 
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,6 +30,7 @@ class MainActivity : ComponentActivity() {
                     authRepository = auth,
                     sessionManager = session,
                     ideaRepository = ideaRepository,
+                    projectRepository = projectRepository,
                     strategicOrientationRepository = strategicOrientationRepository
                 )
             }

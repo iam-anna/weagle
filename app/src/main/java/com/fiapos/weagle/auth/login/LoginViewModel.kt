@@ -28,7 +28,7 @@ class LoginViewModel (
 //        )
 
         val user = authRepository.login(
-            "operator@test.com",
+            "manager@test.com",
             password
         )
 
