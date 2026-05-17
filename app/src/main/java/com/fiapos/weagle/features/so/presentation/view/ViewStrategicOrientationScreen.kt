@@ -1,8 +1,7 @@
-package com.fiapos.weagle.features.ideas.presentation.view
+package com.fiapos.weagle.features.so.presentation.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,50 +9,41 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.fiapos.weagle.features.so.data.StrategicOrientationRepository
 import com.fiapos.weagle.presentation.components.Tag
 import com.fiapos.weagle.presentation.components.TopNavigation
-import com.fiapos.weagle.presentation.components.VoteFragment
+import com.fiapos.weagle.ui.theme.toColor
 
 @Composable
-fun ViewIdeaScreen(
-    viewModel: ViewIdeaViewModel,
+fun ViewStrategicOrientationScreen(
+    viewModel: ViewStrategicOrientationViewModel,
     navController: NavController
 ) {
-    val idea = viewModel.idea
+    val orientation = viewModel.orientation
 
-    var votes by remember {
-        mutableStateOf(0)
-    }
-
-    if(idea == null) {
+    if(orientation == null) {
         // TODO: navigate to 404
         return
     }
 
     Column(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
+            .background(orientation.category.toColor().background)
             .fillMaxSize()
             .padding(vertical = 64.dp, horizontal = 24.dp)
     ) {
+
         TopNavigation(
-            title = "Visualizar Ideia",
+            title = "Orientações Estratégicas",
             onBackPressed = {
-                navController.popBackStack();
-            },
-            actionable = true,
-            onActionablePressed = {
-                // TODO: add actionable (editing) if current user == idea owner
-                navController.popBackStack();
+                navController.popBackStack()
             }
         )
 
@@ -70,38 +60,50 @@ fun ViewIdeaScreen(
             ) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
-                        text = "Criado em",
+                        text = "Publicado em",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.secondary
                     )
 
                     Text(
-                        text = idea.createdAt.toString(),
+                        text = orientation.createdAt.toString(),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.primary
                     )
                 }
 
-                Tag(label = idea.type.label)
+                Tag(
+                    label = if (orientation.isActive) "Ativa" else "Inativa",
+                    background = Color(0xFF5EE851),
+                    foreground = Color(0xFF0F350B),
+                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = idea.title,
+                text = orientation.title,
                 style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.primary
+                color = orientation.category.toColor().foreground
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = idea.description,
+                text = orientation.description,
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.primary
+                color = orientation.category.toColor().foreground
             )
 
-            if (idea.isEdited) {
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Tag(
+                label = orientation.category.name,
+                background = orientation.category.toColor().accent,
+                foreground = Color(0xFF0F350B),
+            )
+
+            if (orientation.isEdited) {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
@@ -121,23 +123,12 @@ fun ViewIdeaScreen(
                 )
 
                 Text(
-                    text = idea.createdBy,
+                    text = orientation.createdBy,
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.primary
                 )
             }
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            VoteFragment(
-                votes = votes,
-                onUpvote = {
-                    viewModel.upvoteIdea()
-                },
-                onDownvote = {
-                    viewModel.downvoteIdea()
-                }
-            )
         }
+
     }
 }

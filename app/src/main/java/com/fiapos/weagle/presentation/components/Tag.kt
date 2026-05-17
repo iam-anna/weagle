@@ -8,15 +8,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.fiapos.weagle.ui.theme.CombinatedColor
 
 @Composable
-fun Tag(label: String) {
+fun Tag(
+    label: String,
+    background: Color = CombinatedColor.lightBlue,
+    foreground: Color = CombinatedColor.lightBlueForeground,
+) {
     Box(
         modifier = Modifier
             .background(
-                color = CombinatedColor.lightBlue,
+                color = background,
                 shape = RoundedCornerShape(6.dp)
             )
             .padding(vertical = 4.dp, horizontal = 6.dp),
@@ -24,7 +29,7 @@ fun Tag(label: String) {
         Text(
             text = label,
             style = MaterialTheme.typography.bodyMedium,
-            color = CombinatedColor.lightBlueForeground
+            color = foreground
         )
     }
 }
