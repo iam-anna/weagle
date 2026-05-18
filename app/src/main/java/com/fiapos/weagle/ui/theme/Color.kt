@@ -6,7 +6,8 @@ import androidx.compose.ui.graphics.Color
 val NavyBlue = Color(0xFF162130)
 var DarkGrey60 = Color(0xFF64748B)
 var DarkGrey80 = Color(0xFF56667C)
-var LighBlueyGrey = Color(0xFFD7E2F2)
+var LightBlueyGrey = Color(0xFFD7E2F2)
+val LightBlue = Color(0xFF3F6EA8)
 
 object CombinatedColor {
     val lightBlue = Color(0xFF87BAF3)
@@ -24,5 +25,6 @@ val AppColorScheme = lightColorScheme(
     surface = White,
     onPrimary = White,
     onBackground = NavyBlue,
-    outline = LighBlueyGrey
+    outline = LightBlueyGrey,
+    surfaceVariant = LightBlue
 )
