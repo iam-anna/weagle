@@ -1,4 +1,4 @@
-package com.fiapos.weagle.features.ideas.presentation
+package com.fiapos.weagle.features.ideas.presentation.list
 
 import SegmentedControl
 import androidx.compose.foundation.background
@@ -12,21 +12,20 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.fiapos.weagle.domain.models.Idea
-import com.fiapos.weagle.domain.models.IdeaStatus
-import com.fiapos.weagle.domain.models.IdeaType
 import com.fiapos.weagle.presentation.components.IdeaItem
 import com.fiapos.weagle.presentation.components.TopNavigation
-import com.fiapos.weagle.ui.theme.AppColorScheme
 import java.util.Date
-import kotlin.String
 
 @Composable
 fun ListIdeasScreen(
-    ideas: List<Idea>
+    viewModel: ListIdeasViewModel,
+    navigationController: NavController
 ) {
+
+    var ideas = viewModel.loadIdeas()
 
     Column(
         modifier = Modifier

@@ -25,4 +25,8 @@ class IdeaRepository {
 
         return idea
     }
+
+    fun getAllIdeas(): MutableList<Idea> {
+        return ideas
+    }
 }
