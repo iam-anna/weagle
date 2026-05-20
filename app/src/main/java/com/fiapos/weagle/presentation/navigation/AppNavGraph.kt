@@ -20,6 +20,7 @@ import com.fiapos.weagle.features.ideas.presentation.view.ViewIdeaScreen
 import com.fiapos.weagle.features.ideas.presentation.view.ViewIdeaViewModel
 import com.fiapos.weagle.features.ideas.presentation.view.ViewIdeaViewModelFactory
 import com.fiapos.weagle.features.projects.data.ProjectRepository
+import com.fiapos.weagle.features.projects.presentation.create.CreateProjectScreen
 import com.fiapos.weagle.features.projects.presentation.create.CreateProjectViewModel
 import com.fiapos.weagle.features.projects.presentation.create.CreateProjectViewModelFactory
 import com.fiapos.weagle.features.so.data.StrategicOrientationRepository
@@ -149,6 +150,8 @@ fun AppNavGraph(
                     sessionManager
                 )
             )
+
+            CreateProjectScreen(vm, navController)
         }
     }
 }

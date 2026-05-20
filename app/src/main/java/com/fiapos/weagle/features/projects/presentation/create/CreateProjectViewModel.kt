@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.fiapos.weagle.auth.session.SessionManager
 import com.fiapos.weagle.domain.models.Idea
 import com.fiapos.weagle.domain.models.Project
+import com.fiapos.weagle.domain.models.ProjectStatus
 import com.fiapos.weagle.features.ideas.presentation.create.CreateIdeaUiState
 import com.fiapos.weagle.features.projects.data.ProjectRepository
 import java.time.LocalDate
@@ -54,7 +55,7 @@ class CreateProjectViewModel(
             id = UUID.randomUUID().toString(),
             name = name,
             description = description,
-            isActive = isActive,
+            status = ProjectStatus.ACTIVE,
             startDate = startDate,
             endDate = endDate,
             investment = investment,
