@@ -50,7 +50,8 @@ class CreateIdeaViewModel(
             description = description,
             type = type,
             createdBy = user.name,
-            createdAt = LocalDate.now()
+            createdAt = LocalDate.now(),
+            votes = 0
         )
 
         repository.createIdea(idea)
