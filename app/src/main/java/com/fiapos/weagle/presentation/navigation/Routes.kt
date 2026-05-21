@@ -18,4 +18,6 @@ object Routes {
     const val VIEW_STRATEGIC_ORIENTATION = "view_strategic_orientation"
     
     const val CREATE_PROJECT = "create_project"
+
+    const val VIEW_PROJECT = "view_project"
 }

@@ -2,7 +2,6 @@ package com.fiapos.weagle.features.ideas.presentation.view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.fiapos.weagle.auth.session.SessionManager
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
 
 class ViewIdeaViewModelFactory(

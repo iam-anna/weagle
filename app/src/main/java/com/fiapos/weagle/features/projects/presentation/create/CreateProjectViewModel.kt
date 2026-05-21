@@ -59,7 +59,8 @@ class CreateProjectViewModel(
             startDate = startDate,
             endDate = endDate,
             investment = investment,
-            ideaList = ideaList
+            ideaList = ideaList,
+            ownedBy = user.name
         )
 
         repository.createProject(project)
