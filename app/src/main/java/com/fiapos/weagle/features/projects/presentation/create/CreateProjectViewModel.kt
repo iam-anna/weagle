@@ -23,7 +23,7 @@ class CreateProjectViewModel(
     fun createProject(
         name: String,
         description: String,
-        isActive: Boolean,
+        status: ProjectStatus,
         startDate: LocalDate,
         endDate: LocalDate,
         investment: Float,

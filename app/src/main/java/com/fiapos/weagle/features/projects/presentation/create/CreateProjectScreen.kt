@@ -1,23 +1,20 @@
 package com.fiapos.weagle.features.projects.presentation.create
 
+import android.widget.Button
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.*
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.fiapos.weagle.domain.models.Idea
 import com.fiapos.weagle.domain.models.ProjectStatus
-import com.fiapos.weagle.presentation.components.DateInput
-import com.fiapos.weagle.presentation.components.Dropdown
-import com.fiapos.weagle.presentation.components.Input
-import com.fiapos.weagle.presentation.components.TitleInput
-import com.fiapos.weagle.presentation.components.TopNavigation
+import com.fiapos.weagle.presentation.components.*
+import com.fiapos.weagle.presentation.navigation.Routes
 import java.time.LocalDate
 
 @Composable
@@ -37,9 +34,25 @@ fun CreateProjectScreen(
         mutableStateOf(ProjectStatus.INACTIVE)
     }
 
-    var selectedDate by remember {
-        mutableStateOf<LocalDate?>(null)
+    var startDate by remember {
+        mutableStateOf<LocalDate>(LocalDate.now())
     }
+
+    var endDate by remember {
+        mutableStateOf<LocalDate>(LocalDate.now())
+    }
+
+    var investiment by remember {
+        mutableStateOf<String>("")
+    }
+
+    var ideaList by remember {
+        mutableStateOf<List<Idea>>(
+            emptyList()
+        )
+    }
+
+    val state = viewModel.uiState
 
     Column(
         modifier = Modifier
@@ -92,23 +105,85 @@ fun CreateProjectScreen(
             }
         )
 
-        Row {
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
 
             DateInput(
-                label = "Prazo",
-                value = selectedDate,
+                label = "Data inicio",
+                value = startDate,
                 onDateSelected = {
-                    selectedDate = it
-                }
+                    startDate = it
+                },
+                modifier = Modifier.weight(1f)
             )
 
             DateInput(
-                label = "Prazo",
-                value = selectedDate,
+                label = "Data fim",
+                value = endDate,
                 onDateSelected = {
-                    selectedDate = it
-                }
+                    endDate = it
+                },
+                modifier = Modifier.weight(1f)
             )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Input(
+            label = "Investimento",
+            placeholder = "R$ 0,00",
+            value = investiment.toString(),
+            onValueChange = {
+                investiment = it
+            },
+            keyboardType = KeyboardType.Number
+        )
+
+        Spacer(modifier = Modifier.height(40.dp))
+
+        CustomButton(
+            text = "Entrar",
+            onClick = {
+                viewModel.createProject(
+                    name,
+                    description,
+                    selectedType,
+                    startDate,
+                    endDate,
+                    investiment.toFloat(),
+                    ideaList
+                )
+            }
+        )
+
+        when(state) {
+            is CreateProjectUiState.Loading -> {
+                CircularProgressIndicator()
+            }
+
+            is CreateProjectUiState.Error -> {
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(state.message)
+            }
+
+            else -> Unit
+        }
+
+        LaunchedEffect(state) {
+            if (state is CreateProjectUiState.Success){
+                // TODO: change for project list
+                navController.navigate(
+                    Routes.MANAGER_HOME
+//                    "${Routes.VIEW_PROJECT}"
+                ) {
+                    popUpTo(Routes.CREATE_PROJECT) {
+                        inclusive = true
+                    }
+                }
+            }
         }
     }
 }

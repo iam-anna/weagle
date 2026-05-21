@@ -37,7 +37,7 @@ fun <T> Dropdown(
     }
 
     Column {
-        Row (
+        Row(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background)
                 .border(
