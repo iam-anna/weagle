@@ -12,5 +12,7 @@ data class Idea(
     val createdAt: LocalDate?,
     val isEdited: Boolean = false,
     val votes: Int = 0,
-    val project: String
+    val isSelectable: Boolean = false,
+    val isSelected: Boolean = false,
+    val project: String,
 )
