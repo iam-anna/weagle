@@ -23,6 +23,9 @@ import com.fiapos.weagle.features.projects.data.ProjectRepository
 import com.fiapos.weagle.features.projects.presentation.create.CreateProjectScreen
 import com.fiapos.weagle.features.projects.presentation.create.CreateProjectViewModel
 import com.fiapos.weagle.features.projects.presentation.create.CreateProjectViewModelFactory
+import com.fiapos.weagle.features.projects.presentation.view.ViewProjectScreen
+import com.fiapos.weagle.features.projects.presentation.view.ViewProjectViewModel
+import com.fiapos.weagle.features.projects.presentation.view.ViewProjectViewModelFactory
 import com.fiapos.weagle.features.so.data.StrategicOrientationRepository
 import com.fiapos.weagle.features.so.presentation.listview.ListViewStrategicOrientationScreen
 import com.fiapos.weagle.features.so.presentation.listview.ListViewStrategicOrientationViewModel
@@ -142,8 +145,8 @@ fun AppNavGraph(
 
             ViewStrategicOrientationScreen(vm, navController)
         }
-//        composable(Routes.CREATE_PROJECT) {
-        composable(Routes.MANAGER_HOME) {
+
+        composable(Routes.CREATE_PROJECT) {
             val vm: CreateProjectViewModel = viewModel(
                 factory = CreateProjectViewModelFactory(
                     projectRepository,
@@ -152,6 +155,20 @@ fun AppNavGraph(
             )
 
             CreateProjectScreen(vm, navController)
+        }
+
+//        composable("${Routes.VIEW_PROJECT}/{ideaId}") { backStackEntry ->
+        composable(Routes.MANAGER_HOME) { backStackEntry ->
+            val projectId = backStackEntry.arguments?.getString("ideaId") ?: ""
+
+            val vm: ViewProjectViewModel = viewModel(
+                factory = ViewProjectViewModelFactory(
+                    projectRepository,
+                    projectId = projectId
+                )
+            )
+
+            ViewProjectScreen(vm, navController)
         }
     }
 }

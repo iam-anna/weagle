@@ -30,14 +30,8 @@ fun ViewIdeaScreen(
 ) {
     val idea = viewModel.idea
 
-    var votes by remember {
-        mutableStateOf(0)
-    }
-
-    if(idea == null) {
-        // TODO: navigate to 404
-        return
-    }
+    // TODO: navigate to 404
+    idea ?: return
 
     Column(
         modifier = Modifier
@@ -130,7 +124,7 @@ fun ViewIdeaScreen(
             Spacer(modifier = Modifier.height(32.dp))
 
             VoteFragment(
-                votes = votes,
+                votes = idea.votes,
                 onUpvote = {
                     viewModel.upvoteIdea()
                 },
