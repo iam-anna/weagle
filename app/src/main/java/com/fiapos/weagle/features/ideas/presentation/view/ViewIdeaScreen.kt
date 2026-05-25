@@ -19,19 +19,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.fiapos.weagle.presentation.components.CustomButton
 import com.fiapos.weagle.presentation.components.Tag
 import com.fiapos.weagle.presentation.components.TopNavigation
 import com.fiapos.weagle.presentation.components.VoteFragment
+import com.fiapos.weagle.presentation.navigation.Routes
 
 @Composable
 fun ViewIdeaScreen(
     viewModel: ViewIdeaViewModel,
-    navController: NavController
+    navigationController: NavController
 ) {
     val idea = viewModel.idea
-
-    // TODO: navigate to 404
-    idea ?: return
 
     Column(
         modifier = Modifier
@@ -42,47 +41,20 @@ fun ViewIdeaScreen(
         TopNavigation(
             title = "Visualizar Ideia",
             onBackPressed = {
-                navController.popBackStack();
+                navigationController.popBackStack();
             },
             actionable = true,
             onActionablePressed = {
                 // TODO: add actionable (editing) if current user == idea owner
-                navController.popBackStack();
+                navigationController.popBackStack();
             }
         )
 
         Spacer(modifier = Modifier.height(120.dp))
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(
-                        text = "Criado em",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.secondary
-                    )
-
-                    Text(
-                        text = idea.createdAt.toString(),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-
-                Tag(label = idea.type.label)
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
+        if (idea == null) {
             Text(
-                text = idea.title,
+                text = "404",
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.primary
             )
@@ -90,48 +62,99 @@ fun ViewIdeaScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = idea.description,
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.primary
+                text = "Opa, parece que não temos nada por aqui",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.secondary
             )
 
-            if (idea.isEdited) {
+            CustomButton(
+                text = "Voltar para o início",
+                onClick = {
+                    navigationController.navigate(Routes.LIST_IDEAS)
+                }
+            )
+        } else {
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Text(
+                            text = "Criado em",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.secondary
+                        )
+
+                        Text(
+                            text = idea.createdAt.toString(),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+
+                    Tag(label = idea.type.label)
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = idea.title,
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.primary
+                )
+
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Editado",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.tertiary
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "Criado por",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.secondary
-                )
-
-                Text(
-                    text = idea.createdBy,
+                    text = idea.description,
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.primary
                 )
-            }
 
-            Spacer(modifier = Modifier.height(32.dp))
+                if (idea.isEdited) {
+                    Spacer(modifier = Modifier.height(8.dp))
 
-            VoteFragment(
-                votes = idea.votes,
-                onUpvote = {
-                    viewModel.upvoteIdea()
-                },
-                onDownvote = {
-                    viewModel.downvoteIdea()
+                    Text(
+                        text = "Editado",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.tertiary
+                    )
                 }
-            )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(
+                        text = "Criado por",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.secondary
+                    )
+
+                    Text(
+                        text = idea.createdBy,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(32.dp))
+
+                VoteFragment(
+                    votes = viewModel.votes,
+                    onUpvote = {
+                        viewModel.upvoteIdea()
+                    },
+                    onDownvote = {
+                        viewModel.downvoteIdea()
+                    }
+                )
+            }
         }
     }
 }

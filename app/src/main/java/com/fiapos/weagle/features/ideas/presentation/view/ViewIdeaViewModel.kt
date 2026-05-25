@@ -2,10 +2,12 @@ package com.fiapos.weagle.features.ideas.presentation.view
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.fiapos.weagle.features.ideas.domains.Idea
 import com.fiapos.weagle.features.ideas.domains.IdeaStatus
 import com.fiapos.weagle.features.ideas.domains.IdeaType
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 class ViewIdeaViewModel(
@@ -26,27 +28,52 @@ class ViewIdeaViewModel(
     }
 
     private fun loadIdea() {
-//        idea = repository.getIdeaId(ideaId)
-        idea = Idea(
-            id = "1234",
-            title = "Mock da Ideia",
-            description = "Descrição da ideia lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem.",
-            type = IdeaType.IDEA,
-            status = IdeaStatus.PENDING,
-            createdBy = "John Doe",
-            isEdited = true,
-            createdAt = LocalDate.now(),
-            votes = 2
-        )
 
-        votes = idea?.votes ?: 0
+        viewModelScope.launch {
+
+            idea = repository.getIdeaById(
+                ideaId.toInt()
+            )
+
+            votes = idea?.votes ?: 0
+        }
     }
 
     fun upvoteIdea() {
+
         votes ++
+
+        idea = idea?.copy(
+            votes = votes
+        )
+
+        viewModelScope.launch {
+            idea?.let {
+
+                repository.updateVotes(
+                    it,
+                    votes
+                )
+            }
+        }
     }
 
     fun downvoteIdea() {
+
         votes --
+
+        idea = idea?.copy(
+            votes = votes
+        )
+
+        viewModelScope.launch {
+            idea?.let {
+
+                repository.updateVotes(
+                    it,
+                    votes
+                )
+            }
+        }
     }
 }
