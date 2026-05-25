@@ -1,7 +1,8 @@
-package com.fiapos.weagle.features.auth.login
+package com.fiapos.weagle.features.auth.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.fiapos.weagle.features.auth.data.AuthRepository
 import com.fiapos.weagle.features.auth.session.SessionManager
 
 class LoginViewModelFactory(

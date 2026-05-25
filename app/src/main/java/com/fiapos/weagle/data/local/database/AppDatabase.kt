@@ -2,8 +2,8 @@ package com.fiapos.weagle.data.local.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.fiapos.weagle.data.local.dao.UserDao
-import com.fiapos.weagle.data.local.entities.UserEntity
+import com.fiapos.weagle.features.auth.data.dao.UserDao
+import com.fiapos.weagle.features.auth.data.entities.UserEntity
 import com.fiapos.weagle.features.ideas.data.dao.IdeaDao
 import com.fiapos.weagle.features.ideas.data.entities.IdeaEntity
 

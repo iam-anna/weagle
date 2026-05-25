@@ -1,9 +1,9 @@
-package com.fiapos.weagle.data.local.dao
+package com.fiapos.weagle.features.auth.data.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.fiapos.weagle.data.local.entities.UserEntity
+import com.fiapos.weagle.features.auth.data.entities.UserEntity
 
 @Dao
 interface UserDao {
@@ -31,6 +31,15 @@ interface UserDao {
     """)
     suspend fun getByEmail(
         email: String
+    ): UserEntity?
+
+    @Query("""
+        SELECT * FROM users
+        WHERE id = :id
+        LIMIT 1
+    """)
+    suspend fun getById(
+        id: Int
     ): UserEntity?
 
     @Query(

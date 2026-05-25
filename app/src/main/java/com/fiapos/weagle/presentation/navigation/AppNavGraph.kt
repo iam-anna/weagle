@@ -6,13 +6,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
-import com.fiapos.weagle.features.auth.login.AuthRepository;
-import com.fiapos.weagle.features.auth.login.LoginScreen
-import com.fiapos.weagle.features.auth.login.LoginViewModel
-import com.fiapos.weagle.features.auth.login.LoginViewModelFactory
+import com.fiapos.weagle.features.auth.data.AuthRepository;
+import com.fiapos.weagle.features.auth.presentation.login.LoginScreen
+import com.fiapos.weagle.features.auth.presentation.login.LoginViewModel
+import com.fiapos.weagle.features.auth.presentation.login.LoginViewModelFactory
 import com.fiapos.weagle.features.auth.session.SessionManager;
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
 import com.fiapos.weagle.domain.models.UserRole
+import com.fiapos.weagle.features.auth.data.UserRepository
+import com.fiapos.weagle.features.auth.presentation.home.HomeScreen
+import com.fiapos.weagle.features.auth.presentation.home.HomeViewModel
+import com.fiapos.weagle.features.auth.presentation.home.HomeViewModelFactory
 import com.fiapos.weagle.features.ideas.presentation.create.CreateIdeaScreen
 import com.fiapos.weagle.features.ideas.presentation.create.CreateIdeaViewModel
 import com.fiapos.weagle.features.ideas.presentation.create.CreateIdeaViewModelFactory
@@ -45,6 +49,7 @@ import com.fiapos.weagle.presentation.ManagerHomeScreen
 @Composable
 fun AppNavGraph(
     authRepository: AuthRepository,
+    userRepository: UserRepository,
     ideaRepository: IdeaRepository,
     projectRepository: ProjectRepository,
     strategicOrientationRepository: StrategicOrientationRepository,
@@ -93,14 +98,16 @@ fun AppNavGraph(
 
         composable(Routes.OPERATOR_HOME) {
 
-            val vm: ListViewIdeasViewModel = viewModel(
-                factory = ListViewIdeasViewModelFactory(
-                    ideaRepository,
+
+
+            val vm: HomeViewModel = viewModel(
+                factory = HomeViewModelFactory(
+                    userRepository,
                     sessionManager
                 )
             )
 
-            ListViewIdeasScreen(vm, navController)
+            HomeScreen(vm, navController)
         }
 
         composable(Routes.MANAGER_HOME) {

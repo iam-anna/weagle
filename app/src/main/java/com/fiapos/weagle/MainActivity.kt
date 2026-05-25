@@ -6,10 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
-import com.fiapos.weagle.features.auth.login.AuthRepository
+import com.fiapos.weagle.features.auth.data.AuthRepository
 import com.fiapos.weagle.features.auth.session.SessionManager
 import com.fiapos.weagle.data.local.database.AppDatabase
-import com.fiapos.weagle.data.local.entities.UserEntity
+import com.fiapos.weagle.features.auth.data.UserRepository
+import com.fiapos.weagle.features.auth.data.entities.UserEntity
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
 import com.fiapos.weagle.features.projects.data.ProjectRepository
 import com.fiapos.weagle.features.so.data.StrategicOrientationRepository
@@ -35,7 +36,6 @@ class MainActivity : ComponentActivity() {
 
         val auth = AuthRepository(userDao)
 
-
         lifecycleScope.launch {
             val existingUser = userDao.getByEmail("operator@test.com")
 
@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
 
                 auth.createdUser(
                     UserEntity(
-                        name = "Operador ",
+                        name = "Josias Pereira Souza",
                         email = "operator@test.com",
                         password = "123456",
                         role = "OPERATOR",
@@ -54,6 +54,8 @@ class MainActivity : ComponentActivity() {
         }
 
         val session  = SessionManager(this)
+
+        val userRepository = UserRepository(userDao)
 
         val ideaRepository = IdeaRepository(db.ideaDao())
 
@@ -66,6 +68,7 @@ class MainActivity : ComponentActivity() {
                 AppNavGraph(
                     authRepository = auth,
                     sessionManager = session,
+                    userRepository = userRepository,
                     ideaRepository = ideaRepository,
                     projectRepository = projectRepository,
                     strategicOrientationRepository = strategicOrientationRepository

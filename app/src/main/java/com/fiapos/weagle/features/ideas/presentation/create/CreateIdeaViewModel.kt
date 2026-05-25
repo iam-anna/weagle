@@ -32,40 +32,28 @@ class CreateIdeaViewModel(
             return
         }
 
-        viewModelScope.launch {
-            repository.createIdea(
-                title,
-                description,
-                type,
-                sessionManager.getUserId() ?: "Unknown"
-            )
-        }
-
-//        val user = sessionManager.getUser()
-
-//        if (user == null) {
-//            uiState = CreateIdeaUiState.Error(
-//                "User not authenticated"
-//            )
-//            return
-//        }
-
         uiState = CreateIdeaUiState.Loading
 
-        val idea = Idea(
-            id = UUID.randomUUID().toString(),
-            title = title,
-            description = description,
-            type = type,
-            createdBy = "user.name",
-            createdAt = LocalDate.now(),
-            votes = 0
-        )
+        viewModelScope.launch {
 
+            try {
 
+                repository.createIdea(
+                    title,
+                    description,
+                    type,
+                    sessionManager.getUserId() ?: "Unknown"
+                )
 
-        uiState = CreateIdeaUiState.Success(
-            "user.id"
-        )
+                uiState = CreateIdeaUiState.Success(
+                    "user.id"
+                )
+            } catch(e: Exception) {
+                CreateIdeaUiState.Error(
+                    e.message ?: "Unknown error"
+                )
+            }
+
+        }
     }
 }

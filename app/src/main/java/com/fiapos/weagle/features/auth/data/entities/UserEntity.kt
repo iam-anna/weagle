@@ -1,4 +1,4 @@
-package com.fiapos.weagle.data.local.entities
+package com.fiapos.weagle.features.auth.data.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

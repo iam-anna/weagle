@@ -1,4 +1,4 @@
-package com.fiapos.weagle.features.auth.login
+package com.fiapos.weagle.features.auth.presentation.login
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
