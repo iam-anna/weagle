@@ -11,7 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.fiapos.weagle.features.ideas.domains.IdeaType
+import com.fiapos.weagle.features.ideas.domain.IdeaType
 import androidx.compose.material3.Text
 import androidx.navigation.NavController
 import com.fiapos.weagle.presentation.components.CustomButton

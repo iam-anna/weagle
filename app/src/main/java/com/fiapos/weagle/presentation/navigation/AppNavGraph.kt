@@ -43,8 +43,6 @@ import com.fiapos.weagle.features.so.presentation.listview.ListViewStrategicOrie
 import com.fiapos.weagle.features.so.presentation.view.ViewStrategicOrientationScreen
 import com.fiapos.weagle.features.so.presentation.view.ViewStrategicOrientationViewModel
 import com.fiapos.weagle.features.so.presentation.view.ViewStrategicOrientationViewModelFactory
-import com.fiapos.weagle.presentation.LeaderHomeScreen
-import com.fiapos.weagle.presentation.ManagerHomeScreen
 
 @Composable
 fun AppNavGraph(
@@ -98,8 +96,6 @@ fun AppNavGraph(
 
         composable(Routes.OPERATOR_HOME) {
 
-
-
             val vm: HomeViewModel = viewModel(
                 factory = HomeViewModelFactory(
                     userRepository,
@@ -111,11 +107,27 @@ fun AppNavGraph(
         }
 
         composable(Routes.MANAGER_HOME) {
-            ManagerHomeScreen()
+
+            val vm: HomeViewModel = viewModel(
+                factory = HomeViewModelFactory(
+                    userRepository,
+                    sessionManager
+                )
+            )
+
+            HomeScreen(vm, navController)
         }
 
         composable(Routes.LEADER_HOME) {
-            LeaderHomeScreen()
+
+            val vm: HomeViewModel = viewModel(
+                factory = HomeViewModelFactory(
+                    userRepository,
+                    sessionManager
+                )
+            )
+
+            HomeScreen(vm, navController)
         }
 
         composable(Routes.CREATE_IDEA) {
@@ -172,17 +184,19 @@ fun AppNavGraph(
         }
 
         composable(Routes.LIST_STRATEGIC_ORIENTATION) {
+
             val vm: ListViewStrategicOrientationViewModel = viewModel(
                 factory = ListViewStrategicOrientationViewModelFactory(
-                    strategicOrientationRepository
+                    strategicOrientationRepository,
+                    sessionManager
                 )
             )
 
             ListViewStrategicOrientationScreen(vm, navController)
         }
 
-//        composable("${Routes.VIEW_STRATEGIC_ORIENTATION}/{strategicOrientationId}") { backStackEntry ->
-        composable(Routes.VIEW_STRATEGIC_ORIENTATION) { backStackEntry ->
+        composable("${Routes.VIEW_STRATEGIC_ORIENTATION}/{strategicOrientationId}") { backStackEntry ->
+
             val orientationId = backStackEntry.arguments?.getString("strategicOrientationId") ?: ""
 
             val vm: ViewStrategicOrientationViewModel = viewModel(

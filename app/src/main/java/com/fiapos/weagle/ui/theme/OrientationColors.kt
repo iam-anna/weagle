@@ -1,7 +1,7 @@
 package com.fiapos.weagle.ui.theme
 
 import androidx.compose.ui.graphics.Color
-import com.fiapos.weagle.domain.models.OrientationCategory
+import com.fiapos.weagle.features.so.data.domain.OrientationCategory
 
 data class OrientationColors(
     val background: Color,

@@ -1,9 +1,9 @@
-package com.fiapos.weagle.domain.models
+package com.fiapos.weagle.features.so.data.domain
 
 import java.time.LocalDate
 
 data class StrategicOrientation (
-    val id: String = "",
+    val id: String,
     val title: String,
     val description: String,
     val category: OrientationCategory,

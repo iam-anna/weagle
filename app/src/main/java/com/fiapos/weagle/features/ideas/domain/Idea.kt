@@ -1,9 +1,9 @@
-package com.fiapos.weagle.features.ideas.domains
+package com.fiapos.weagle.features.ideas.domain
 
 import java.time.LocalDate
 
 data class Idea(
-    val id: String = "",
+    val id: String,
     val title: String,
     val description: String,
     val type: IdeaType,

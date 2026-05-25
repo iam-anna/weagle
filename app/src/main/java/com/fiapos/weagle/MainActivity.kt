@@ -39,18 +39,18 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             val existingUser = userDao.getByEmail("operator@test.com")
 
-            if(existingUser == null) {
+//            if(existingUser == null) {
 
                 auth.createdUser(
                     UserEntity(
-                        name = "Josias Pereira Souza",
-                        email = "operator@test.com",
+                        name = "Josue Pereira Souza",
+                        email = "leader@test.com",
                         password = "123456",
-                        role = "OPERATOR",
+                        role = "LEADER",
                         isActive = true,
                     )
                 )
-            }
+//            }
         }
 
         val session  = SessionManager(this)
@@ -59,7 +59,7 @@ class MainActivity : ComponentActivity() {
 
         val ideaRepository = IdeaRepository(db.ideaDao())
 
-        val strategicOrientationRepository = StrategicOrientationRepository()
+        val strategicOrientationRepository = StrategicOrientationRepository(db.strategicOrientationDao())
 
         val projectRepository = ProjectRepository()
 

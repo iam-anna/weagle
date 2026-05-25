@@ -1,8 +1,8 @@
 package com.fiapos.weagle.features.ideas.data.mappers
 
 import com.fiapos.weagle.features.ideas.data.entities.IdeaEntity
-import com.fiapos.weagle.features.ideas.domains.Idea
-import com.fiapos.weagle.features.ideas.domains.IdeaType
+import com.fiapos.weagle.features.ideas.domain.Idea
+import com.fiapos.weagle.features.ideas.domain.IdeaType
 import java.time.Instant
 import java.time.ZoneId
 

@@ -2,8 +2,8 @@ package com.fiapos.weagle.features.so.presentation.view
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import com.fiapos.weagle.domain.models.OrientationCategory
-import com.fiapos.weagle.domain.models.StrategicOrientation
+import com.fiapos.weagle.features.so.data.domain.OrientationCategory
+import com.fiapos.weagle.features.so.data.domain.StrategicOrientation
 import com.fiapos.weagle.features.so.data.StrategicOrientationRepository
 
 class ViewStrategicOrientationViewModel(

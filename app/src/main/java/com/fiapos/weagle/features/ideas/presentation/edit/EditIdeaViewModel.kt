@@ -3,12 +3,10 @@ package com.fiapos.weagle.features.ideas.presentation.edit
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fiapos.weagle.features.auth.session.SessionManager
-import com.fiapos.weagle.features.ideas.domains.Idea
-import com.fiapos.weagle.features.ideas.domains.IdeaType
+import com.fiapos.weagle.features.ideas.domain.Idea
+import com.fiapos.weagle.features.ideas.domain.IdeaType
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 
 class EditIdeaViewModel(
     private val repository: IdeaRepository,

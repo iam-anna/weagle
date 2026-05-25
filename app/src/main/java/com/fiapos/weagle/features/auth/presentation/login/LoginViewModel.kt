@@ -37,6 +37,8 @@ class LoginViewModel (
 
                 sessionManager.saveUserId(user.id)
 
+                sessionManager.saveUserRole(user.role)
+
                 loginState = LoginState.Success(user)
             } else {
 

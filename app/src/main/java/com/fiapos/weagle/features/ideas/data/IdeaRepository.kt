@@ -3,9 +3,9 @@ package com.fiapos.weagle.features.ideas.data
 import com.fiapos.weagle.features.ideas.data.dao.IdeaDao
 import com.fiapos.weagle.features.ideas.data.entities.IdeaEntity
 import com.fiapos.weagle.features.ideas.data.mappers.toIdea
-import com.fiapos.weagle.features.ideas.domains.Idea
-import com.fiapos.weagle.features.ideas.domains.IdeaStatus
-import com.fiapos.weagle.features.ideas.domains.IdeaType
+import com.fiapos.weagle.features.ideas.domain.Idea
+import com.fiapos.weagle.features.ideas.domain.IdeaStatus
+import com.fiapos.weagle.features.ideas.domain.IdeaType
 
 class IdeaRepository(
     private val dao: IdeaDao

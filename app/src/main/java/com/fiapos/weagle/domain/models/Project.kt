@@ -1,6 +1,6 @@
 package com.fiapos.weagle.domain.models
 
-import com.fiapos.weagle.features.ideas.domains.Idea
+import com.fiapos.weagle.features.ideas.domain.Idea
 import java.time.LocalDate
 
 data class Project(

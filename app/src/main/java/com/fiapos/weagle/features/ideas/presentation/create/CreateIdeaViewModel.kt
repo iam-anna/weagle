@@ -5,11 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fiapos.weagle.features.auth.session.SessionManager
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
-import com.fiapos.weagle.features.ideas.domains.Idea
-import com.fiapos.weagle.features.ideas.domains.IdeaType
+import com.fiapos.weagle.features.ideas.domain.IdeaType
 import kotlinx.coroutines.launch
-import java.time.LocalDate
-import java.util.UUID
 
 class CreateIdeaViewModel(
     private val repository: IdeaRepository,

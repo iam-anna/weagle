@@ -4,10 +4,8 @@ import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fiapos.weagle.features.auth.session.SessionManager
-import com.fiapos.weagle.features.ideas.domains.Idea
+import com.fiapos.weagle.features.ideas.domain.Idea
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class ListViewIdeasViewModel(

@@ -28,7 +28,7 @@ fun HomeScreen(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
-            .padding(vertical = 64.dp, horizontal = 56.dp)
+            .padding(vertical = 64.dp, horizontal = 32.dp)
     ) {
 
         Spacer(modifier = Modifier.height(160.dp))
@@ -68,7 +68,18 @@ fun HomeScreen(
                         navigationController.navigate(Routes.LIST_IDEAS)
                     }
                 )
+
+                Spacer(modifier = Modifier.height(8.dp))
             }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            CustomButton(
+                text = "Orientações Estratégicas",
+                onClick = {
+                    navigationController.navigate(Routes.LIST_STRATEGIC_ORIENTATION)
+                }
+            )
         }
     }
 }

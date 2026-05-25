@@ -1,4 +1,4 @@
-package com.fiapos.weagle.domain.models
+package com.fiapos.weagle.features.so.data.domain
 
 enum class OrientationCategory(
     val label: String
