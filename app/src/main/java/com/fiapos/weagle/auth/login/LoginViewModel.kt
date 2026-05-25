@@ -5,6 +5,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.fiapos.weagle.auth.session.SessionManager
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 class LoginViewModel (
     private val authRepository: AuthRepository,
@@ -20,26 +22,27 @@ class LoginViewModel (
         email: String,
         password: String
     ) {
+
         loginState = LoginState.Loading
 
-//        val user = authRepository.login(
-//            email,
-//            password
-//        )
+        viewModelScope.launch {
 
-        val user = authRepository.login(
-            "manager@test.com",
-            password
-        )
-
-        if (user != null) {
-            sessionManager.saveUser(user)
-
-            loginState = LoginState.Success(user)
-        } else {
-            loginState = LoginState.Error(
-                "Invalid credentials"
+            val user = authRepository.login(
+                email,
+                password
             )
+
+            if (user != null) {
+
+                sessionManager.saveUserId(user.id)
+
+                loginState = LoginState.Success(user)
+            } else {
+
+                loginState = LoginState.Error(
+                    "Invalid credentials"
+                )
+            }
         }
     }
 }

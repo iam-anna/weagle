@@ -27,13 +27,13 @@ class ListIdeasViewModel(
     fun fetchIdeas() {
         val allIdeas = repository.getAllIdeas()
 
-        if (selectedOption.value == "Criadas por mim") {
-            val currentUser = sessionManager.getUser()
+//        if (selectedOption.value == "Criadas por mim") {
+//            val currentUser = sessionManager.getUser()
 
-            _ideas.value = allIdeas.filter { it.createdBy == currentUser?.name }
-        } else {
-            _ideas.value = allIdeas
-        }
+//            _ideas.value = allIdeas.filter { it.createdBy == currentUser?.name }
+//        } else {
+//            _ideas.value = allIdeas
+//        }
     }
 
     fun loadIdeas(): MutableList<Idea> {

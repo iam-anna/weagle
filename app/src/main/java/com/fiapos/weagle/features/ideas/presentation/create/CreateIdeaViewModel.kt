@@ -30,14 +30,14 @@ class CreateIdeaViewModel(
             return
         }
 
-        val user = sessionManager.getUser()
+//        val user = sessionManager.getUser()
 
-        if (user == null) {
-            uiState = CreateIdeaUiState.Error(
-                "User not authenticated"
-            )
-            return
-        }
+//        if (user == null) {
+//            uiState = CreateIdeaUiState.Error(
+//                "User not authenticated"
+//            )
+//            return
+//        }
 
         uiState = CreateIdeaUiState.Loading
 
@@ -46,7 +46,7 @@ class CreateIdeaViewModel(
             title = title,
             description = description,
             type = type,
-            createdBy = user.name,
+            createdBy = "user.name",
             createdAt = LocalDate.now(),
             votes = 0
         )
@@ -54,7 +54,7 @@ class CreateIdeaViewModel(
         repository.createIdea(idea)
 
         uiState = CreateIdeaUiState.Success(
-            user.id
+            "user.id"
         )
     }
 }

@@ -32,18 +32,18 @@ class EditIdeaViewModel(
 
         uiState = EditIdeaUiState.Loading
 
-        val user = sessionManager.getUser()
-        if (user == null) {
-            uiState = EditIdeaUiState.Error("User not authenticated")
-            return
-        }
+//        val user = sessionManager.getUser()
+//        if (user == null) {
+//            uiState = EditIdeaUiState.Error("User not authenticated")
+//            return
+//        }
 
         val updatedIdea = Idea(
             id = id,
             title = title,
             description = description,
             type = type,
-            createdBy = user.id,
+            createdBy = "user.id",
             createdAt = LocalDate.now()
         )
 

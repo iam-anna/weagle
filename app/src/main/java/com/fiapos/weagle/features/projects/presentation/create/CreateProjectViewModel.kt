@@ -40,33 +40,33 @@ class CreateProjectViewModel(
             return
         }
 
-        val user = sessionManager.getUser()
+//        val user = sessionManager.getUser()
 
-        if (user == null) {
-            uiState = CreateProjectUiState.Error(
-                "User not authenticated"
-            )
+//        if (user == null) {
+//            uiState = CreateProjectUiState.Error(
+//                "User not authenticated"
+//            )
             return
         }
 
-        uiState = CreateProjectUiState.Loading
+//        uiState = CreateProjectUiState.Loading
 
         val project = Project(
             id = UUID.randomUUID().toString(),
-            name = name,
-            description = description,
+            name = "name",
+            description = "description",
             status = ProjectStatus.ACTIVE,
-            startDate = startDate,
-            endDate = endDate,
-            investment = investment,
-            ideaList = ideaList,
-            ownedBy = user.name
+            startDate = LocalDate.now(),
+            endDate = LocalDate.now(),
+            investment = 00F,
+            ideaList = mutableListOf(),
+            ownedBy = "user.name"
         )
 
-        repository.createProject(project)
+//        repository.createProject(project)
 
-        uiState = CreateProjectUiState.Success(
-            projectId = project.id
-        )
-    }
+//        uiState = CreateProjectUiState.Success(
+//            projectId = project.id
+//        )
+//    }
 }

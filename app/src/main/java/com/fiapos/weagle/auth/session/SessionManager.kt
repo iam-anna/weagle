@@ -1,19 +1,40 @@
 package com.fiapos.weagle.auth.session
 
+import android.content.Context
 import com.fiapos.weagle.domain.models.User
 
-class SessionManager {
-    private var currentUser: User? = null
+class SessionManager(
+    private val context: Context
+) {
+    private val prefs = context.getSharedPreferences(
+        "session",
+        Context.MODE_PRIVATE
+    )
 
-    fun saveUser(user: User) {
-        currentUser = user
+    fun saveUserId(userId: String) {
+        prefs.edit()
+            .putString(
+                "user_id",
+                userId
+            )
+            .apply()
     }
 
-    fun getUser(): User? {
-        return currentUser
+    fun getUserId(): String? {
+        return prefs.getString(
+            "user_id",
+            null
+        )
     }
+
+    fun isLoggedIn(): Boolean {
+        return getUserId() != null
+    }
+
 
     fun logout() {
-        currentUser = null
+        prefs.edit()
+            .clear()
+            .apply()
     }
 }
