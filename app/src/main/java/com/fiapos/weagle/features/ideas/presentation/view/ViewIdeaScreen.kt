@@ -43,10 +43,12 @@ fun ViewIdeaScreen(
             onBackPressed = {
                 navigationController.popBackStack();
             },
-            actionable = true,
+            actionable = viewModel.canEdit,
             onActionablePressed = {
-                // TODO: add actionable (editing) if current user == idea owner
-                navigationController.popBackStack();
+
+                navigationController.navigate(
+                    "${Routes.EDIT_IDEA}/${idea?.id}"
+                );
             }
         )
 

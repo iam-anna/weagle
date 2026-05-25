@@ -13,6 +13,8 @@ object Routes {
 
     const val VIEW_IDEA = "view_idea"
 
+    const val EDIT_IDEA = "edit_idea"
+
     const val LIST_IDEAS = "list_ideas"
 
     const val LIST_STRATEGIC_ORIENTATION = "list_strategic_orientation"

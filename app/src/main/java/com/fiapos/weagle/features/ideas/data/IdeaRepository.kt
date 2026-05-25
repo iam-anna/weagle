@@ -42,9 +42,8 @@ class IdeaRepository(
         return dao.getById(id)?.toIdea()
     }
 
-    suspend fun updateVotes(
-        idea: Idea,
-        votes: Int
+    suspend fun updateIdea(
+        idea: Idea
     ) {
         dao.update(
             IdeaEntity(
@@ -54,21 +53,8 @@ class IdeaRepository(
                 type = idea.type.name,
                 status = idea.status.name,
                 createdBy = idea.createdBy,
-                votes = votes
+                votes = idea.votes
             )
         )
     }
-
-//    fun editIdea(idea: Idea) {
-//        dao.update(
-//            IdeaEntity(
-//                id = idea.id.toInt(),
-//                title = idea.title,
-//                description = idea.description,
-//                type = idea.type.name,
-//                status = idea.status.name,
-//                createdBy = idea.createdBy,
-//            )
-//        )
-//    }
 }

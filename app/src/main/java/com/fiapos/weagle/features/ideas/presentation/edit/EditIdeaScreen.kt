@@ -1,6 +1,7 @@
 package com.fiapos.weagle.features.ideas.presentation.edit
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -24,19 +26,19 @@ import com.fiapos.weagle.presentation.components.Dropdown
 import com.fiapos.weagle.presentation.components.Input
 import com.fiapos.weagle.presentation.components.TitleInput
 import com.fiapos.weagle.presentation.components.TopNavigation
+import com.fiapos.weagle.presentation.navigation.Routes
 
 @Composable
 fun EditIdeaScreen(
-    ideaId: String,
     viewModel: EditIdeaViewModel,
     navController: NavController
 ){
     var title by remember {
-        mutableStateOf("Ideia maneira")
+        mutableStateOf("")
     }
 
     var description by remember {
-        mutableStateOf("Descrição legal")
+        mutableStateOf("")
     }
 
     var selectedType by remember {
@@ -44,6 +46,30 @@ fun EditIdeaScreen(
     }
 
     val state = viewModel.uiState
+
+    val idea = viewModel.idea
+
+    if(idea == null) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+
+        return
+    }
+
+    LaunchedEffect(idea) {
+        idea.let {
+
+            title = it.title
+
+            description = it.description
+
+            selectedType = it.type
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -101,7 +127,6 @@ fun EditIdeaScreen(
             text = "Atualizar ideia",
             onClick = {
                 viewModel.editIdea(
-                    id = ideaId,
                     title,
                     description,
                     selectedType
@@ -125,8 +150,7 @@ fun EditIdeaScreen(
 
         LaunchedEffect(state) {
             if (state is EditIdeaUiState.Success) {
-                // TODO: change for ideas list
-                navController.popBackStack()
+                navController.navigate(Routes.LIST_IDEAS)
             }
         }
     }

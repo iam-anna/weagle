@@ -16,6 +16,9 @@ import com.fiapos.weagle.domain.models.UserRole
 import com.fiapos.weagle.features.ideas.presentation.create.CreateIdeaScreen
 import com.fiapos.weagle.features.ideas.presentation.create.CreateIdeaViewModel
 import com.fiapos.weagle.features.ideas.presentation.create.CreateIdeaViewModelFactory
+import com.fiapos.weagle.features.ideas.presentation.edit.EditIdeaScreen
+import com.fiapos.weagle.features.ideas.presentation.edit.EditIdeaViewModel
+import com.fiapos.weagle.features.ideas.presentation.edit.EditIdeaViewModelFactory
 import com.fiapos.weagle.features.ideas.presentation.listview.ListViewIdeasScreen
 import com.fiapos.weagle.features.ideas.presentation.listview.ListViewIdeasViewModel
 import com.fiapos.weagle.features.ideas.presentation.listview.ListViewIdeasViewModelFactory
@@ -127,11 +130,26 @@ fun AppNavGraph(
             val vm: ViewIdeaViewModel = viewModel(
                 factory = ViewIdeaViewModelFactory(
                     ideaRepository,
-                    ideaId = ideaId
+                    sessionManager,
+                    ideaId
                 )
             )
 
             ViewIdeaScreen(vm, navController)
+        }
+
+        composable("${Routes.EDIT_IDEA}/{ideaId}") { backStackEntry ->
+
+            val ideaId = backStackEntry.arguments?.getString("ideaId") ?: ""
+
+            val vm: EditIdeaViewModel = viewModel(
+                factory = EditIdeaViewModelFactory(
+                    ideaRepository,
+                    ideaId
+                )
+            )
+
+            EditIdeaScreen(vm, navController)
         }
 
         composable(Routes.LIST_IDEAS) {
