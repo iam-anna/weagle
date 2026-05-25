@@ -11,7 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.fiapos.weagle.domain.models.IdeaType
+import com.fiapos.weagle.features.ideas.domains.IdeaType
 import androidx.compose.material3.Text
 import androidx.navigation.NavController
 import com.fiapos.weagle.presentation.components.CustomButton
@@ -24,7 +24,7 @@ import com.fiapos.weagle.presentation.navigation.Routes
 @Composable
 fun CreateIdeaScreen(
     viewModel: CreateIdeaViewModel,
-    navController: NavController
+    navigationController: NavController
 ) {
     var title by remember {
         mutableStateOf("")
@@ -50,7 +50,7 @@ fun CreateIdeaScreen(
         TopNavigation(
             title = "Criar Ideia",
             onBackPressed = {
-                navController.popBackStack();
+                navigationController.popBackStack();
             }
         )
 
@@ -120,10 +120,7 @@ fun CreateIdeaScreen(
 
         LaunchedEffect(state) {
             if (state is CreateIdeaUiState.Success) {
-                // TODO: change for ideas list
-                navController.navigate(
-                    "${Routes.VIEW_IDEA}/${state.ideaId}"
-                ) {
+                navigationController.navigate(Routes.LIST_IDEAS) {
                     popUpTo(Routes.CREATE_IDEA) {
                         inclusive = true
                     }

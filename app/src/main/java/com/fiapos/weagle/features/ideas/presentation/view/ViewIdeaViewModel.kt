@@ -2,9 +2,9 @@ package com.fiapos.weagle.features.ideas.presentation.view
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import com.fiapos.weagle.domain.models.Idea
-import com.fiapos.weagle.domain.models.IdeaStatus
-import com.fiapos.weagle.domain.models.IdeaType
+import com.fiapos.weagle.features.ideas.domains.Idea
+import com.fiapos.weagle.features.ideas.domains.IdeaStatus
+import com.fiapos.weagle.features.ideas.domains.IdeaType
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
 import java.time.LocalDate
 

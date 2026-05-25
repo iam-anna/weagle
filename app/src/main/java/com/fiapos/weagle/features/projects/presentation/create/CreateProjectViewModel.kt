@@ -2,11 +2,10 @@ package com.fiapos.weagle.features.projects.presentation.create
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import com.fiapos.weagle.auth.session.SessionManager
-import com.fiapos.weagle.domain.models.Idea
+import com.fiapos.weagle.features.auth.session.SessionManager
+import com.fiapos.weagle.features.ideas.domains.Idea
 import com.fiapos.weagle.domain.models.Project
 import com.fiapos.weagle.domain.models.ProjectStatus
-import com.fiapos.weagle.features.ideas.presentation.create.CreateIdeaUiState
 import com.fiapos.weagle.features.projects.data.ProjectRepository
 import java.time.LocalDate
 import java.util.UUID

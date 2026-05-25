@@ -4,9 +4,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.fiapos.weagle.auth.session.SessionManager
-import com.fiapos.weagle.domain.models.Idea
-import com.fiapos.weagle.domain.models.IdeaType
+import com.fiapos.weagle.features.auth.session.SessionManager
+import com.fiapos.weagle.features.ideas.domains.Idea
+import com.fiapos.weagle.features.ideas.domains.IdeaType
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
 import java.time.LocalDate
 

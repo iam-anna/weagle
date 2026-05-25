@@ -6,8 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
-import com.fiapos.weagle.auth.login.AuthRepository
-import com.fiapos.weagle.auth.session.SessionManager
+import com.fiapos.weagle.features.auth.login.AuthRepository
+import com.fiapos.weagle.features.auth.session.SessionManager
 import com.fiapos.weagle.data.local.database.AppDatabase
 import com.fiapos.weagle.data.local.entities.UserEntity
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
@@ -27,7 +27,9 @@ class MainActivity : ComponentActivity() {
             applicationContext,
             AppDatabase::class.java,
             "weagle_db"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
 
         val userDao = db.userDao()
 
@@ -35,18 +37,25 @@ class MainActivity : ComponentActivity() {
 
 
         lifecycleScope.launch {
-            auth.createdUser(UserEntity(
-                name = "Operador ",
-                email = "operator@test.com",
-                password = "123456",
-                role = "OPERATOR",
-                isActive = true,
-            ))
+            val existingUser = userDao.getByEmail("operator@test.com")
+
+            if(existingUser == null) {
+
+                auth.createdUser(
+                    UserEntity(
+                        name = "Operador ",
+                        email = "operator@test.com",
+                        password = "123456",
+                        role = "OPERATOR",
+                        isActive = true,
+                    )
+                )
+            }
         }
 
         val session  = SessionManager(this)
 
-        val ideaRepository = IdeaRepository()
+        val ideaRepository = IdeaRepository(db.ideaDao())
 
         val strategicOrientationRepository = StrategicOrientationRepository()
 

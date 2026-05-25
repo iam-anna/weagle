@@ -6,16 +6,19 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
-import com.fiapos.weagle.auth.login.AuthRepository;
-import com.fiapos.weagle.auth.login.LoginScreen
-import com.fiapos.weagle.auth.login.LoginViewModel
-import com.fiapos.weagle.auth.login.LoginViewModelFactory
-import com.fiapos.weagle.auth.session.SessionManager;
+import com.fiapos.weagle.features.auth.login.AuthRepository;
+import com.fiapos.weagle.features.auth.login.LoginScreen
+import com.fiapos.weagle.features.auth.login.LoginViewModel
+import com.fiapos.weagle.features.auth.login.LoginViewModelFactory
+import com.fiapos.weagle.features.auth.session.SessionManager;
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
 import com.fiapos.weagle.domain.models.UserRole
 import com.fiapos.weagle.features.ideas.presentation.create.CreateIdeaScreen
 import com.fiapos.weagle.features.ideas.presentation.create.CreateIdeaViewModel
 import com.fiapos.weagle.features.ideas.presentation.create.CreateIdeaViewModelFactory
+import com.fiapos.weagle.features.ideas.presentation.listview.ListViewIdeasScreen
+import com.fiapos.weagle.features.ideas.presentation.listview.ListViewIdeasViewModel
+import com.fiapos.weagle.features.ideas.presentation.listview.ListViewIdeasViewModelFactory
 import com.fiapos.weagle.features.ideas.presentation.view.ViewIdeaScreen
 import com.fiapos.weagle.features.ideas.presentation.view.ViewIdeaViewModel
 import com.fiapos.weagle.features.ideas.presentation.view.ViewIdeaViewModelFactory
@@ -35,7 +38,6 @@ import com.fiapos.weagle.features.so.presentation.view.ViewStrategicOrientationV
 import com.fiapos.weagle.features.so.presentation.view.ViewStrategicOrientationViewModelFactory
 import com.fiapos.weagle.presentation.LeaderHomeScreen
 import com.fiapos.weagle.presentation.ManagerHomeScreen
-import com.fiapos.weagle.presentation.OperatorHomeScreen
 
 @Composable
 fun AppNavGraph(
@@ -52,6 +54,7 @@ fun AppNavGraph(
         startDestination = Routes.LOGIN
     ) {
         composable(Routes.LOGIN) {
+
             val loginViewModel: LoginViewModel = viewModel(
                 factory = LoginViewModelFactory(
                     authRepository,
@@ -86,7 +89,15 @@ fun AppNavGraph(
         }
 
         composable(Routes.OPERATOR_HOME) {
-            OperatorHomeScreen()
+
+            val vm: ListViewIdeasViewModel = viewModel(
+                factory = ListViewIdeasViewModelFactory(
+                    ideaRepository,
+                    sessionManager
+                )
+            )
+
+            ListViewIdeasScreen(vm, navController)
         }
 
         composable(Routes.MANAGER_HOME) {
@@ -98,6 +109,7 @@ fun AppNavGraph(
         }
 
         composable(Routes.CREATE_IDEA) {
+
             val vm: CreateIdeaViewModel = viewModel(
                 factory = CreateIdeaViewModelFactory(
                     ideaRepository,
@@ -122,6 +134,18 @@ fun AppNavGraph(
             ViewIdeaScreen(vm, navController)
         }
 
+        composable(Routes.LIST_IDEAS) {
+
+            val vm: ListViewIdeasViewModel = viewModel(
+                factory = ListViewIdeasViewModelFactory(
+                    ideaRepository,
+                    sessionManager
+                )
+            )
+
+            ListViewIdeasScreen(vm, navController)
+        }
+
         composable(Routes.LIST_STRATEGIC_ORIENTATION) {
             val vm: ListViewStrategicOrientationViewModel = viewModel(
                 factory = ListViewStrategicOrientationViewModelFactory(
@@ -133,7 +157,7 @@ fun AppNavGraph(
         }
 
 //        composable("${Routes.VIEW_STRATEGIC_ORIENTATION}/{strategicOrientationId}") { backStackEntry ->
-        composable(Routes.OPERATOR_HOME) { backStackEntry ->
+        composable(Routes.VIEW_STRATEGIC_ORIENTATION) { backStackEntry ->
             val orientationId = backStackEntry.arguments?.getString("strategicOrientationId") ?: ""
 
             val vm: ViewStrategicOrientationViewModel = viewModel(

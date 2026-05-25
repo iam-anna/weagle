@@ -2,10 +2,12 @@ package com.fiapos.weagle.features.ideas.presentation.create
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import com.fiapos.weagle.auth.session.SessionManager
+import androidx.lifecycle.viewModelScope
+import com.fiapos.weagle.features.auth.session.SessionManager
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
-import com.fiapos.weagle.domain.models.Idea
-import com.fiapos.weagle.domain.models.IdeaType
+import com.fiapos.weagle.features.ideas.domains.Idea
+import com.fiapos.weagle.features.ideas.domains.IdeaType
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.UUID
 
@@ -30,6 +32,15 @@ class CreateIdeaViewModel(
             return
         }
 
+        viewModelScope.launch {
+            repository.createIdea(
+                title,
+                description,
+                type,
+                sessionManager.getUserId() ?: "Unknown"
+            )
+        }
+
 //        val user = sessionManager.getUser()
 
 //        if (user == null) {
@@ -51,7 +62,7 @@ class CreateIdeaViewModel(
             votes = 0
         )
 
-        repository.createIdea(idea)
+
 
         uiState = CreateIdeaUiState.Success(
             "user.id"

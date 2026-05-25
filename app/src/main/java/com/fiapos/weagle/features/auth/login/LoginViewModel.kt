@@ -1,10 +1,10 @@
-package com.fiapos.weagle.auth.login
+package com.fiapos.weagle.features.auth.login
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.fiapos.weagle.auth.session.SessionManager
+import com.fiapos.weagle.features.auth.session.SessionManager
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 

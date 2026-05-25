@@ -1,17 +1,13 @@
-package com.fiapos.weagle.features.ideas.presentation.list
+package com.fiapos.weagle.features.ideas.presentation.listview
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.fiapos.weagle.auth.session.SessionManager
-import com.fiapos.weagle.domain.models.Idea
-import com.fiapos.weagle.domain.models.IdeaStatus
-import com.fiapos.weagle.domain.models.IdeaType
+import com.fiapos.weagle.features.auth.session.SessionManager
+import com.fiapos.weagle.features.ideas.domains.Idea
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import java.time.LocalDate
 
-class ListIdeasViewModel(
+class ListViewIdeasViewModel(
     private val repository: IdeaRepository,
     private val sessionManager: SessionManager
 ) : ViewModel() {
@@ -27,13 +23,13 @@ class ListIdeasViewModel(
     fun fetchIdeas() {
         val allIdeas = repository.getAllIdeas()
 
-//        if (selectedOption.value == "Criadas por mim") {
-//            val currentUser = sessionManager.getUser()
+        if (selectedOption.value == "Criadas por mim") {
+            val currentUserId = sessionManager.getUserId()
 
-//            _ideas.value = allIdeas.filter { it.createdBy == currentUser?.name }
-//        } else {
-//            _ideas.value = allIdeas
-//        }
+            _ideas.value = allIdeas.filter { it.createdBy == currentUserId }
+        } else {
+            _ideas.value = allIdeas
+        }
     }
 
     fun loadIdeas(): MutableList<Idea> {

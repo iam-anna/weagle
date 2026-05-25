@@ -1,4 +1,4 @@
-package com.fiapos.weagle.auth.session
+package com.fiapos.weagle.features.auth.session
 
 import android.content.Context
 import com.fiapos.weagle.domain.models.User

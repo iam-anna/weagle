@@ -1,4 +1,4 @@
-package com.fiapos.weagle.domain.models
+package com.fiapos.weagle.features.ideas.domains
 
 enum class IdeaType(
     val label: String

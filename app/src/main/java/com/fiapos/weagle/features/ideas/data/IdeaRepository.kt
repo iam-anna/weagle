@@ -1,19 +1,63 @@
 package com.fiapos.weagle.features.ideas.data
 
-import com.fiapos.weagle.domain.models.Idea
+import com.fiapos.weagle.features.ideas.data.dao.IdeaDao
+import com.fiapos.weagle.features.ideas.data.entities.IdeaEntity
+import com.fiapos.weagle.features.ideas.data.mappers.toIdea
+import com.fiapos.weagle.features.ideas.domains.Idea
+import com.fiapos.weagle.features.ideas.domains.IdeaStatus
+import com.fiapos.weagle.features.ideas.domains.IdeaType
 
-class IdeaRepository {
+class IdeaRepository(
+    private val dao: IdeaDao
+) {
     private val ideas = mutableListOf<Idea>()
 
-    fun createIdea(idea: Idea): Idea {
-        ideas.add(idea)
-        return idea
+    suspend fun createIdea(
+        title: String,
+        description: String,
+        type: IdeaType,
+        createdBy: String
+    ) {
+
+        dao.insert(
+            IdeaEntity(
+                title = title,
+                description = description,
+                type = type.name,
+                status = IdeaStatus.PENDING.name,
+                createdBy = createdBy
+            )
+        )
     }
 
-    fun getIdea(id: String): Idea? {
-        return ideas.find {
-            it.id == id
-        }
+    suspend fun getIdeas(): List<Idea> {
+
+        return dao.getAll()
+            .map {
+                it.toIdea()
+            }
+    }
+
+
+    suspend fun getIdeaById(id: Int): Idea? {
+        return dao.getById(id)?.toIdea()
+    }
+
+    suspend fun updateVotes(
+        idea: Idea,
+        votes: Int
+    ) {
+        dao.update(
+            IdeaEntity(
+                id = idea.id.toInt(),
+                title = idea.title,
+                description = idea.description,
+                type = idea.type.name,
+                status = idea.status.name,
+                createdBy = idea.createdBy,
+                votes = votes
+            )
+        )
     }
 
     fun editIdea(idea: Idea): Idea {

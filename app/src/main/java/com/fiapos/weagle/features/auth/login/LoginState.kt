@@ -1,4 +1,4 @@
-package com.fiapos.weagle.auth.login
+package com.fiapos.weagle.features.auth.login
 
 import com.fiapos.weagle.domain.models.User
 

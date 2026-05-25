@@ -24,6 +24,15 @@ interface UserDao {
         password: String
     ): UserEntity?
 
+    @Query("""
+        SELECT * FROM users
+        WHERE email = :email
+        LIMIT 1
+    """)
+    suspend fun getByEmail(
+        email: String
+    ): UserEntity?
+
     @Query(
         "SELECT * FROM users"
     )
