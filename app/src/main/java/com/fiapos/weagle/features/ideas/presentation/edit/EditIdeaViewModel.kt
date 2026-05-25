@@ -47,7 +47,7 @@ class EditIdeaViewModel(
             createdAt = LocalDate.now()
         )
 
-        repository.editIdea(updatedIdea)
+//        repository.editIdea(updatedIdea)
         uiState = EditIdeaUiState.Success
     }
 }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,7 +28,7 @@ fun ListViewIdeasScreen(
     navigationController: NavController
 ) {
 
-    var ideas = viewModel.loadIdeas()
+    val ideas = viewModel.ideas
 
     Column(
         modifier = Modifier
@@ -61,29 +62,18 @@ fun ListViewIdeasScreen(
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.secondary
             )
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-
-            CustomButton(
-                text = "Adicionar ideia",
-                onClick = {
-                    navigationController.navigate(Routes.CREATE_IDEA)
-                }
-            )
         } else {
 
-            SegmentedControl(
-                options = listOf("Todas", "Criadas por mim"),
-                selectedOption = "Todas",
-                onOptionSelected = { }
-            )
-
-            Spacer(modifier = Modifier.height(24.dp))
+//            SegmentedControl(
+//                options = listOf("Todas", "Criadas por mim"),
+//                selectedOption = "Todas",
+//                onOptionSelected = { }
+//            )
 
             LazyColumn(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
+                    .weight(1f)
             ) {
                 items(ideas) { idea ->
                     IdeaItem(
@@ -93,12 +83,27 @@ fun ListViewIdeasScreen(
                         createdBy = idea.createdBy,
                         createdAt = Date(),
                         votes = idea.votes,
-                        modifier = Modifier
+                        modifier = Modifier,
+                        onClick = {
+                            navigationController.navigate(
+                                "${Routes.VIEW_IDEA}/${idea.id}"
+                            )
+                        }
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
                 }
             }
         }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+
+        CustomButton(
+            text = "Adicionar ideia",
+            onClick = {
+                navigationController.navigate(Routes.CREATE_IDEA)
+            }
+        )
     }
 }

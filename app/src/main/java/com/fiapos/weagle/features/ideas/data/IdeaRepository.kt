@@ -10,7 +10,6 @@ import com.fiapos.weagle.features.ideas.domains.IdeaType
 class IdeaRepository(
     private val dao: IdeaDao
 ) {
-    private val ideas = mutableListOf<Idea>()
 
     suspend fun createIdea(
         title: String,
@@ -60,17 +59,16 @@ class IdeaRepository(
         )
     }
 
-    fun editIdea(idea: Idea): Idea {
-        val index = ideas.indexOfFirst { it.id == idea.id }
-
-        if (index != -1) {
-            ideas[index] = idea
-        }
-
-        return idea
-    }
-
-    fun getAllIdeas(): MutableList<Idea> {
-        return ideas
-    }
+//    fun editIdea(idea: Idea) {
+//        dao.update(
+//            IdeaEntity(
+//                id = idea.id.toInt(),
+//                title = idea.title,
+//                description = idea.description,
+//                type = idea.type.name,
+//                status = idea.status.name,
+//                createdBy = idea.createdBy,
+//            )
+//        )
+//    }
 }

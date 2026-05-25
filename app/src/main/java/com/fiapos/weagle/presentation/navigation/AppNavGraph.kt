@@ -120,8 +120,8 @@ fun AppNavGraph(
             CreateIdeaScreen(vm, navController)
         }
 
-//        composable("${Routes.VIEW_IDEA}/{ideaId}") { backStackEntry ->
-        composable(Routes.VIEW_IDEA) { backStackEntry ->
+        composable("${Routes.VIEW_IDEA}/{ideaId}") { backStackEntry ->
+
             val ideaId = backStackEntry.arguments?.getString("ideaId") ?: ""
 
             val vm: ViewIdeaViewModel = viewModel(

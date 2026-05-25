@@ -1,38 +1,48 @@
 package com.fiapos.weagle.features.ideas.presentation.listview
 
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.fiapos.weagle.features.auth.session.SessionManager
 import com.fiapos.weagle.features.ideas.domains.Idea
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class ListViewIdeasViewModel(
     private val repository: IdeaRepository,
     private val sessionManager: SessionManager
 ) : ViewModel() {
-    var selectedOption = MutableStateFlow("Todas")
 
-    private val _ideas = MutableStateFlow<List<Idea>>(emptyList())
-    val ideas: StateFlow<List<Idea>> = _ideas
+    var ideas by mutableStateOf<List<Idea>>(
+        emptyList()
+    )
+        private set
 
     init {
-        fetchIdeas()
+        loadIdeas()
     }
 
-    fun fetchIdeas() {
-        val allIdeas = repository.getAllIdeas()
+    // TODO: Implement filters
+    //    var selectedOption = MutableStateFlow("Todas")
+//    fun fetchIdeas() {
+//        val allIdeas = repository.getAllIdeas()
+//
+//        if (selectedOption.value == "Criadas por mim") {
+//            val currentUserId = sessionManager.getUserId()
+//
+//            _ideas.value = allIdeas.filter { it.createdBy == currentUserId }
+//        } else {
+//            _ideas.value = allIdeas
+//        }
+//    }
 
-        if (selectedOption.value == "Criadas por mim") {
-            val currentUserId = sessionManager.getUserId()
+    private fun loadIdeas() {
 
-            _ideas.value = allIdeas.filter { it.createdBy == currentUserId }
-        } else {
-            _ideas.value = allIdeas
+        viewModelScope.launch {
+
+            ideas = repository.getIdeas()
         }
-    }
-
-    fun loadIdeas(): MutableList<Idea> {
-        return repository.getAllIdeas()
     }
 }
