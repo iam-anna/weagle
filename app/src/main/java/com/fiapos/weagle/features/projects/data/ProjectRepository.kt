@@ -1,13 +1,13 @@
 package com.fiapos.weagle.features.projects.data
 
+import androidx.compose.runtime.mutableStateOf
 import com.fiapos.weagle.features.ideas.data.dao.IdeaDao
 import com.fiapos.weagle.features.projects.data.dao.ProjectDao
 import com.fiapos.weagle.features.projects.data.domain.Project
 import com.fiapos.weagle.features.projects.data.domain.ProjectStatus
 import com.fiapos.weagle.features.projects.data.mappers.toProject
-import java.time.LocalDate
 import com.fiapos.weagle.features.projects.data.entities.ProjectEntity
-import com.fiapos.weagle.features.projects.data.mappers.toProject
+import com.fiapos.weagle.features.projects.data.relations.toProject
 import java.time.LocalDate
 import java.time.ZoneId
 
@@ -15,44 +15,8 @@ class ProjectRepository(
     private val projectDao: ProjectDao,
     private val ideaDao: IdeaDao
 ) {
-    private val projects = mutableListOf<Project>(
-// TODO: Deletar esses mocks
-//        Project(
-//            id = "1",
-//            name = "aaa",
-//            description = "dsf",
-//            status = ProjectStatus.ACTIVE,
-//            startDate = LocalDate.now(),
-//            endDate = LocalDate.now(),
-//            investment = 2000.3f,
-//            ideaList = listOf(),
-//            ownedBy = "FULANO DE tal",
-//            createdAt = LocalDate.now()
-//        ),
-//        Project(
-//            id = "1",
-//            name = "aaa",
-//            description = "dsf",
-//            status = ProjectStatus.ACTIVE,
-//            startDate = LocalDate.now(),
-//            endDate = LocalDate.now(),
-//            investment = 2000.3f,
-//            ideaList = listOf(),
-//            ownedBy = "FULANO DE tal",
-//            createdAt = LocalDate.now()
-//        ),
-//        Project(
-//            id = "1",
-//            name = "aaa",
-//            description = "dsf",
-//            status = ProjectStatus.ACTIVE,
-//            startDate = LocalDate.now(),
-//            endDate = LocalDate.now(),
-//            investment = 2000.3f,
-//            ideaList = listOf(),
-//            ownedBy = "FULANO DE tal",
-//            createdAt = LocalDate.now()
-//        )
+    private val projects = mutableStateOf<List<Project>>(
+        emptyList()
     )
 
 
@@ -99,16 +63,15 @@ class ProjectRepository(
 
 
     suspend fun getProjects(): List<Project> {
-        return projects
-// TODO: Remover mock e integrar com banco
-//        return dao.getAll()
-//            .map {
-//                it.toProject()
-//            }
-
         return projectDao.getAll()
             .map {
                 it.toProject()
             }
+    }
+
+    suspend fun getProject(projectId: Int): Project {
+        return projectDao
+            .getById(projectId)
+            .toProject()
     }
 }

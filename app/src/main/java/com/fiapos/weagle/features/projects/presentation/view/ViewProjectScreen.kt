@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.fiapos.weagle.presentation.components.Tag
 import com.fiapos.weagle.presentation.components.TopNavigation
+import com.fiapos.weagle.presentation.navigation.Routes
 
 @Composable
 fun ViewProjectScreen(
@@ -39,11 +40,6 @@ fun ViewProjectScreen(
             onBackPressed = {
                 navController.popBackStack()
             },
-            actionable = true,
-            onActionablePressed = {
-                // TODO: add actionable (editing) if current user == project owner
-                navController.popBackStack()
-            }
         )
 
         Spacer(modifier = Modifier.height(100.dp))

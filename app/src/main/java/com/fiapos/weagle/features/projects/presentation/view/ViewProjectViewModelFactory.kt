@@ -2,10 +2,12 @@ package com.fiapos.weagle.features.projects.presentation.view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.fiapos.weagle.features.auth.session.SessionManager
 import com.fiapos.weagle.features.projects.data.ProjectRepository
 
 class ViewProjectViewModelFactory(
     private val projectRepository: ProjectRepository,
+    private val sessionManager: SessionManager,
     private val projectId: String,
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
@@ -13,7 +15,8 @@ class ViewProjectViewModelFactory(
         if(modelClass.isAssignableFrom(ViewProjectViewModel::class.java)) {
             return ViewProjectViewModel(
                 projectRepository,
-                projectId
+                sessionManager,
+                projectId,
             ) as T
         }
         throw IllegalArgumentException(

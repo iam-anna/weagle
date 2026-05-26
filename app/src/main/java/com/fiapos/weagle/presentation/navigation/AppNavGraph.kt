@@ -292,6 +292,7 @@ fun AppNavGraph(
             val vm: ViewProjectViewModel = viewModel(
                 factory = ViewProjectViewModelFactory(
                     projectRepository,
+                    sessionManager,
                     projectId = projectId
                 )
             )
