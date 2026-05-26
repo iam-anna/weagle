@@ -1,53 +1,78 @@
 package com.fiapos.weagle.features.ideas.presentation.edit
 
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import com.fiapos.weagle.auth.session.SessionManager
-import com.fiapos.weagle.domain.models.Idea
-import com.fiapos.weagle.domain.models.IdeaType
+import androidx.lifecycle.viewModelScope
+import com.fiapos.weagle.features.ideas.domain.Idea
+import com.fiapos.weagle.features.ideas.domain.IdeaType
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
-import java.time.LocalDate
+import kotlinx.coroutines.launch
 
 class EditIdeaViewModel(
     private val repository: IdeaRepository,
-    private val sessionManager: SessionManager
+    private val ideaId: String
 ) : ViewModel() {
+
+    var idea by mutableStateOf<Idea?>(
+        null
+    )
+        private set
+
     var uiState by mutableStateOf<EditIdeaUiState>(
         EditIdeaUiState.Idle
     )
         private set
 
+    init {
+        loadIdea()
+    }
+
+    fun loadIdea() {
+
+        viewModelScope.launch {
+
+            idea = repository.getIdeaById(
+                ideaId.toInt()
+            )
+        }
+    }
+
     fun editIdea(
-        id: String,
         title: String,
         description: String,
         type: IdeaType
     ) {
         if (title.isBlank() || description.isBlank()) {
-            uiState = EditIdeaUiState.Error("Fill all fields")
+
+            uiState = EditIdeaUiState.Error(
+                "Fill all fields"
+            )
             return
         }
 
         uiState = EditIdeaUiState.Loading
 
-        val user = sessionManager.getUser()
-        if (user == null) {
-            uiState = EditIdeaUiState.Error("User not authenticated")
-            return
-        }
-
-        val updatedIdea = Idea(
-            id = id,
+        idea = idea?.copy(
             title = title,
             description = description,
             type = type,
-            createdBy = user.id,
-            createdAt = LocalDate.now()
+            isEdited = true
         )
 
-        repository.editIdea(updatedIdea)
-        uiState = EditIdeaUiState.Success
+        viewModelScope.launch {
+
+            try {
+
+                idea?.let {
+                    repository.updateIdea(it)
+                }
+
+                uiState = EditIdeaUiState.Success
+            } catch (e: Exception) {
+                EditIdeaUiState.Error(
+                    e.message ?: "Unknown error"
+                )
+            }
+        }
     }
 }

@@ -18,7 +18,8 @@ import com.fiapos.weagle.R
 @Composable
 fun TitleInput(
     value: String,
-    onValueChange: (String) -> Unit
+    placeholder: String = "",
+    onValueChange: (String) -> Unit,
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         BasicTextField(
@@ -29,7 +30,7 @@ fun TitleInput(
             decorationBox = { innerTextField ->
                 if (value.isEmpty()) {
                     Text(
-                        text = "Título da ideia",
+                        text = placeholder,
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.tertiary
                     )

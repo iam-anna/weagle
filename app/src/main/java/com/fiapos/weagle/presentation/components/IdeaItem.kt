@@ -3,6 +3,7 @@ package com.fiapos.weagle.presentation.components
 import android.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,12 +37,14 @@ fun IdeaItem(
     createdBy: String,
     createdAt: Date,
     votes: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
+            .clickable { onClick() }
             .background(AppColorScheme.background)
             .border(1.dp, AppColorScheme.outline, RoundedCornerShape(8.dp))
             .padding(16.dp)

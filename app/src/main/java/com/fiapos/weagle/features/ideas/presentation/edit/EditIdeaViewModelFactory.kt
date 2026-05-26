@@ -2,19 +2,19 @@ package com.fiapos.weagle.features.ideas.presentation.edit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.fiapos.weagle.auth.session.SessionManager
+import com.fiapos.weagle.features.auth.session.SessionManager
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
 
 class EditIdeaViewModelFactory(
     private val ideaRepository: IdeaRepository,
-    private val sessionManager: SessionManager
+    private val ideaId: String
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EditIdeaViewModel::class.java)) {
             return EditIdeaViewModel(
                 ideaRepository,
-                sessionManager
+                ideaId
             ) as T
         }
         throw IllegalArgumentException(

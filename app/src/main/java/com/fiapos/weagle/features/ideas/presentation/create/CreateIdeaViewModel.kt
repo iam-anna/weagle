@@ -2,17 +2,17 @@ package com.fiapos.weagle.features.ideas.presentation.create
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import com.fiapos.weagle.auth.session.SessionManager
+import androidx.lifecycle.viewModelScope
+import com.fiapos.weagle.features.auth.session.SessionManager
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
-import com.fiapos.weagle.domain.models.Idea
-import com.fiapos.weagle.domain.models.IdeaType
-import java.time.LocalDate
-import java.util.UUID
+import com.fiapos.weagle.features.ideas.domain.IdeaType
+import kotlinx.coroutines.launch
 
 class CreateIdeaViewModel(
     private val repository: IdeaRepository,
-    private val sessionManager: SessionManager
+    private val sessionManager: SessionManager,
 ) : ViewModel() {
+
     var uiState by mutableStateOf<CreateIdeaUiState>(
         CreateIdeaUiState.Idle
     )
@@ -30,31 +30,26 @@ class CreateIdeaViewModel(
             return
         }
 
-        val user = sessionManager.getUser()
-
-        if (user == null) {
-            uiState = CreateIdeaUiState.Error(
-                "User not authenticated"
-            )
-            return
-        }
-
         uiState = CreateIdeaUiState.Loading
 
-        val idea = Idea(
-            id = UUID.randomUUID().toString(),
-            title = title,
-            description = description,
-            type = type,
-            createdBy = user.name,
-            createdAt = LocalDate.now(),
-            votes = 0
-        )
+        viewModelScope.launch {
 
-        repository.createIdea(idea)
+            try {
 
-        uiState = CreateIdeaUiState.Success(
-            user.id
-        )
+                repository.createIdea(
+                    title,
+                    description,
+                    type,
+                    sessionManager.getUserId() ?: "Unknown"
+                )
+
+                uiState = CreateIdeaUiState.Success
+            } catch (e: Exception) {
+                CreateIdeaUiState.Error(
+                    e.message ?: "Unknown error"
+                )
+            }
+
+        }
     }
 }

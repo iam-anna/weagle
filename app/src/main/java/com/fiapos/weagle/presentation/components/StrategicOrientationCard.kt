@@ -1,7 +1,7 @@
 package com.fiapos.weagle.presentation.components
 
 import androidx.compose.runtime.Composable
-import com.fiapos.weagle.domain.models.StrategicOrientation
+import com.fiapos.weagle.features.so.data.domain.StrategicOrientation
 import com.fiapos.weagle.ui.theme.toColor
 
 @Composable
@@ -13,7 +13,7 @@ fun StrategicOrientationCard(
 
     ListItem(
         label = orientation.title,
-        description = orientation.description,
+        description = orientation.category.label,
         background = colors.background,
         foreground = colors.foreground,
         border = colors.border,

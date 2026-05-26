@@ -1,32 +1,60 @@
 package com.fiapos.weagle.features.ideas.data
 
-import com.fiapos.weagle.domain.models.Idea
+import com.fiapos.weagle.features.ideas.data.dao.IdeaDao
+import com.fiapos.weagle.features.ideas.data.entities.IdeaEntity
+import com.fiapos.weagle.features.ideas.data.mappers.toIdea
+import com.fiapos.weagle.features.ideas.domain.Idea
+import com.fiapos.weagle.features.ideas.domain.IdeaStatus
+import com.fiapos.weagle.features.ideas.domain.IdeaType
 
-class IdeaRepository {
-    private val ideas = mutableListOf<Idea>()
+class IdeaRepository(
+    private val dao: IdeaDao
+) {
 
-    fun createIdea(idea: Idea): Idea {
-        ideas.add(idea)
-        return idea
+    suspend fun createIdea(
+        title: String,
+        description: String,
+        type: IdeaType,
+        createdBy: String
+    ) {
+
+        dao.insert(
+            IdeaEntity(
+                title = title,
+                description = description,
+                type = type.name,
+                status = IdeaStatus.PENDING.name,
+                createdBy = createdBy
+            )
+        )
     }
 
-    fun getIdea(id: String): Idea? {
-        return ideas.find {
-            it.id == id
-        }
+    suspend fun getIdeas(): List<Idea> {
+
+        return dao.getAll()
+            .map {
+                it.toIdea()
+            }
     }
 
-    fun editIdea(idea: Idea): Idea {
-        val index = ideas.indexOfFirst { it.id == idea.id }
 
-        if (index != -1) {
-            ideas[index] = idea
-        }
-
-        return idea
+    suspend fun getIdeaById(id: Int): Idea? {
+        return dao.getById(id)?.toIdea()
     }
 
-    fun getAllIdeas(): MutableList<Idea> {
-        return ideas
+    suspend fun updateIdea(
+        idea: Idea
+    ) {
+        dao.update(
+            IdeaEntity(
+                id = idea.id.toInt(),
+                title = idea.title,
+                description = idea.description,
+                type = idea.type.name,
+                status = idea.status.name,
+                createdBy = idea.createdBy,
+                votes = idea.votes
+            )
+        )
     }
 }

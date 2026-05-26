@@ -2,11 +2,10 @@ package com.fiapos.weagle.features.projects.presentation.create
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import com.fiapos.weagle.auth.session.SessionManager
-import com.fiapos.weagle.domain.models.Idea
+import com.fiapos.weagle.features.auth.session.SessionManager
+import com.fiapos.weagle.features.ideas.domain.Idea
 import com.fiapos.weagle.domain.models.Project
 import com.fiapos.weagle.domain.models.ProjectStatus
-import com.fiapos.weagle.features.ideas.presentation.create.CreateIdeaUiState
 import com.fiapos.weagle.features.projects.data.ProjectRepository
 import java.time.LocalDate
 import java.util.UUID
@@ -40,33 +39,33 @@ class CreateProjectViewModel(
             return
         }
 
-        val user = sessionManager.getUser()
+//        val user = sessionManager.getUser()
 
-        if (user == null) {
-            uiState = CreateProjectUiState.Error(
-                "User not authenticated"
-            )
+//        if (user == null) {
+//            uiState = CreateProjectUiState.Error(
+//                "User not authenticated"
+//            )
             return
         }
 
-        uiState = CreateProjectUiState.Loading
+//        uiState = CreateProjectUiState.Loading
 
         val project = Project(
             id = UUID.randomUUID().toString(),
-            name = name,
-            description = description,
+            name = "name",
+            description = "description",
             status = ProjectStatus.ACTIVE,
-            startDate = startDate,
-            endDate = endDate,
-            investment = investment,
-            ideaList = ideaList,
-            ownedBy = user.name
+            startDate = LocalDate.now(),
+            endDate = LocalDate.now(),
+            investment = 00F,
+            ideaList = mutableListOf(),
+            ownedBy = "user.name"
         )
 
-        repository.createProject(project)
+//        repository.createProject(project)
 
-        uiState = CreateProjectUiState.Success(
-            projectId = project.id
-        )
-    }
+//        uiState = CreateProjectUiState.Success(
+//            projectId = project.id
+//        )
+//    }
 }

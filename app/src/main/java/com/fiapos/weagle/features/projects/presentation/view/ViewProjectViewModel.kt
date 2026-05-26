@@ -2,7 +2,6 @@ package com.fiapos.weagle.features.projects.presentation.view
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import com.fiapos.weagle.domain.models.Idea
 import com.fiapos.weagle.domain.models.Project
 import com.fiapos.weagle.domain.models.ProjectStatus
 import com.fiapos.weagle.features.projects.data.ProjectRepository
