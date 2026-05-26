@@ -25,7 +25,7 @@ import com.fiapos.weagle.presentation.navigation.Routes
 @Composable
 fun ListViewStrategicOrientationScreen(
     viewModel: ListViewStrategicOrientationViewModel,
-    navigateController: NavController
+    navigationController: NavController
 ) {
 
     val orientations = viewModel.orientations
@@ -39,7 +39,7 @@ fun ListViewStrategicOrientationScreen(
         TopNavigation(
             title = "Orientações Estratégicas",
             onBackPressed = {
-                navigateController.popBackStack()
+                navigationController.popBackStack()
             }
         )
 
@@ -74,7 +74,7 @@ fun ListViewStrategicOrientationScreen(
                     StrategicOrientationCard(
                         orientation = strategicOrientation,
                         onClick = {
-                            navigateController.navigate(
+                            navigationController.navigate(
                                 "${Routes.VIEW_STRATEGIC_ORIENTATION}/${strategicOrientation.id}"
                             )
                         }
@@ -89,7 +89,7 @@ fun ListViewStrategicOrientationScreen(
             CustomButton(
                 text = "Criar Orientação Estratégica",
                 onClick = {
-                    navigateController.navigate(Routes.CREATE_STRATEGIC_ORIENTATION)
+                    navigationController.navigate(Routes.CREATE_STRATEGIC_ORIENTATION)
                 }
             )
         }
