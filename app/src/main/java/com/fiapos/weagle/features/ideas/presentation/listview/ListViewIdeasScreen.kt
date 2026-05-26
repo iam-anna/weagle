@@ -37,7 +37,7 @@ fun ListViewIdeasScreen(
             .padding(vertical = 64.dp, horizontal = 24.dp)
     ) {
         TopNavigation(
-            title = "Ideias",
+            title = "Projetos",
             onBackPressed = {
                 navigationController.popBackStack();
             }

@@ -78,7 +78,7 @@ fun HomeScreen(
                     CustomButton(
                         text = "Lista de projetos",
                         onClick = {
-                            // TODO: navigate do list project
+                            navigationController.navigate(Routes.LIST_PROJECTS)
                         }
                     )
                 }

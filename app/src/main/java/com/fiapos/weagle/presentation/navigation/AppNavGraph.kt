@@ -33,6 +33,9 @@ import com.fiapos.weagle.features.projects.data.ProjectRepository
 import com.fiapos.weagle.features.projects.presentation.create.CreateProjectScreen
 import com.fiapos.weagle.features.projects.presentation.create.CreateProjectViewModel
 import com.fiapos.weagle.features.projects.presentation.create.CreateProjectViewModelFactory
+import com.fiapos.weagle.features.projects.presentation.listview.ListViewProjectsScreen
+import com.fiapos.weagle.features.projects.presentation.listview.ListViewProjectsViewModel
+import com.fiapos.weagle.features.projects.presentation.listview.ListViewProjectsViewModelFactory
 import com.fiapos.weagle.features.projects.presentation.view.ViewProjectScreen
 import com.fiapos.weagle.features.projects.presentation.view.ViewProjectViewModel
 import com.fiapos.weagle.features.projects.presentation.view.ViewProjectViewModelFactory
@@ -254,7 +257,13 @@ fun AppNavGraph(
         }
 
         composable(Routes.LIST_PROJECTS) {
+            val vm: ListViewProjectsViewModel = viewModel(
+                factory = ListViewProjectsViewModelFactory(
+                    projectRepository,
+                )
+            )
 
+            ListViewProjectsScreen(vm, navController)
         }
         composable("${Routes.VIEW_PROJECT}/{ideaId}") { backStackEntry ->
 //        composable(Routes.MANAGER_HOME) { backStackEntry ->
