@@ -2,11 +2,13 @@ package com.fiapos.weagle.features.projects.presentation.create
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.fiapos.weagle.features.auth.session.SessionManager
 import com.fiapos.weagle.features.ideas.domain.Idea
 import com.fiapos.weagle.features.projects.data.domain.Project
 import com.fiapos.weagle.features.projects.data.domain.ProjectStatus
 import com.fiapos.weagle.features.projects.data.ProjectRepository
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.UUID
 
@@ -26,7 +28,7 @@ class CreateProjectViewModel(
         startDate: LocalDate,
         endDate: LocalDate,
         investment: Float,
-        ideaList: List<Idea> = mutableListOf()
+        ideaList: List<Int> = mutableListOf()
     ) {
         if (
             name.isBlank() ||
@@ -39,29 +41,33 @@ class CreateProjectViewModel(
             return
         }
 
-//        val user = sessionManager.getUser()
+        uiState = CreateProjectUiState.Loading
 
-//        if (user == null) {
-//            uiState = CreateProjectUiState.Error(
-//                "User not authenticated"
-//            )
-            return
+        val currentUserId = sessionManager.getUserId() ?: "Unknown"
+
+        viewModelScope.launch {
+
+            try {
+
+                repository.createProject(
+                    name,
+                    description,
+                    status,
+                    startDate,
+                    endDate,
+                    investment,
+                    currentUserId,
+                    ideaList
+                )
+
+                uiState = CreateProjectUiState.Success
+            } catch (e: Exception) {
+                CreateProjectUiState.Error(
+                    e.message ?: "Unknown error"
+                )
+            }
         }
-
-//        uiState = CreateProjectUiState.Loading
-
-        val project = Project(
-            id = UUID.randomUUID().toString(),
-            name = "name",
-            description = "description",
-            status = ProjectStatus.ACTIVE,
-            startDate = LocalDate.now(),
-            endDate = LocalDate.now(),
-            investment = 00F,
-            ideaList = mutableListOf(),
-            ownedBy = "user.name",
-            createdAt = LocalDate.now()
-        )
+    }
 
 //        repository.createProject(project)
 

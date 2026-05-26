@@ -265,6 +265,7 @@ fun AppNavGraph(
 
             ListViewProjectsScreen(vm, navController)
         }
+
         composable("${Routes.VIEW_PROJECT}/{ideaId}") { backStackEntry ->
 //        composable(Routes.MANAGER_HOME) { backStackEntry ->
             val projectId = backStackEntry.arguments?.getString("ideaId") ?: ""

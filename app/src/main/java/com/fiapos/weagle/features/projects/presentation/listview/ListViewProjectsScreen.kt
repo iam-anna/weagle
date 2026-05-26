@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.fiapos.weagle.presentation.components.ProjectItem
+import com.fiapos.weagle.presentation.components.CustomButton
 import com.fiapos.weagle.presentation.components.TopNavigation
 import com.fiapos.weagle.presentation.navigation.Routes
 
@@ -77,5 +78,14 @@ fun ListViewProjectsScreen(
                 }
             }
         }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        CustomButton(
+            text = "Adicionar projeto",
+            onClick = {
+                navigationController.navigate(Routes.CREATE_PROJECT)
+            }
+        )
     }
 }

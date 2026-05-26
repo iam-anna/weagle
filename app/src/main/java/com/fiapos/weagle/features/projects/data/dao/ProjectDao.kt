@@ -13,7 +13,7 @@ import com.fiapos.weagle.features.projects.data.relations.ProjectWithIdeas
 interface ProjectDao {
 
     @Insert
-    suspend fun insert(project: ProjectEntity)
+    suspend fun insert(project: ProjectEntity): Long
 
     @Query("""
         SELECT * FROM projects ORDER BY createdAt DESC
@@ -23,7 +23,7 @@ interface ProjectDao {
     @Transaction
     @Query("SELECT * FROM projects WHERE id = :projectId")
     suspend fun getById(
-        projectId: String
+        projectId: Int
     ): ProjectWithIdeas
 
     @Update

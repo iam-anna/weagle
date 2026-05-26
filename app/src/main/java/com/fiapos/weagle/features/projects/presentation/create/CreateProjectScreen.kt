@@ -1,6 +1,7 @@
 package com.fiapos.weagle.features.projects.presentation.create
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -19,7 +20,7 @@ import java.time.LocalDate
 @Composable
 fun CreateProjectScreen(
     viewModel: CreateProjectViewModel,
-    navController: NavController
+    navigationController: NavController
 ) {
     var name by remember {
         mutableStateOf("")
@@ -63,7 +64,7 @@ fun CreateProjectScreen(
         TopNavigation(
             title = "Criar Projeto",
             onBackPressed = {
-                navController.popBackStack()
+                navigationController.popBackStack()
             }
         )
 
@@ -71,6 +72,7 @@ fun CreateProjectScreen(
 
         TitleInput(
             name,
+            placeholder = "Nome do projeto",
             onValueChange = {
                 name = it
             }
@@ -134,12 +136,44 @@ fun CreateProjectScreen(
         Input(
             label = "Investimento",
             placeholder = "R$ 0,00",
-            value = investiment.toString(),
+            value = investiment,
             onValueChange = {
                 investiment = it
             },
             keyboardType = KeyboardType.Number
         )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Input(
+            label = "Investimento",
+            placeholder = "R$ 0,00",
+            value = investiment,
+            onValueChange = {
+                investiment = it
+            },
+            keyboardType = KeyboardType.Number
+        )
+
+        Column {
+            Text(
+                text = "Ideias",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = "Selecionar Ideias",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .clickable {
+                        navigationController.navigate(Routes.)
+                    }
+            )
+        }
 
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -152,8 +186,7 @@ fun CreateProjectScreen(
                     selectedType,
                     startDate,
                     endDate,
-                    investiment.toFloat(),
-                    ideaList
+                    investiment.toFloat()
                 )
             }
         )
@@ -174,9 +207,8 @@ fun CreateProjectScreen(
         LaunchedEffect(state) {
             if (state is CreateProjectUiState.Success){
                 // TODO: change for project list
-                navController.navigate(
-                    Routes.MANAGER_HOME
-//                    "${Routes.VIEW_PROJECT}"
+                navigationController.navigate(
+                    Routes.LIST_PROJECTS
                 ) {
                     popUpTo(Routes.CREATE_PROJECT) {
                         inclusive = true

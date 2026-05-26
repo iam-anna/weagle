@@ -5,9 +5,7 @@ sealed class CreateProjectUiState {
 
     object Loading : CreateProjectUiState()
 
-    data class Success(
-        val projectId: String
-    ): CreateProjectUiState()
+    object Success : CreateProjectUiState()
 
     data class Error(
         val message: String

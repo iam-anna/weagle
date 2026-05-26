@@ -11,7 +11,7 @@ data class Project(
     val startDate: LocalDate,
     val endDate: LocalDate,
     val investment: Float,
-    val ideaList: List<String> = mutableListOf(),
+    val ideaList: List<Idea> = mutableListOf(),
     val ownedBy: String,
     val createdAt: LocalDate
 )

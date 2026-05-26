@@ -37,7 +37,7 @@ fun ListViewIdeasScreen(
             .padding(vertical = 64.dp, horizontal = 24.dp)
     ) {
         TopNavigation(
-            title = "Projetos",
+            title = "Ideias",
             onBackPressed = {
                 navigationController.popBackStack();
             }
@@ -97,7 +97,6 @@ fun ListViewIdeasScreen(
         }
 
         Spacer(modifier = Modifier.height(24.dp))
-
 
         CustomButton(
             text = "Adicionar ideia",

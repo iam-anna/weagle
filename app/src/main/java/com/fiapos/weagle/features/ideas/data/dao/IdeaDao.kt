@@ -31,4 +31,14 @@ interface IdeaDao {
 
     @Delete
     suspend fun delete(idea: IdeaEntity)
+
+    @Query("""
+        UPDATE ideas
+        SET projectId = :projectId
+        WHERE id = :ideaId
+    """)
+    suspend fun attachToProject(
+        ideaId: Int,
+        projectId: Int
+    )
 }

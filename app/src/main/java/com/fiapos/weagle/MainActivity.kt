@@ -80,7 +80,7 @@ class MainActivity : ComponentActivity() {
 
         val strategicOrientationRepository = StrategicOrientationRepository(db.strategicOrientationDao())
 
-        val projectRepository = ProjectRepository(db.projectDao())
+        val projectRepository = ProjectRepository(db.projectDao(), db.ideaDao())
 
         setContent {
             WeagleTheme {
