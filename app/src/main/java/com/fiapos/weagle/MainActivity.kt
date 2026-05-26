@@ -44,9 +44,28 @@ class MainActivity : ComponentActivity() {
                 auth.createdUser(
                     UserEntity(
                         name = "Josue Pereira Souza",
+                        email = "operator@test.com",
+                        password = "123456",
+                        role = "OPERATOR",
+                        isActive = true,
+                    )
+                )
+                auth.createdUser(
+                    UserEntity(
+                        name = "Josue Pereira Souza",
                         email = "leader@test.com",
                         password = "123456",
                         role = "LEADER",
+                        isActive = true,
+                    )
+                )
+
+                auth.createdUser(
+                    UserEntity(
+                        name = "Josue Pereira Souza",
+                        email = "manager@test.com",
+                        password = "123456",
+                        role = "MANAGER",
                         isActive = true,
                     )
                 )

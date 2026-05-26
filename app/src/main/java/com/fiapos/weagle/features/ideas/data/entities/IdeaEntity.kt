@@ -34,5 +34,7 @@ data class IdeaEntity (
 
     val createdAt: Long = System.currentTimeMillis(),
 
+    val isEdited: Boolean = false,
+
     val votes: Int = 0
 )

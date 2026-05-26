@@ -11,18 +11,6 @@ class StrategicOrientationRepository(
     private val dao: StrategicOrientationDao
 ) {
 
-    suspend fun getOrientations(): List<StrategicOrientation> {
-
-        return dao.getAll()
-            .map {
-                it.toStrategicOrientation()
-            }
-    }
-
-    suspend fun getOrientationById(id: Int): StrategicOrientation? {
-        return dao.getById(id)?.toStrategicOrientation()
-    }
-
     suspend fun createOrientation(
         title: String,
         description: String,
@@ -38,6 +26,34 @@ class StrategicOrientationRepository(
                 category = category.name,
                 isActive = status.value,
                 createdBy = createdBy
+            )
+        )
+    }
+
+    suspend fun getOrientations(): List<StrategicOrientation> {
+
+        return dao.getAll()
+            .map {
+                it.toStrategicOrientation()
+            }
+    }
+
+    suspend fun getOrientationById(id: Int): StrategicOrientation? {
+        return dao.getById(id)?.toStrategicOrientation()
+    }
+
+    suspend fun updateOrientation(
+        orientation: StrategicOrientation
+    ) {
+        dao.update(
+            StrategicOrientationEntity(
+                id = orientation.id.toInt(),
+                title = orientation.title,
+                description = orientation.description,
+                category = orientation.category.name,
+                isActive = orientation.isActive.value,
+                isEdited = true,
+                createdBy = orientation.createdBy
             )
         )
     }

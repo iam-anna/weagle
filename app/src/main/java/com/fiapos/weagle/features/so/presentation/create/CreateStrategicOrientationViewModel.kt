@@ -25,7 +25,6 @@ class CreateStrategicOrientationViewModel(
         category: StrategicOrientationCategory,
         status: StrategicOrientationStatus
     ) {
-        // TODO: limit creation to the not fullfilled categories
 
         if (title.isBlank() || description.isBlank()) {
             uiState = CreateStrategicOrientationUiState.Error(

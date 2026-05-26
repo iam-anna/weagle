@@ -44,8 +44,9 @@ fun ViewStrategicOrientationScreen(
             },
             actionable = viewModel.canEdit,
             onActionablePressed = {
-                // TODO: navegar para editar orientações estratégicas
-//                navigationController.navigate(Routes.)
+                navigationController.navigate(
+                    "${Routes.EDIT_STRATEGIC_ORIENTATION}/${orientation?.id}"
+                )
             }
         )
 

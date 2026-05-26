@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.fiapos.weagle.features.ideas.domain.IdeaType
+import com.fiapos.weagle.features.so.presentation.edit.EditStrategicOrientationUiState
 import com.fiapos.weagle.presentation.components.CustomButton
 import com.fiapos.weagle.presentation.components.Dropdown
 import com.fiapos.weagle.presentation.components.Input
@@ -31,7 +32,7 @@ import com.fiapos.weagle.presentation.navigation.Routes
 @Composable
 fun EditIdeaScreen(
     viewModel: EditIdeaViewModel,
-    navController: NavController
+    navigationController: NavController
 ){
     var title by remember {
         mutableStateOf("")
@@ -80,7 +81,7 @@ fun EditIdeaScreen(
         TopNavigation(
             title = "Editar Ideia",
             onBackPressed = {
-                navController.popBackStack();
+                navigationController.popBackStack();
             }
         )
 
@@ -124,7 +125,7 @@ fun EditIdeaScreen(
         Spacer(modifier = Modifier.height(80.dp))
 
         CustomButton(
-            text = "Atualizar ideia",
+            text = "Editar ideia",
             onClick = {
                 viewModel.editIdea(
                     title,
@@ -145,13 +146,11 @@ fun EditIdeaScreen(
                 Text(state.message)
             }
 
-            else -> Unit
-        }
-
-        LaunchedEffect(state) {
-            if (state is EditIdeaUiState.Success) {
-                navController.navigate(Routes.LIST_IDEAS)
+            is EditIdeaUiState.Success -> {
+                navigationController.navigate(Routes.LIST_IDEAS)
             }
+
+            else -> Unit
         }
     }
 }

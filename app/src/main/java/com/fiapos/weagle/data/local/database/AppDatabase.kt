@@ -15,7 +15,7 @@ import com.fiapos.weagle.features.so.data.entities.StrategicOrientationEntity
         IdeaEntity::class,
         StrategicOrientationEntity::class,
     ],
-    version = 3
+    version = 4
 )
 abstract class AppDatabase : RoomDatabase() {
 

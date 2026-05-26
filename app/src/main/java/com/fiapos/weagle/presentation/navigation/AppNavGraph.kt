@@ -40,6 +40,9 @@ import com.fiapos.weagle.features.so.data.StrategicOrientationRepository
 import com.fiapos.weagle.features.so.presentation.create.CreateStrategicOrientationScreen
 import com.fiapos.weagle.features.so.presentation.create.CreateStrategicOrientationViewModel
 import com.fiapos.weagle.features.so.presentation.create.CreateStrategicOrientationViewModelFactory
+import com.fiapos.weagle.features.so.presentation.edit.EditStrategicOrientationScreen
+import com.fiapos.weagle.features.so.presentation.edit.EditStrategicOrientationViewModel
+import com.fiapos.weagle.features.so.presentation.edit.EditStrategicOrientationViewModelFactory
 import com.fiapos.weagle.features.so.presentation.listview.ListViewStrategicOrientationScreen
 import com.fiapos.weagle.features.so.presentation.listview.ListViewStrategicOrientationViewModel
 import com.fiapos.weagle.features.so.presentation.listview.ListViewStrategicOrientationViewModelFactory
@@ -223,6 +226,20 @@ fun AppNavGraph(
             )
 
             ViewStrategicOrientationScreen(vm, navController)
+        }
+
+        composable("${Routes.EDIT_STRATEGIC_ORIENTATION}/{strategicOrientationId}") { backStackEntry ->
+
+            val orientationId = backStackEntry.arguments?.getString("strategicOrientationId") ?: ""
+
+            val vm: EditStrategicOrientationViewModel = viewModel(
+                factory = EditStrategicOrientationViewModelFactory(
+                    strategicOrientationRepository,
+                    orientationId
+                )
+            )
+
+            EditStrategicOrientationScreen(vm, navController)
         }
 
         composable(Routes.CREATE_PROJECT) {

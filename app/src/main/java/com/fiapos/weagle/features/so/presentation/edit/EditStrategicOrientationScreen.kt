@@ -1,6 +1,7 @@
-package com.fiapos.weagle.features.so.presentation.create
+package com.fiapos.weagle.features.so.presentation.edit
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,6 +13,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -25,8 +27,8 @@ import com.fiapos.weagle.presentation.components.TopNavigation
 import com.fiapos.weagle.presentation.navigation.Routes
 
 @Composable
-fun CreateStrategicOrientationScreen(
-    viewModel: CreateStrategicOrientationViewModel,
+fun EditStrategicOrientationScreen(
+    viewModel: EditStrategicOrientationViewModel,
     navigationController: NavController
 ) {
 
@@ -48,6 +50,32 @@ fun CreateStrategicOrientationScreen(
 
     val state = viewModel.uiState
 
+    val orientation = viewModel.orientation
+
+    if(orientation == null) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+
+        return
+    }
+
+    LaunchedEffect(orientation) {
+        orientation.let {
+
+            title = it.title
+
+            description = it.description
+
+            selectedCategory = it.category
+
+            selectedStatus = it.isActive
+        }
+    }
+
     Column(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
@@ -56,7 +84,7 @@ fun CreateStrategicOrientationScreen(
     ) {
 
         TopNavigation(
-            title = "Criar Orientação Estratégica",
+            title = "Editar Orientação Estratégica",
             onBackPressed = {
                 navigationController.popBackStack();
             }
@@ -115,9 +143,9 @@ fun CreateStrategicOrientationScreen(
         Spacer(modifier = Modifier.height(80.dp))
 
         CustomButton(
-            text = "Criar orientação",
+            text = "Editar orientação",
             onClick = {
-                viewModel.createStrategicOrientation(
+                viewModel.editStrategicOrientation(
                     title,
                     description,
                     selectedCategory,
@@ -128,22 +156,17 @@ fun CreateStrategicOrientationScreen(
 
         when(state) {
 
-            is CreateStrategicOrientationUiState.Loading -> {
+            is EditStrategicOrientationUiState.Loading -> {
                 CircularProgressIndicator()
             }
 
-            is CreateStrategicOrientationUiState.Error -> {
+            is EditStrategicOrientationUiState.Error -> {
                 Spacer(modifier = Modifier.height(12.dp))
-
                 Text(state.message)
             }
 
-            is CreateStrategicOrientationUiState.Success -> {
-                navigationController.navigate(Routes.LIST_STRATEGIC_ORIENTATION) {
-                    popUpTo(Routes.CREATE_STRATEGIC_ORIENTATION) {
-                        inclusive = true
-                    }
-                }
+            is EditStrategicOrientationUiState.Success -> {
+                navigationController.navigate(Routes.LIST_STRATEGIC_ORIENTATION)
             }
 
             else -> Unit
