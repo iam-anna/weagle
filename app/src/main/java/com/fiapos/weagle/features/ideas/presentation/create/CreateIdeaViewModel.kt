@@ -10,8 +10,9 @@ import kotlinx.coroutines.launch
 
 class CreateIdeaViewModel(
     private val repository: IdeaRepository,
-    private val sessionManager: SessionManager
+    private val sessionManager: SessionManager,
 ) : ViewModel() {
+
     var uiState by mutableStateOf<CreateIdeaUiState>(
         CreateIdeaUiState.Idle
     )
@@ -42,10 +43,8 @@ class CreateIdeaViewModel(
                     sessionManager.getUserId() ?: "Unknown"
                 )
 
-                uiState = CreateIdeaUiState.Success(
-                    "user.id"
-                )
-            } catch(e: Exception) {
+                uiState = CreateIdeaUiState.Success
+            } catch (e: Exception) {
                 CreateIdeaUiState.Error(
                     e.message ?: "Unknown error"
                 )

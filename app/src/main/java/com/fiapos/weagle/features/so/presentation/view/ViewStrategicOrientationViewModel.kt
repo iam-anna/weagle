@@ -2,12 +2,16 @@ package com.fiapos.weagle.features.so.presentation.view
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import com.fiapos.weagle.features.so.data.domain.OrientationCategory
+import androidx.lifecycle.viewModelScope
+import com.fiapos.weagle.features.auth.session.SessionManager
+import com.fiapos.weagle.features.so.data.domain.StrategicOrientationCategory
 import com.fiapos.weagle.features.so.data.domain.StrategicOrientation
 import com.fiapos.weagle.features.so.data.StrategicOrientationRepository
+import kotlinx.coroutines.launch
 
 class ViewStrategicOrientationViewModel(
     private val repository: StrategicOrientationRepository,
+    private val sessionManager: SessionManager,
     private val orientationId: String
 ): ViewModel() {
 
@@ -16,20 +20,24 @@ class ViewStrategicOrientationViewModel(
     )
         private set
 
+    var canEdit by mutableStateOf(false)
+        private set
+
     init {
         loadOrientation()
     }
 
     private fun loadOrientation() {
-//        orientation = repository.getOrientation(orientationId)
-        orientation = StrategicOrientation(
-            id = "1",
-            title = "Automação de Processos Internos",
-            description = "A empresa busca automatizar tarefas repetitivas para reduzir tempo operacional.",
-            category = OrientationCategory.INNOVATION,
-            isActive = true,
-            createdBy = "John Doe",
-        )
+
+        viewModelScope.launch {
+            orientation = repository.getOrientationById(
+                orientationId.toInt()
+            )
+
+            val currentUserId = sessionManager.getUserId()
+
+            canEdit = orientation?.createdBy == currentUserId
+        }
     }
 }
 

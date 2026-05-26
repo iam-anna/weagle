@@ -37,6 +37,9 @@ import com.fiapos.weagle.features.projects.presentation.view.ViewProjectScreen
 import com.fiapos.weagle.features.projects.presentation.view.ViewProjectViewModel
 import com.fiapos.weagle.features.projects.presentation.view.ViewProjectViewModelFactory
 import com.fiapos.weagle.features.so.data.StrategicOrientationRepository
+import com.fiapos.weagle.features.so.presentation.create.CreateStrategicOrientationScreen
+import com.fiapos.weagle.features.so.presentation.create.CreateStrategicOrientationViewModel
+import com.fiapos.weagle.features.so.presentation.create.CreateStrategicOrientationViewModelFactory
 import com.fiapos.weagle.features.so.presentation.listview.ListViewStrategicOrientationScreen
 import com.fiapos.weagle.features.so.presentation.listview.ListViewStrategicOrientationViewModel
 import com.fiapos.weagle.features.so.presentation.listview.ListViewStrategicOrientationViewModelFactory
@@ -183,6 +186,18 @@ fun AppNavGraph(
             ListViewIdeasScreen(vm, navController)
         }
 
+        composable(Routes.CREATE_STRATEGIC_ORIENTATION) {
+
+            val vm: CreateStrategicOrientationViewModel = viewModel(
+                factory = CreateStrategicOrientationViewModelFactory(
+                    strategicOrientationRepository,
+                    sessionManager,
+                )
+            )
+
+            CreateStrategicOrientationScreen(vm, navController)
+        }
+
         composable(Routes.LIST_STRATEGIC_ORIENTATION) {
 
             val vm: ListViewStrategicOrientationViewModel = viewModel(
@@ -201,8 +216,9 @@ fun AppNavGraph(
 
             val vm: ViewStrategicOrientationViewModel = viewModel(
             factory = ViewStrategicOrientationViewModelFactory(
-                    strategicOrientationRepository,
-                    orientationId
+                strategicOrientationRepository,
+                sessionManager,
+                orientationId
                 )
             )
 

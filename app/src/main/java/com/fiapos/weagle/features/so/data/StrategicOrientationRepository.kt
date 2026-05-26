@@ -2,6 +2,9 @@ package com.fiapos.weagle.features.so.data
 
 import com.fiapos.weagle.features.so.data.dao.StrategicOrientationDao
 import com.fiapos.weagle.features.so.data.domain.StrategicOrientation
+import com.fiapos.weagle.features.so.data.domain.StrategicOrientationCategory
+import com.fiapos.weagle.features.so.data.domain.StrategicOrientationStatus
+import com.fiapos.weagle.features.so.data.entities.StrategicOrientationEntity
 import com.fiapos.weagle.features.so.data.mappers.toStrategicOrientation
 
 class StrategicOrientationRepository(
@@ -18,5 +21,24 @@ class StrategicOrientationRepository(
 
     suspend fun getOrientationById(id: Int): StrategicOrientation? {
         return dao.getById(id)?.toStrategicOrientation()
+    }
+
+    suspend fun createOrientation(
+        title: String,
+        description: String,
+        category: StrategicOrientationCategory,
+        status: StrategicOrientationStatus,
+        createdBy: String,
+    ) {
+
+        dao.insert(
+            StrategicOrientationEntity(
+                title = title,
+                description = description,
+                category = category.name,
+                isActive = status.value,
+                createdBy = createdBy
+            )
+        )
     }
 }

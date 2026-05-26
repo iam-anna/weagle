@@ -17,25 +17,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.fiapos.weagle.features.so.data.StrategicOrientationRepository
+import com.fiapos.weagle.presentation.components.CustomButton
 import com.fiapos.weagle.presentation.components.Tag
 import com.fiapos.weagle.presentation.components.TopNavigation
+import com.fiapos.weagle.presentation.navigation.Routes
 import com.fiapos.weagle.ui.theme.toColor
 
 @Composable
 fun ViewStrategicOrientationScreen(
     viewModel: ViewStrategicOrientationViewModel,
-    navController: NavController
+    navigationController: NavController
 ) {
     val orientation = viewModel.orientation
 
-    if(orientation == null) {
-        // TODO: navigate to 404
-        return
-    }
-
     Column(
         modifier = Modifier
-            .background(orientation.category.toColor().background)
+            .background(orientation?.category?.toColor()?.background ?: Color.White)
             .fillMaxSize()
             .padding(vertical = 64.dp, horizontal = 24.dp)
     ) {
@@ -43,92 +40,125 @@ fun ViewStrategicOrientationScreen(
         TopNavigation(
             title = "Orientações Estratégicas",
             onBackPressed = {
-                navController.popBackStack()
+                navigationController.popBackStack()
+            },
+            actionable = viewModel.canEdit,
+            onActionablePressed = {
+                // TODO: navegar para editar orientações estratégicas
+//                navigationController.navigate(Routes.)
             }
         )
 
         Spacer(modifier = Modifier.height(120.dp))
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(
-                        text = "Publicado em",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.secondary
-                    )
-
-                    Text(
-                        text = orientation.createdAt.toString(),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-
-                Tag(
-                    label = if (orientation.isActive) "Ativa" else "Inativa",
-                    background = Color(0xFF5EE851),
-                    foreground = Color(0xFF0F350B),
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
+        if(orientation == null) {
             Text(
-                text = orientation.title,
+                text = "404",
                 style = MaterialTheme.typography.titleLarge,
-                color = orientation.category.toColor().foreground
+                color = MaterialTheme.colorScheme.primary
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = orientation.description,
-                style = MaterialTheme.typography.bodyLarge,
-                color = orientation.category.toColor().foreground
+                text = "Opa, parece que não temos nada por aqui",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.secondary
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Tag(
-                label = orientation.category.name,
-                background = orientation.category.toColor().accent,
-                foreground = Color(0xFF0F350B),
+            CustomButton(
+                text = "Voltar para o início",
+                onClick = {
+                    navigationController.navigate(Routes.LIST_IDEAS)
+                }
             )
+        } else {
 
-            if (orientation.isEdited) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+
+                        Text(
+                            text = "Publicado em",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.secondary
+                        )
+
+                        Text(
+                            text = orientation.createdAt.toString(),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+
+                    Tag(
+                        label = orientation.isActive.label,
+                        background = Color(0xFF5EE851),
+                        foreground = Color(0xFF0F350B),
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = orientation.title,
+                    style = MaterialTheme.typography.titleLarge,
+                    color = orientation.category.toColor().foreground
+                )
+
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Editado",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.tertiary
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    text = "Criado por",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.secondary
-                )
-
-                Text(
-                    text = orientation.createdBy,
+                    text = orientation.description,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.primary
+                    color = orientation.category.toColor().foreground
                 )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Tag(
+                    label = orientation.category.label,
+                    background = orientation.category.toColor().accent,
+                    foreground = Color(0xFF0F350B),
+                )
+
+                if (orientation.isEdited) {
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        text = "Editado",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.tertiary
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+
+                    Text(
+                        text = "Criado por",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.secondary
+                    )
+
+                    Text(
+                        text = orientation.createdBy,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
             }
         }
-
     }
 }

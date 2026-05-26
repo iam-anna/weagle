@@ -1,10 +1,9 @@
 package com.fiapos.weagle.features.so.data.mappers
 
-import com.fiapos.weagle.features.so.data.domain.OrientationCategory
+import com.fiapos.weagle.features.so.data.domain.StrategicOrientationCategory
 import com.fiapos.weagle.features.so.data.domain.StrategicOrientation
 import com.fiapos.weagle.features.so.data.entities.StrategicOrientationEntity
 import java.time.Instant
-import java.time.LocalDate
 import java.time.ZoneId
 
 fun StrategicOrientationEntity.toStrategicOrientation(): StrategicOrientation {
@@ -12,7 +11,7 @@ fun StrategicOrientationEntity.toStrategicOrientation(): StrategicOrientation {
         id = id.toString(),
         title = title,
         description = description,
-        category = OrientationCategory.valueOf(category),
+        category = StrategicOrientationCategory.valueOf(category),
         isActive = isActive,
         createdAt = Instant
             .ofEpochMilli(createdAt)

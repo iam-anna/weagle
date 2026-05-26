@@ -13,7 +13,7 @@ fun StrategicOrientationCard(
 
     ListItem(
         label = orientation.title,
-        description = orientation.description,
+        description = orientation.category.label,
         background = colors.background,
         foreground = colors.foreground,
         border = colors.border,

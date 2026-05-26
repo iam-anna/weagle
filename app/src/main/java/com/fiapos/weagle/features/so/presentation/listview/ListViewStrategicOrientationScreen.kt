@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,7 +25,7 @@ import com.fiapos.weagle.presentation.navigation.Routes
 @Composable
 fun ListViewStrategicOrientationScreen(
     viewModel: ListViewStrategicOrientationViewModel,
-    navController: NavController
+    navigateController: NavController
 ) {
 
     val orientations = viewModel.orientations
@@ -38,7 +39,7 @@ fun ListViewStrategicOrientationScreen(
         TopNavigation(
             title = "Orientações Estratégicas",
             onBackPressed = {
-                navController.popBackStack()
+                navigateController.popBackStack()
             }
         )
 
@@ -61,27 +62,19 @@ fun ListViewStrategicOrientationScreen(
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.secondary
             )
-
-            if (viewModel.canCreate) {
-                Spacer(modifier = Modifier.height(56.dp))
-
-                CustomButton(
-                    text = "Criar Orientação Estratégica",
-                    onClick = {
-                        // TODO: navegar para criar orientação estratégica
-                    }
-                )
-            }
         } else {
 
             LazyColumn(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(orientations) { strategicOrientation ->
                     StrategicOrientationCard(
                         orientation = strategicOrientation,
                         onClick = {
-                            navController.navigate(
+                            navigateController.navigate(
                                 "${Routes.VIEW_STRATEGIC_ORIENTATION}/${strategicOrientation.id}"
                             )
                         }
@@ -89,6 +82,16 @@ fun ListViewStrategicOrientationScreen(
                 }
             }
         }
-    }
 
+        if (viewModel.canCreate) {
+            Spacer(modifier = Modifier.height(24.dp))
+
+            CustomButton(
+                text = "Criar Orientação Estratégica",
+                onClick = {
+                    navigateController.navigate(Routes.CREATE_STRATEGIC_ORIENTATION)
+                }
+            )
+        }
+    }
 }

@@ -1,4 +1,14 @@
 package com.fiapos.weagle.features.so.presentation.create
 
-class CreateStrategicOrientationUiState {
+sealed class CreateStrategicOrientationUiState {
+
+    object Idle: CreateStrategicOrientationUiState()
+
+    object Loading: CreateStrategicOrientationUiState()
+
+    object Success: CreateStrategicOrientationUiState()
+
+    data class Error(
+        val message: String
+    ): CreateStrategicOrientationUiState()
 }

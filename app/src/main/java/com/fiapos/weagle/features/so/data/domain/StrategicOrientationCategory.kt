@@ -1,6 +1,6 @@
 package com.fiapos.weagle.features.so.data.domain
 
-enum class OrientationCategory(
+enum class StrategicOrientationCategory(
     val label: String
 ) {
     INNOVATION(label = "Inovação"),

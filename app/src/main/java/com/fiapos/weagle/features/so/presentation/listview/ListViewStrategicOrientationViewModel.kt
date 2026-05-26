@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fiapos.weagle.domain.models.UserRole
 import com.fiapos.weagle.features.auth.session.SessionManager
-import com.fiapos.weagle.features.so.data.domain.OrientationCategory
 import com.fiapos.weagle.features.so.data.domain.StrategicOrientation
 import com.fiapos.weagle.features.so.data.StrategicOrientationRepository
 import kotlinx.coroutines.launch

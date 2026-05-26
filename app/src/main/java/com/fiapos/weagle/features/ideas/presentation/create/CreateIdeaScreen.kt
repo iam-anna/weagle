@@ -26,6 +26,7 @@ fun CreateIdeaScreen(
     viewModel: CreateIdeaViewModel,
     navigationController: NavController
 ) {
+
     var title by remember {
         mutableStateOf("")
     }
@@ -58,6 +59,7 @@ fun CreateIdeaScreen(
 
         TitleInput(
             title,
+            placeholder = "Título da ideia",
             onValueChange = {
                 title = it
             }
@@ -84,10 +86,7 @@ fun CreateIdeaScreen(
                 selectedType = it
             },
             label = {
-                when (it) {
-                    IdeaType.IDEA -> "Ideia"
-                    IdeaType.PROBLEM -> "Problema"
-                }
+                it.label
             }
         )
 
@@ -112,6 +111,7 @@ fun CreateIdeaScreen(
 
             is CreateIdeaUiState.Error -> {
                 Spacer(modifier = Modifier.height(12.dp))
+
                 Text(state.message)
             }
 
