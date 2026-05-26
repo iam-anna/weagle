@@ -11,7 +11,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.fiapos.weagle.features.ideas.domain.Idea
-import com.fiapos.weagle.domain.models.ProjectStatus
+import com.fiapos.weagle.features.projects.data.domain.ProjectStatus
 import com.fiapos.weagle.presentation.components.*
 import com.fiapos.weagle.presentation.navigation.Routes
 import java.time.LocalDate

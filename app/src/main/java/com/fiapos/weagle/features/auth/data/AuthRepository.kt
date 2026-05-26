@@ -3,7 +3,7 @@ package com.fiapos.weagle.features.auth.data
 import com.fiapos.weagle.features.auth.data.dao.UserDao
 import com.fiapos.weagle.features.auth.data.entities.UserEntity
 import com.fiapos.weagle.features.auth.data.mappers.toUser
-import com.fiapos.weagle.domain.models.User
+import com.fiapos.weagle.features.auth.data.domain.models.User
 
 class AuthRepository(
     private val userDao: UserDao

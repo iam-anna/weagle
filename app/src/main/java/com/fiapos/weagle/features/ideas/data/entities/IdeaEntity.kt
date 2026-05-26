@@ -12,7 +12,7 @@ import com.fiapos.weagle.features.auth.data.entities.UserEntity
         ForeignKey(entity = UserEntity::class,
             parentColumns = ["id"],
             childColumns = ["createdBy"],
-            onDelete = ForeignKey.CASCADE
+            onDelete = ForeignKey.SET_NULL
         )
     ],
     indices = [Index("createdBy")]
@@ -36,5 +36,7 @@ data class IdeaEntity (
 
     val isEdited: Boolean = false,
 
-    val votes: Int = 0
+    val votes: Int = 0,
+
+    val projectId: Int? = null
 )

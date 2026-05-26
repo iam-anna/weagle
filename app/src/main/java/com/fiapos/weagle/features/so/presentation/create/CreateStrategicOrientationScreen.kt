@@ -139,7 +139,7 @@ fun CreateStrategicOrientationScreen(
             }
 
             is CreateStrategicOrientationUiState.Success -> {
-                navigationController.navigate(Routes.LIST_STRATEGIC_ORIENTATION) {
+                navigationController.navigate(Routes.LIST_STRATEGIC_ORIENTATIONS) {
                     popUpTo(Routes.CREATE_STRATEGIC_ORIENTATION) {
                         inclusive = true
                     }

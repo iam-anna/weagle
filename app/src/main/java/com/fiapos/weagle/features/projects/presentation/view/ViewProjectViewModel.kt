@@ -2,8 +2,8 @@ package com.fiapos.weagle.features.projects.presentation.view
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import com.fiapos.weagle.domain.models.Project
-import com.fiapos.weagle.domain.models.ProjectStatus
+import com.fiapos.weagle.features.projects.data.domain.Project
+import com.fiapos.weagle.features.projects.data.domain.ProjectStatus
 import com.fiapos.weagle.features.projects.data.ProjectRepository
 import java.time.LocalDate
 
@@ -31,7 +31,8 @@ class ViewProjectViewModel(
             endDate = LocalDate.now(),
             investment = 1212.0F,
             ideaList = mutableListOf(),
-            ownedBy = "John Doew"
+            ownedBy = "John Doew",
+            createdAt = LocalDate.now()
         )
     }
 }

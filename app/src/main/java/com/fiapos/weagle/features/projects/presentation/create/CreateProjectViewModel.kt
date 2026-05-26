@@ -4,8 +4,8 @@ import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import com.fiapos.weagle.features.auth.session.SessionManager
 import com.fiapos.weagle.features.ideas.domain.Idea
-import com.fiapos.weagle.domain.models.Project
-import com.fiapos.weagle.domain.models.ProjectStatus
+import com.fiapos.weagle.features.projects.data.domain.Project
+import com.fiapos.weagle.features.projects.data.domain.ProjectStatus
 import com.fiapos.weagle.features.projects.data.ProjectRepository
 import java.time.LocalDate
 import java.util.UUID
@@ -59,7 +59,8 @@ class CreateProjectViewModel(
             endDate = LocalDate.now(),
             investment = 00F,
             ideaList = mutableListOf(),
-            ownedBy = "user.name"
+            ownedBy = "user.name",
+            createdAt = LocalDate.now()
         )
 
 //        repository.createProject(project)

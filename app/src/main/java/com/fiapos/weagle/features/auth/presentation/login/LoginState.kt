@@ -1,6 +1,6 @@
 package com.fiapos.weagle.features.auth.presentation.login
 
-import com.fiapos.weagle.domain.models.User
+import com.fiapos.weagle.features.auth.data.domain.models.User
 
 sealed class LoginState {
     object Idle : LoginState()

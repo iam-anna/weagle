@@ -19,13 +19,15 @@ object Routes {
 
     const val CREATE_STRATEGIC_ORIENTATION = "create_strategic_orientation"
 
-    const val LIST_STRATEGIC_ORIENTATION = "list_strategic_orientation"
+    const val LIST_STRATEGIC_ORIENTATIONS = "list_strategic_orientations"
 
     const val VIEW_STRATEGIC_ORIENTATION = "view_strategic_orientation"
 
     const val EDIT_STRATEGIC_ORIENTATION = "edit_strategic_orientation"
     
     const val CREATE_PROJECT = "create_project"
+
+    const val LIST_PROJECTS = "list_projects"
 
     const val VIEW_PROJECT = "view_project"
 }

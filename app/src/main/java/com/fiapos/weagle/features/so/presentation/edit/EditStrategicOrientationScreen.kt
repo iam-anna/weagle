@@ -166,7 +166,7 @@ fun EditStrategicOrientationScreen(
             }
 
             is EditStrategicOrientationUiState.Success -> {
-                navigationController.navigate(Routes.LIST_STRATEGIC_ORIENTATION)
+                navigationController.navigate(Routes.LIST_STRATEGIC_ORIENTATIONS)
             }
 
             else -> Unit

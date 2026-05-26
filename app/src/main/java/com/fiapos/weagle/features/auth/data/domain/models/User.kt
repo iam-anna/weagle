@@ -1,4 +1,4 @@
-package com.fiapos.weagle.domain.models
+package com.fiapos.weagle.features.auth.data.domain.models
 
 data class User (
     val id: String,

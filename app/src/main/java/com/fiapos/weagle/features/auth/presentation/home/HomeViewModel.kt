@@ -3,7 +3,7 @@ package com.fiapos.weagle.features.auth.presentation.home
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fiapos.weagle.domain.models.User
+import com.fiapos.weagle.features.auth.data.domain.models.User
 import com.fiapos.weagle.features.auth.data.UserRepository
 import com.fiapos.weagle.features.auth.session.SessionManager
 import kotlinx.coroutines.launch
