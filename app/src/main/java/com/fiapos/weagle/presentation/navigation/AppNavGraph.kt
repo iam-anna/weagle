@@ -23,9 +23,12 @@ import com.fiapos.weagle.features.ideas.presentation.create.CreateIdeaViewModelF
 import com.fiapos.weagle.features.ideas.presentation.edit.EditIdeaScreen
 import com.fiapos.weagle.features.ideas.presentation.edit.EditIdeaViewModel
 import com.fiapos.weagle.features.ideas.presentation.edit.EditIdeaViewModelFactory
+import com.fiapos.weagle.features.ideas.presentation.list.SelectIdeaViewModelFactory
 import com.fiapos.weagle.features.ideas.presentation.listview.ListViewIdeasScreen
 import com.fiapos.weagle.features.ideas.presentation.listview.ListViewIdeasViewModel
 import com.fiapos.weagle.features.ideas.presentation.listview.ListViewIdeasViewModelFactory
+import com.fiapos.weagle.features.ideas.presentation.select.SelectIdeaScreen
+import com.fiapos.weagle.features.ideas.presentation.select.SelectIdeaViewModel
 import com.fiapos.weagle.features.ideas.presentation.view.ViewIdeaScreen
 import com.fiapos.weagle.features.ideas.presentation.view.ViewIdeaViewModel
 import com.fiapos.weagle.features.ideas.presentation.view.ViewIdeaViewModelFactory
@@ -63,6 +66,13 @@ fun AppNavGraph(
     sessionManager: SessionManager
 ) {
     val navController = rememberNavController()
+
+    val createProjectVm: CreateProjectViewModel = viewModel(
+        factory = CreateProjectViewModelFactory(
+            projectRepository,
+            sessionManager
+        )
+    )
 
     NavHost(
         navController = navController,
@@ -192,6 +202,21 @@ fun AppNavGraph(
             ListViewIdeasScreen(vm, navController)
         }
 
+        composable(Routes.SELECT_IDEA) {
+            val vm: SelectIdeaViewModel = viewModel(
+                factory = SelectIdeaViewModelFactory(
+                    ideaRepository,
+                    sessionManager
+                )
+            )
+
+            SelectIdeaScreen(
+                viewModel = vm,
+                projectViewModel = createProjectVm,
+                navController
+            )
+        }
+
         composable(Routes.CREATE_STRATEGIC_ORIENTATION) {
 
             val vm: CreateStrategicOrientationViewModel = viewModel(
@@ -246,14 +271,8 @@ fun AppNavGraph(
         }
 
         composable(Routes.CREATE_PROJECT) {
-            val vm: CreateProjectViewModel = viewModel(
-                factory = CreateProjectViewModelFactory(
-                    projectRepository,
-                    sessionManager
-                )
-            )
 
-            CreateProjectScreen(vm, navController)
+            CreateProjectScreen(createProjectVm, navController)
         }
 
         composable(Routes.LIST_PROJECTS) {

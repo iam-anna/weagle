@@ -81,7 +81,7 @@ fun ListViewIdeasScreen(
                         tag = idea.type.label,
                         description = idea.description,
                         createdBy = idea.createdBy,
-                        createdAt = Date(),
+                        createdAt = idea.createdAt,
                         votes = idea.votes,
                         modifier = Modifier,
                         onClick = {

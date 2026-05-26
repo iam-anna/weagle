@@ -5,19 +5,23 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fiapos.weagle.features.auth.session.SessionManager
 import com.fiapos.weagle.features.ideas.domain.Idea
-import com.fiapos.weagle.features.projects.data.domain.Project
 import com.fiapos.weagle.features.projects.data.domain.ProjectStatus
 import com.fiapos.weagle.features.projects.data.ProjectRepository
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.util.UUID
 
 class CreateProjectViewModel(
     private val repository: ProjectRepository,
     private val sessionManager: SessionManager,
 ) : ViewModel() {
+
     var uiState by mutableStateOf<CreateProjectUiState>(
         CreateProjectUiState.Idle
+    )
+        private set
+
+    var selectedIdeas by mutableStateOf<List<Idea>>(
+        emptyList()
     )
         private set
 
@@ -69,10 +73,25 @@ class CreateProjectViewModel(
         }
     }
 
-//        repository.createProject(project)
+    fun toggleIdeaSelection(idea: Idea) {
 
-//        uiState = CreateProjectUiState.Success(
-//            projectId = project.id
-//        )
-//    }
+        selectedIdeas =
+            if (selectedIdeas.any { it.id == idea.id }) {
+
+                selectedIdeas.filterNot {
+                    it.id == idea.id
+                }
+
+            } else {
+
+                selectedIdeas + idea
+            }
+    }
+
+    fun isIdeaSelected(ideaId: String): Boolean {
+
+        return selectedIdeas.any {
+            it.id == ideaId
+        }
+    }
 }

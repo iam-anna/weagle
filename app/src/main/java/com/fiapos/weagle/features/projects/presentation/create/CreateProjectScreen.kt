@@ -3,6 +3,8 @@ package com.fiapos.weagle.features.projects.presentation.create
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -58,6 +60,7 @@ fun CreateProjectScreen(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(vertical = 64.dp, horizontal = 24.dp)
     ) {
 
@@ -156,6 +159,7 @@ fun CreateProjectScreen(
         )
 
         Column {
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "Ideias",
                 style = MaterialTheme.typography.labelMedium,
@@ -170,9 +174,23 @@ fun CreateProjectScreen(
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .clickable {
-                        navigationController.navigate(Routes.)
+                        navigationController.navigate(Routes.SELECT_IDEA)
                     }
             )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            viewModel.selectedIdeas.forEach { idea ->
+                Text(
+                    text = "• ${idea.title}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+
+                Spacer(
+                    modifier = Modifier.height(4.dp)
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(40.dp))
@@ -186,7 +204,8 @@ fun CreateProjectScreen(
                     selectedType,
                     startDate,
                     endDate,
-                    investiment.toFloat()
+                    investiment.toFloatOrNull() ?: 0F,
+                    viewModel.selectedIdeas.map { it.id.toInt() }
                 )
             }
         )
@@ -206,7 +225,6 @@ fun CreateProjectScreen(
 
         LaunchedEffect(state) {
             if (state is CreateProjectUiState.Success){
-                // TODO: change for project list
                 navigationController.navigate(
                     Routes.LIST_PROJECTS
                 ) {

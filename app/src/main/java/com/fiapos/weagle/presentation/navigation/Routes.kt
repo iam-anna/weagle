@@ -17,6 +17,8 @@ object Routes {
 
     const val LIST_IDEAS = "list_ideas"
 
+    const val SELECT_IDEA = "select_idea"
+
     const val CREATE_STRATEGIC_ORIENTATION = "create_strategic_orientation"
 
     const val LIST_STRATEGIC_ORIENTATIONS = "list_strategic_orientations"

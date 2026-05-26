@@ -9,7 +9,7 @@ data class Idea(
     val type: IdeaType,
     val status: IdeaStatus = IdeaStatus.PENDING,
     val createdBy: String,
-    val createdAt: LocalDate?,
+    val createdAt: LocalDate,
     val isEdited: Boolean = false,
     val votes: Int = 0,
     val isSelectable: Boolean = false,

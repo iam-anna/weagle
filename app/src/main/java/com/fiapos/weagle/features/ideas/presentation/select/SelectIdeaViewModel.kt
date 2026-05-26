@@ -1,17 +1,31 @@
 package com.fiapos.weagle.features.ideas.presentation.select
 
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import com.fiapos.weagle.auth.session.SessionManager
-import com.fiapos.weagle.domain.models.Idea
+import androidx.lifecycle.viewModelScope
+import com.fiapos.weagle.features.auth.session.SessionManager
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import com.fiapos.weagle.features.ideas.domain.Idea
+import kotlinx.coroutines.launch
 
 class SelectIdeaViewModel (
-        private val repository: IdeaRepository,
-        private val sessionManager: SessionManager
-    ) : ViewModel() {
-        fun loadIdeas(): MutableList<Idea> {
-            return repository.getAllIdeas()
+    private val repository: IdeaRepository,
+    private val sessionManager: SessionManager
+) : ViewModel() {
+
+    var ideas by mutableStateOf<List<Idea>>(
+        emptyList()
+    )
+        private set
+
+    init {
+        loadIdeas()
+    }
+
+    private fun loadIdeas() {
+
+        viewModelScope.launch {
+             ideas = repository.getIdeas()
         }
     }
+}

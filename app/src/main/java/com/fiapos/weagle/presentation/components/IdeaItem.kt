@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fiapos.weagle.ui.theme.AppColorScheme
+import java.time.LocalDate
 import java.util.Date
 
 
@@ -40,16 +41,12 @@ fun IdeaItem(
     tag: String,
     description: String,
     createdBy: String,
-    createdAt: Date,
+    createdAt: LocalDate,
     votes: Int,
-<<<<<<< HEAD
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
-=======
     isSelectable: Boolean = false,
     isSelected: Boolean = false,
-    modifier: Modifier = Modifier
->>>>>>> ab7465d (Selecionar ideia)
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
 ) {
     Box(
         modifier = modifier
@@ -146,7 +143,7 @@ fun IdeaItem(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Criado em %02d/%02d/%04d".format(createdAt.date, createdAt.month, createdAt.year),
+                    text = "Criado em ${createdAt.toString()}",
                     color = AppColorScheme.secondary,
                     fontSize = 13.sp
                 )
