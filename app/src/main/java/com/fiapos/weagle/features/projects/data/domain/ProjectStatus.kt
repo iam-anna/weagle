@@ -1,4 +1,4 @@
-package com.fiapos.weagle.domain.models
+package com.fiapos.weagle.features.projects.data.domain
 
 enum class ProjectStatus(
     val label: String

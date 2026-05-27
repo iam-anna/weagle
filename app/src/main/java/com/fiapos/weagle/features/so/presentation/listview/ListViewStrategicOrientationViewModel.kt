@@ -3,7 +3,7 @@ package com.fiapos.weagle.features.so.presentation.listview
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fiapos.weagle.domain.models.UserRole
+import com.fiapos.weagle.features.auth.data.domain.models.UserRole
 import com.fiapos.weagle.features.auth.session.SessionManager
 import com.fiapos.weagle.features.so.data.domain.StrategicOrientation
 import com.fiapos.weagle.features.so.data.StrategicOrientationRepository

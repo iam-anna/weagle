@@ -1,8 +1,8 @@
 package com.fiapos.weagle.features.auth.session
 
 import android.content.Context
-import com.fiapos.weagle.domain.models.User
-import com.fiapos.weagle.domain.models.UserRole
+import com.fiapos.weagle.features.auth.data.domain.models.User
+import com.fiapos.weagle.features.auth.data.domain.models.UserRole
 
 class SessionManager(
     private val context: Context

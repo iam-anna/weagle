@@ -2,6 +2,7 @@ package com.fiapos.weagle.features.ideas.data
 
 import com.fiapos.weagle.features.ideas.data.dao.IdeaDao
 import com.fiapos.weagle.features.ideas.data.entities.IdeaEntity
+import com.fiapos.weagle.features.ideas.data.mappers.toEntity
 import com.fiapos.weagle.features.ideas.data.mappers.toIdea
 import com.fiapos.weagle.features.ideas.domain.Idea
 import com.fiapos.weagle.features.ideas.domain.IdeaStatus
@@ -37,7 +38,6 @@ class IdeaRepository(
             }
     }
 
-
     suspend fun getIdeaById(id: Int): Idea? {
         return dao.getById(id)?.toIdea()
     }
@@ -46,15 +46,7 @@ class IdeaRepository(
         idea: Idea
     ) {
         dao.update(
-            IdeaEntity(
-                id = idea.id.toInt(),
-                title = idea.title,
-                description = idea.description,
-                type = idea.type.name,
-                status = idea.status.name,
-                createdBy = idea.createdBy,
-                votes = idea.votes
-            )
+            idea = idea.toEntity()
         )
     }
 }

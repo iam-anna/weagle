@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.fiapos.weagle.presentation.components.CustomButton
+import com.fiapos.weagle.presentation.components.CustomIconButton
 import com.fiapos.weagle.presentation.components.Tag
 import com.fiapos.weagle.presentation.components.TopNavigation
 import com.fiapos.weagle.presentation.components.VoteFragment
@@ -132,6 +133,7 @@ fun ViewIdeaScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+
                     Text(
                         text = "Criado por",
                         style = MaterialTheme.typography.bodyMedium,
@@ -147,15 +149,34 @@ fun ViewIdeaScreen(
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                VoteFragment(
-                    votes = viewModel.votes,
-                    onUpvote = {
-                        viewModel.upvoteIdea()
-                    },
-                    onDownvote = {
-                        viewModel.downvoteIdea()
+                Column (
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+
+                    VoteFragment(
+                        votes = viewModel.votes,
+                        onUpvote = {
+                            viewModel.upvoteIdea()
+                        },
+                        onDownvote = {
+                            viewModel.downvoteIdea()
+                        }
+                    )
+
+                    if (viewModel.canApprove) {
+
+                        CustomIconButton(
+                            text = "Aprovar",
+                            onClick = {
+                                viewModel.approveIdea()
+                            }
+                        )
+                    } else {
+                        Tag(
+                            label = idea.status.name
+                        )
                     }
-                )
+                }
             }
         }
     }

@@ -1,7 +1,10 @@
 package com.fiapos.weagle.features.projects.presentation.create
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -11,7 +14,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.fiapos.weagle.features.ideas.domain.Idea
-import com.fiapos.weagle.domain.models.ProjectStatus
+import com.fiapos.weagle.features.projects.data.domain.ProjectStatus
 import com.fiapos.weagle.presentation.components.*
 import com.fiapos.weagle.presentation.navigation.Routes
 import java.time.LocalDate
@@ -19,7 +22,7 @@ import java.time.LocalDate
 @Composable
 fun CreateProjectScreen(
     viewModel: CreateProjectViewModel,
-    navController: NavController
+    navigationController: NavController
 ) {
     var name by remember {
         mutableStateOf("")
@@ -57,13 +60,14 @@ fun CreateProjectScreen(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(vertical = 64.dp, horizontal = 24.dp)
     ) {
 
         TopNavigation(
             title = "Criar Projeto",
             onBackPressed = {
-                navController.popBackStack()
+                navigationController.popBackStack()
             }
         )
 
@@ -71,6 +75,7 @@ fun CreateProjectScreen(
 
         TitleInput(
             name,
+            placeholder = "Nome do projeto",
             onValueChange = {
                 name = it
             }
@@ -134,12 +139,59 @@ fun CreateProjectScreen(
         Input(
             label = "Investimento",
             placeholder = "R$ 0,00",
-            value = investiment.toString(),
+            value = investiment,
             onValueChange = {
                 investiment = it
             },
             keyboardType = KeyboardType.Number
         )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Input(
+            label = "Investimento",
+            placeholder = "R$ 0,00",
+            value = investiment,
+            onValueChange = {
+                investiment = it
+            },
+            keyboardType = KeyboardType.Number
+        )
+
+        Column {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "Ideias",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = "Selecionar Ideias",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .clickable {
+                        navigationController.navigate(Routes.SELECT_IDEA)
+                    }
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            viewModel.selectedIdeas.forEach { idea ->
+                Text(
+                    text = "• ${idea.title}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+
+                Spacer(
+                    modifier = Modifier.height(4.dp)
+                )
+            }
+        }
 
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -152,8 +204,8 @@ fun CreateProjectScreen(
                     selectedType,
                     startDate,
                     endDate,
-                    investiment.toFloat(),
-                    ideaList
+                    investiment.toFloatOrNull() ?: 0F,
+                    viewModel.selectedIdeas.map { it.id.toInt() }
                 )
             }
         )
@@ -173,10 +225,8 @@ fun CreateProjectScreen(
 
         LaunchedEffect(state) {
             if (state is CreateProjectUiState.Success){
-                // TODO: change for project list
-                navController.navigate(
-                    Routes.MANAGER_HOME
-//                    "${Routes.VIEW_PROJECT}"
+                navigationController.navigate(
+                    Routes.LIST_PROJECTS
                 ) {
                     popUpTo(Routes.CREATE_PROJECT) {
                         inclusive = true

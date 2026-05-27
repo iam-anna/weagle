@@ -3,9 +3,11 @@ package com.fiapos.weagle.features.ideas.presentation.view
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fiapos.weagle.features.auth.data.domain.models.UserRole
 import com.fiapos.weagle.features.auth.session.SessionManager
 import com.fiapos.weagle.features.ideas.domain.Idea
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
+import com.fiapos.weagle.features.ideas.domain.IdeaStatus
 import kotlinx.coroutines.launch
 
 class ViewIdeaViewModel(
@@ -25,6 +27,9 @@ class ViewIdeaViewModel(
     var canEdit by mutableStateOf(false)
         private set
 
+    var canApprove by mutableStateOf(false)
+        private set
+
     init {
         loadIdea()
     }
@@ -41,8 +46,41 @@ class ViewIdeaViewModel(
 
             canEdit = idea?.createdBy == currentUserId
 
+            canApprove = canApproveIdea()
+
             votes = idea?.votes ?: 0
         }
+    }
+
+    fun approveIdea() {
+
+        idea = idea?.copy(
+            status = IdeaStatus.APPROVED
+        )
+
+        canApprove = canApproveIdea()
+
+        viewModelScope.launch {
+            idea?.let {
+
+                repository.updateIdea(it)
+
+                idea = repository.getIdeaById(ideaId.toInt())
+            }
+        }
+    }
+
+    private fun canApproveIdea(): Boolean {
+        val currentUserRole = sessionManager.getUserRole()
+
+        if (
+            currentUserRole == UserRole.MANAGER &&
+            idea?.status == IdeaStatus.PENDING
+        ) {
+            return true
+        }
+
+        return false
     }
 
     fun upvoteIdea() {

@@ -1,6 +1,7 @@
 package com.fiapos.weagle.features.auth.presentation.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.fiapos.weagle.domain.models.UserRole
+import com.fiapos.weagle.features.auth.data.domain.models.UserRole
 import com.fiapos.weagle.presentation.components.CustomButton
 import com.fiapos.weagle.presentation.components.Tag
 import com.fiapos.weagle.presentation.navigation.Routes
@@ -59,27 +60,36 @@ fun HomeScreen(
                 color = MaterialTheme.colorScheme.primary
             )
 
-            Spacer(modifier = Modifier.height(160.dp))
+            Spacer(modifier = Modifier.height(80.dp))
 
-            if (user.role == UserRole.OPERATOR) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                if (user.role == UserRole.OPERATOR || user.role == UserRole.MANAGER) {
+                    CustomButton(
+                        text = "Lista de ideias",
+                        onClick = {
+                            navigationController.navigate(Routes.LIST_IDEAS)
+                        }
+                    )
+                }
+
+                if (user.role == UserRole.MANAGER || user.role == UserRole.LEADER) {
+                    CustomButton(
+                        text = "Lista de projetos",
+                        onClick = {
+                            navigationController.navigate(Routes.LIST_PROJECTS)
+                        }
+                    )
+                }
+
                 CustomButton(
-                    text = "Lista de ideias",
+                    text = "Orientações Estratégicas",
                     onClick = {
-                        navigationController.navigate(Routes.LIST_IDEAS)
+                        navigationController.navigate(Routes.LIST_STRATEGIC_ORIENTATIONS)
                     }
                 )
-
-                Spacer(modifier = Modifier.height(8.dp))
             }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            CustomButton(
-                text = "Orientações Estratégicas",
-                onClick = {
-                    navigationController.navigate(Routes.LIST_STRATEGIC_ORIENTATION)
-                }
-            )
         }
     }
 }

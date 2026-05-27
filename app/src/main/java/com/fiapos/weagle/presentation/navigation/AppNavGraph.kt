@@ -12,7 +12,7 @@ import com.fiapos.weagle.features.auth.presentation.login.LoginViewModel
 import com.fiapos.weagle.features.auth.presentation.login.LoginViewModelFactory
 import com.fiapos.weagle.features.auth.session.SessionManager;
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
-import com.fiapos.weagle.domain.models.UserRole
+import com.fiapos.weagle.features.auth.data.domain.models.UserRole
 import com.fiapos.weagle.features.auth.data.UserRepository
 import com.fiapos.weagle.features.auth.presentation.home.HomeScreen
 import com.fiapos.weagle.features.auth.presentation.home.HomeViewModel
@@ -23,9 +23,12 @@ import com.fiapos.weagle.features.ideas.presentation.create.CreateIdeaViewModelF
 import com.fiapos.weagle.features.ideas.presentation.edit.EditIdeaScreen
 import com.fiapos.weagle.features.ideas.presentation.edit.EditIdeaViewModel
 import com.fiapos.weagle.features.ideas.presentation.edit.EditIdeaViewModelFactory
+import com.fiapos.weagle.features.ideas.presentation.list.SelectIdeaViewModelFactory
 import com.fiapos.weagle.features.ideas.presentation.listview.ListViewIdeasScreen
 import com.fiapos.weagle.features.ideas.presentation.listview.ListViewIdeasViewModel
 import com.fiapos.weagle.features.ideas.presentation.listview.ListViewIdeasViewModelFactory
+import com.fiapos.weagle.features.ideas.presentation.select.SelectIdeaScreen
+import com.fiapos.weagle.features.ideas.presentation.select.SelectIdeaViewModel
 import com.fiapos.weagle.features.ideas.presentation.view.ViewIdeaScreen
 import com.fiapos.weagle.features.ideas.presentation.view.ViewIdeaViewModel
 import com.fiapos.weagle.features.ideas.presentation.view.ViewIdeaViewModelFactory
@@ -33,6 +36,9 @@ import com.fiapos.weagle.features.projects.data.ProjectRepository
 import com.fiapos.weagle.features.projects.presentation.create.CreateProjectScreen
 import com.fiapos.weagle.features.projects.presentation.create.CreateProjectViewModel
 import com.fiapos.weagle.features.projects.presentation.create.CreateProjectViewModelFactory
+import com.fiapos.weagle.features.projects.presentation.listview.ListViewProjectsScreen
+import com.fiapos.weagle.features.projects.presentation.listview.ListViewProjectsViewModel
+import com.fiapos.weagle.features.projects.presentation.listview.ListViewProjectsViewModelFactory
 import com.fiapos.weagle.features.projects.presentation.view.ViewProjectScreen
 import com.fiapos.weagle.features.projects.presentation.view.ViewProjectViewModel
 import com.fiapos.weagle.features.projects.presentation.view.ViewProjectViewModelFactory
@@ -60,6 +66,13 @@ fun AppNavGraph(
     sessionManager: SessionManager
 ) {
     val navController = rememberNavController()
+
+    val createProjectVm: CreateProjectViewModel = viewModel(
+        factory = CreateProjectViewModelFactory(
+            projectRepository,
+            sessionManager
+        )
+    )
 
     NavHost(
         navController = navController,
@@ -189,6 +202,21 @@ fun AppNavGraph(
             ListViewIdeasScreen(vm, navController)
         }
 
+        composable(Routes.SELECT_IDEA) {
+            val vm: SelectIdeaViewModel = viewModel(
+                factory = SelectIdeaViewModelFactory(
+                    ideaRepository,
+                    sessionManager
+                )
+            )
+
+            SelectIdeaScreen(
+                viewModel = vm,
+                projectViewModel = createProjectVm,
+                navController
+            )
+        }
+
         composable(Routes.CREATE_STRATEGIC_ORIENTATION) {
 
             val vm: CreateStrategicOrientationViewModel = viewModel(
@@ -201,7 +229,7 @@ fun AppNavGraph(
             CreateStrategicOrientationScreen(vm, navController)
         }
 
-        composable(Routes.LIST_STRATEGIC_ORIENTATION) {
+        composable(Routes.LIST_STRATEGIC_ORIENTATIONS) {
 
             val vm: ListViewStrategicOrientationViewModel = viewModel(
                 factory = ListViewStrategicOrientationViewModelFactory(
@@ -243,23 +271,28 @@ fun AppNavGraph(
         }
 
         composable(Routes.CREATE_PROJECT) {
-            val vm: CreateProjectViewModel = viewModel(
-                factory = CreateProjectViewModelFactory(
+
+            CreateProjectScreen(createProjectVm, navController)
+        }
+
+        composable(Routes.LIST_PROJECTS) {
+            val vm: ListViewProjectsViewModel = viewModel(
+                factory = ListViewProjectsViewModelFactory(
                     projectRepository,
-                    sessionManager
                 )
             )
 
-            CreateProjectScreen(vm, navController)
+            ListViewProjectsScreen(vm, navController)
         }
 
-//        composable("${Routes.VIEW_PROJECT}/{ideaId}") { backStackEntry ->
-        composable(Routes.MANAGER_HOME) { backStackEntry ->
+        composable("${Routes.VIEW_PROJECT}/{ideaId}") { backStackEntry ->
+//        composable(Routes.MANAGER_HOME) { backStackEntry ->
             val projectId = backStackEntry.arguments?.getString("ideaId") ?: ""
 
             val vm: ViewProjectViewModel = viewModel(
                 factory = ViewProjectViewModelFactory(
                     projectRepository,
+                    sessionManager,
                     projectId = projectId
                 )
             )

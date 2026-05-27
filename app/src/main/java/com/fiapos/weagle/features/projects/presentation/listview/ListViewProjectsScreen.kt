@@ -1,7 +1,7 @@
-package com.fiapos.weagle.features.ideas.presentation.listview
+package com.fiapos.weagle.features.projects.presentation.listview
 
-import SegmentedControl
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,19 +16,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.fiapos.weagle.presentation.components.ProjectItem
 import com.fiapos.weagle.presentation.components.CustomButton
-import com.fiapos.weagle.presentation.components.IdeaItem
 import com.fiapos.weagle.presentation.components.TopNavigation
 import com.fiapos.weagle.presentation.navigation.Routes
-import java.util.Date
 
 @Composable
-fun ListViewIdeasScreen(
-    viewModel: ListViewIdeasViewModel,
+fun ListViewProjectsScreen(
+    viewModel: ListViewProjectsViewModel,
     navigationController: NavController
 ) {
 
-    val ideas = viewModel.ideas
+    val projects = viewModel.projects
 
     Column(
         modifier = Modifier
@@ -37,7 +36,7 @@ fun ListViewIdeasScreen(
             .padding(vertical = 64.dp, horizontal = 24.dp)
     ) {
         TopNavigation(
-            title = "Ideias",
+            title = "Projetos",
             onBackPressed = {
                 navigationController.popBackStack();
             }
@@ -45,7 +44,7 @@ fun ListViewIdeasScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        if (ideas.isEmpty()) {
+        if (projects.isEmpty()) {
 
             Spacer(modifier = Modifier.height(136.dp))
 
@@ -63,35 +62,19 @@ fun ListViewIdeasScreen(
                 color = MaterialTheme.colorScheme.secondary
             )
         } else {
-
-//            SegmentedControl(
-//                options = listOf("Todas", "Criadas por mim"),
-//                selectedOption = "Todas",
-//                onOptionSelected = { }
-//            )
-
             LazyColumn(
                 modifier = Modifier
-                    .fillMaxWidth()
                     .weight(1f)
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(ideas) { idea ->
-                    IdeaItem(
-                        title = idea.title,
-                        tag = idea.type.label,
-                        description = idea.description,
-                        createdBy = idea.createdBy,
-                        createdAt = idea.createdAt,
-                        votes = idea.votes,
-                        modifier = Modifier,
+                items(projects) { project ->
+                    ProjectItem(
+                        project = project,
                         onClick = {
-                            navigationController.navigate(
-                                "${Routes.VIEW_IDEA}/${idea.id}"
-                            )
+                            navigationController.navigate("${Routes.VIEW_PROJECT}/${project.id}")
                         }
                     )
-
-                    Spacer(modifier = Modifier.height(12.dp))
                 }
             }
         }
@@ -99,9 +82,9 @@ fun ListViewIdeasScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         CustomButton(
-            text = "Adicionar ideia",
+            text = "Adicionar projeto",
             onClick = {
-                navigationController.navigate(Routes.CREATE_IDEA)
+                navigationController.navigate(Routes.CREATE_PROJECT)
             }
         )
     }

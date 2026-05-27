@@ -2,13 +2,17 @@ package com.fiapos.weagle.features.projects.presentation.view
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import com.fiapos.weagle.domain.models.Project
-import com.fiapos.weagle.domain.models.ProjectStatus
+import androidx.lifecycle.viewModelScope
+import com.fiapos.weagle.features.auth.session.SessionManager
+import com.fiapos.weagle.features.projects.data.domain.Project
+import com.fiapos.weagle.features.projects.data.domain.ProjectStatus
 import com.fiapos.weagle.features.projects.data.ProjectRepository
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 class ViewProjectViewModel(
     private val repository: ProjectRepository,
+    private val sessionManager: SessionManager,
     private val projectId: String
 ): ViewModel() {
 
@@ -17,21 +21,23 @@ class ViewProjectViewModel(
     )
         private set
 
+    var canEdit by mutableStateOf(false)
+        private set
+
     init {
         loadProject()
     }
 
     private fun loadProject() {
-        project = Project(
-            id = "123",
-            name = "Nome do Projeto",
-            description = "Descrição do porjetp lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem.",
-            status = ProjectStatus.ACTIVE,
-            startDate = LocalDate.now(),
-            endDate = LocalDate.now(),
-            investment = 1212.0F,
-            ideaList = mutableListOf(),
-            ownedBy = "John Doew"
-        )
+
+        viewModelScope.launch {
+            project = repository.getProject(
+                projectId.toInt()
+            )
+
+            val currentUserId = sessionManager.getUserId()
+
+            canEdit = project?.ownedBy == currentUserId
+        }
     }
 }

@@ -36,41 +36,41 @@ class MainActivity : ComponentActivity() {
 
         val auth = AuthRepository(userDao)
 
-        lifecycleScope.launch {
-            val existingUser = userDao.getByEmail("operator@test.com")
-
+//        lifecycleScope.launch {
+//            val existingUser = userDao.getByEmail("operator@test.com")
+//
 //            if(existingUser == null) {
-
-                auth.createdUser(
-                    UserEntity(
-                        name = "Josue Pereira Souza",
-                        email = "operator@test.com",
-                        password = "123456",
-                        role = "OPERATOR",
-                        isActive = true,
-                    )
-                )
-                auth.createdUser(
-                    UserEntity(
-                        name = "Josue Pereira Souza",
-                        email = "leader@test.com",
-                        password = "123456",
-                        role = "LEADER",
-                        isActive = true,
-                    )
-                )
-
-                auth.createdUser(
-                    UserEntity(
-                        name = "Josue Pereira Souza",
-                        email = "manager@test.com",
-                        password = "123456",
-                        role = "MANAGER",
-                        isActive = true,
-                    )
-                )
+//
+//                auth.createdUser(
+//                    UserEntity(
+//                        name = "Josue Pereira Souza",
+//                        email = "operator@test.com",
+//                        password = "123456",
+//                        role = "OPERATOR",
+//                        isActive = true,
+//                    )
+//                )
+//                auth.createdUser(
+//                    UserEntity(
+//                        name = "Josue Pereira Souza",
+//                        email = "leader@test.com",
+//                        password = "123456",
+//                        role = "LEADER",
+//                        isActive = true,
+//                    )
+//                )
+//
+//                auth.createdUser(
+//                    UserEntity(
+//                        name = "Josue Pereira Souza",
+//                        email = "manager@test.com",
+//                        password = "123456",
+//                        role = "MANAGER",
+//                        isActive = true,
+//                    )
+//                )
 //            }
-        }
+//        }
 
         val session  = SessionManager(this)
 
@@ -80,7 +80,7 @@ class MainActivity : ComponentActivity() {
 
         val strategicOrientationRepository = StrategicOrientationRepository(db.strategicOrientationDao())
 
-        val projectRepository = ProjectRepository()
+        val projectRepository = ProjectRepository(db.projectDao(), db.ideaDao())
 
         setContent {
             WeagleTheme {

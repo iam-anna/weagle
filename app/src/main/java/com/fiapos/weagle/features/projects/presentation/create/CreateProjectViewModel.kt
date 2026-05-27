@@ -2,20 +2,26 @@ package com.fiapos.weagle.features.projects.presentation.create
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.fiapos.weagle.features.auth.session.SessionManager
 import com.fiapos.weagle.features.ideas.domain.Idea
-import com.fiapos.weagle.domain.models.Project
-import com.fiapos.weagle.domain.models.ProjectStatus
+import com.fiapos.weagle.features.projects.data.domain.ProjectStatus
 import com.fiapos.weagle.features.projects.data.ProjectRepository
+import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.util.UUID
 
 class CreateProjectViewModel(
     private val repository: ProjectRepository,
     private val sessionManager: SessionManager,
 ) : ViewModel() {
+
     var uiState by mutableStateOf<CreateProjectUiState>(
         CreateProjectUiState.Idle
+    )
+        private set
+
+    var selectedIdeas by mutableStateOf<List<Idea>>(
+        emptyList()
     )
         private set
 
@@ -26,7 +32,7 @@ class CreateProjectViewModel(
         startDate: LocalDate,
         endDate: LocalDate,
         investment: Float,
-        ideaList: List<Idea> = mutableListOf()
+        ideaList: List<Int> = mutableListOf()
     ) {
         if (
             name.isBlank() ||
@@ -39,33 +45,53 @@ class CreateProjectViewModel(
             return
         }
 
-//        val user = sessionManager.getUser()
+        uiState = CreateProjectUiState.Loading
 
-//        if (user == null) {
-//            uiState = CreateProjectUiState.Error(
-//                "User not authenticated"
-//            )
-            return
+        val currentUserId = sessionManager.getUserId() ?: "Unknown"
+
+        viewModelScope.launch {
+
+            try {
+
+                repository.createProject(
+                    name,
+                    description,
+                    status,
+                    startDate,
+                    endDate,
+                    investment,
+                    currentUserId,
+                    ideaList
+                )
+
+                uiState = CreateProjectUiState.Success
+            } catch (e: Exception) {
+                CreateProjectUiState.Error(
+                    e.message ?: "Unknown error"
+                )
+            }
         }
+    }
 
-//        uiState = CreateProjectUiState.Loading
+    fun toggleIdeaSelection(idea: Idea) {
 
-        val project = Project(
-            id = UUID.randomUUID().toString(),
-            name = "name",
-            description = "description",
-            status = ProjectStatus.ACTIVE,
-            startDate = LocalDate.now(),
-            endDate = LocalDate.now(),
-            investment = 00F,
-            ideaList = mutableListOf(),
-            ownedBy = "user.name"
-        )
+        selectedIdeas =
+            if (selectedIdeas.any { it.id == idea.id }) {
 
-//        repository.createProject(project)
+                selectedIdeas.filterNot {
+                    it.id == idea.id
+                }
 
-//        uiState = CreateProjectUiState.Success(
-//            projectId = project.id
-//        )
-//    }
+            } else {
+
+                selectedIdeas + idea
+            }
+    }
+
+    fun isIdeaSelected(ideaId: String): Boolean {
+
+        return selectedIdeas.any {
+            it.id == ideaId
+        }
+    }
 }
