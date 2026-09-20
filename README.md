@@ -1,4 +1,4 @@
-# Weagle AI — Documentação dos Endpoints
+# Weagle — Documentação dos Endpoints
 
 ## 1. Visão geral
 
