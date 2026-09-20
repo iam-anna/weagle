@@ -70,6 +70,10 @@ public class ProjectController {
                 .strategyId(request.strategyId())
                 .ideaId(request.ideaId())
                 .progress(request.progress())
+                .investment(request.investments())
+                .returnValue(request.returnValue())
+                .productivityGain(request.productivityGain())
+                .costReduction(request.costReduction())
                 .results(request.results())
                 .build();
 

@@ -1,6 +1,7 @@
 package com.weagle.service;
 
 import com.weagle.entity.Project;
+import com.weagle.entity.ProjectStatus;
 import com.weagle.repository.ProjectRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,12 @@ public class ProjectService {
     }
 
     public List<Project> findAll() {
+
         return projectRepository.findAll();
     }
 
     public Project findById(String id) {
+
         return projectRepository.findById(id)
                 .orElseThrow(() ->
                         new RuntimeException("Projeto não encontrado")
@@ -30,6 +33,11 @@ public class ProjectService {
     public Project create(Project project) {
 
         project.setId(null);
+
+        if (project.getStatus() == null) {
+            project.setStatus(ProjectStatus.PLANNED);
+        }
+
         project.setCreatedAt(LocalDateTime.now());
         project.setUpdatedAt(LocalDateTime.now());
 
@@ -44,7 +52,12 @@ public class ProjectService {
         project.setDescription(updatedProject.getDescription());
         project.setStrategyId(updatedProject.getStrategyId());
         project.setIdeaId(updatedProject.getIdeaId());
+        project.setStatus(updatedProject.getStatus());
         project.setProgress(updatedProject.getProgress());
+        project.setInvestment(updatedProject.getInvestment());
+        project.setReturnValue(updatedProject.getReturnValue());
+        project.setProductivityGain(updatedProject.getProductivityGain());
+        project.setCostReduction(updatedProject.getCostReduction());
         project.setResults(updatedProject.getResults());
         project.setUpdatedAt(LocalDateTime.now());
 

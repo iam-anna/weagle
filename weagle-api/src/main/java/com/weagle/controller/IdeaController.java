@@ -1,8 +1,10 @@
 package com.weagle.controller;
 
+import com.weagle.dto.ai.AIAnalysisResponse;
 import com.weagle.dto.idea.IdeaRequest;
 import com.weagle.dto.idea.IdeaResponse;
 import com.weagle.entity.Idea;
+import com.weagle.service.AIService;
 import com.weagle.service.IdeaService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
@@ -16,9 +18,14 @@ import java.util.List;
 public class IdeaController {
 
     private final IdeaService ideaService;
+    private final AIService aiService;
 
-    public IdeaController(IdeaService ideaService) {
+    public IdeaController(
+            IdeaService ideaService,
+            AIService aiService
+    ) {
         this.ideaService = ideaService;
+        this.aiService = aiService;
     }
 
     @GetMapping
@@ -100,5 +107,12 @@ public class IdeaController {
         return IdeaResponse.fromEntity(
                 ideaService.setPriority(id, highPriority)
         );
+    }
+
+    @PostMapping("/{id}/ai-analysis")
+    public AIAnalysisResponse analyzeWithAI(
+            @PathVariable String id
+    ) {
+        return aiService.analyzeIdea(id);
     }
 }
