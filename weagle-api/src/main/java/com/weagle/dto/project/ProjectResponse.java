@@ -15,6 +15,10 @@ public record ProjectResponse(
         String ideaId,
         int progress,
         String results,
+        double investment,
+        double financialReturn,
+        double productivityIncrease,
+        double costReduction,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {
@@ -28,6 +32,10 @@ public record ProjectResponse(
                 project.getIdeaId(),
                 project.getProgress(),
                 project.getResults(),
+                project.getInvestment(),
+                project.getFinancialReturn(),
+                project.getProductivityIncrease(),
+                project.getCostReduction(),
                 project.getCreatedAt(),
                 project.getUpdatedAt()
         );

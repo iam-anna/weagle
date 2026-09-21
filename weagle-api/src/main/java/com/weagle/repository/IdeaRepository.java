@@ -8,4 +8,8 @@ import java.util.List;
 public interface IdeaRepository extends MongoRepository<Idea, String> {
 
     List<Idea> findByCreatedBy(String createdBy);
+
+    long countByApprovedTrue();
+
+    long countByHighPriorityTrue();
 }

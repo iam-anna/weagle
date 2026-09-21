@@ -30,6 +30,14 @@ class SessionManager(
             .apply()
     }
 
+    fun saveToken(token: String) {
+        prefs.edit()
+            .putString("token", token)
+            .apply()
+    }
+
+    fun getToken(): String? = prefs.getString("token", null)
+
     fun getUserRole(): UserRole? {
         return UserRole.valueOf(
             prefs.getString(
@@ -47,7 +55,7 @@ class SessionManager(
     }
 
     fun isLoggedIn(): Boolean {
-        return getUserId() != null
+        return getUserId() != null && getToken() != null
     }
 
 

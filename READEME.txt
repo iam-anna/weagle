@@ -105,4 +105,19 @@ POST   apiprojects
 PUT    apiprojects{id}
 DELETE apiprojects{id}
 
-GET    apidashboard
+GET    /api/dashboard
+POST   /api/ai/ideas/{id}/analyze
+
+Implementado nesta etapa:
+- MongoDB, autenticação JWT e autorização por role.
+- CRUD de estratégias, ideias e projetos.
+- Dashboard com métricas reais de projetos e ideias.
+- Análise de ideias com OpenRouter: score de 0 a 100, justificativa e priorização automática.
+- Variável obrigatória para IA: OPENROUTER_API_KEY.
+
+Para executar o backend:
+1. Instale Java 21 e MongoDB.
+2. Defina OPENROUTER_API_KEY para habilitar a IA.
+3. Execute `./mvnw spring-boot:run` (Linux/macOS) ou `mvnw.cmd spring-boot:run` (Windows).
+
+Pendência principal: substituir os repositórios Room do Android por Retrofit e integrar cada tela aos endpoints acima.

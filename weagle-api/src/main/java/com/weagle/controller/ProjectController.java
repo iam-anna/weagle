@@ -51,6 +51,10 @@ public class ProjectController {
                 .ideaId(request.ideaId())
                 .progress(request.progress())
                 .results(request.results())
+                .investment(request.investment())
+                .financialReturn(request.financialReturn())
+                .productivityIncrease(request.productivityIncrease())
+                .costReduction(request.costReduction())
                 .build();
 
         return ProjectResponse.fromEntity(
@@ -71,6 +75,10 @@ public class ProjectController {
                 .ideaId(request.ideaId())
                 .progress(request.progress())
                 .results(request.results())
+                .investment(request.investment())
+                .financialReturn(request.financialReturn())
+                .productivityIncrease(request.productivityIncrease())
+                .costReduction(request.costReduction())
                 .build();
 
         return ProjectResponse.fromEntity(

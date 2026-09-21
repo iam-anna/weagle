@@ -39,6 +39,8 @@ class LoginViewModel (
 
                 sessionManager.saveUserRole(user.role)
 
+                user.token?.let(sessionManager::saveToken)
+
                 loginState = LoginState.Success(user)
             } else {
 

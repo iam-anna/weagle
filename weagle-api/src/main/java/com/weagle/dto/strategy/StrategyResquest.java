@@ -5,7 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 public record StrategyResquest(
         @NotBlank String name,
         @NotBlank String description,
-        boolean active
+        boolean active,
+        String category,
+        String campaign
 ) {
 
 }

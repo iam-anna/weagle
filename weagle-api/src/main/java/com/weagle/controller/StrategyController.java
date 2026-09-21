@@ -3,6 +3,7 @@ package com.weagle.controller;
 import com.weagle.dto.strategy.StrategyResponse;
 import com.weagle.dto.strategy.StrategyResquest;
 import com.weagle.entity.Strategy;
+import com.weagle.entity.StrategyHistory;
 import com.weagle.service.StrategyService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,11 @@ public class StrategyController {
         );
     }
 
+        @GetMapping("/{id}/history")
+        public List<StrategyHistory> history(@PathVariable String id) {
+                return strategyService.history(id);
+        }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public StrategyResponse create(
@@ -44,6 +50,8 @@ public class StrategyController {
         Strategy strategy = Strategy.builder()
                 .name(request.name())
                 .description(request.description())
+                .category(request.category())
+                .campaign(request.campaign())
                 .active(request.active())
                 .build();
 
@@ -53,7 +61,6 @@ public class StrategyController {
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public StrategyResponse update(
             @PathVariable String id,
             @Valid @RequestBody StrategyResquest request
@@ -62,6 +69,8 @@ public class StrategyController {
         Strategy strategy = Strategy.builder()
                 .name(request.name())
                 .description(request.description())
+                .category(request.category())
+                .campaign(request.campaign())
                 .active(request.active())
                 .build();
 

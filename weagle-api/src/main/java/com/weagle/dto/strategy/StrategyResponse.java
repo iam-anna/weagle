@@ -9,6 +9,8 @@ public record StrategyResponse(
         String name,
         String description,
         boolean active,
+        String category,
+        String campaign,
         LocalDateTime createdAt
 ) {
 
@@ -18,6 +20,8 @@ public record StrategyResponse(
                 strategy.getName(),
                 strategy.getDescription(),
                 strategy.isActive(),
+                strategy.getCategory(),
+                strategy.getCampaign(),
                 strategy.getCreatedAt()
         );
     }

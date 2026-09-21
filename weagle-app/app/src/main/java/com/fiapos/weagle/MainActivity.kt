@@ -14,6 +14,7 @@ import com.fiapos.weagle.features.auth.data.entities.UserEntity
 import com.fiapos.weagle.features.ideas.data.IdeaRepository
 import com.fiapos.weagle.features.projects.data.ProjectRepository
 import com.fiapos.weagle.features.so.data.StrategicOrientationRepository
+import com.fiapos.weagle.data.remote.ApiClient
 import com.fiapos.weagle.presentation.navigation.AppNavGraph
 import com.fiapos.weagle.ui.theme.WeagleTheme
 import kotlinx.coroutines.launch
@@ -34,7 +35,9 @@ class MainActivity : ComponentActivity() {
 
         val userDao = db.userDao()
 
-        val auth = AuthRepository(userDao)
+        val session  = SessionManager(this)
+        val api = ApiClient.create(session::getToken)
+        val auth = AuthRepository(userDao, api)
 
 //        lifecycleScope.launch {
 //            val existingUser = userDao.getByEmail("operator@test.com")
@@ -72,15 +75,13 @@ class MainActivity : ComponentActivity() {
 //            }
 //        }
 
-        val session  = SessionManager(this)
-
         val userRepository = UserRepository(userDao)
 
-        val ideaRepository = IdeaRepository(db.ideaDao())
+        val ideaRepository = IdeaRepository(db.ideaDao(), api)
 
-        val strategicOrientationRepository = StrategicOrientationRepository(db.strategicOrientationDao())
+        val strategicOrientationRepository = StrategicOrientationRepository(db.strategicOrientationDao(), api)
 
-        val projectRepository = ProjectRepository(db.projectDao(), db.ideaDao())
+        val projectRepository = ProjectRepository(db.projectDao(), db.ideaDao(), api)
 
         setContent {
             WeagleTheme {

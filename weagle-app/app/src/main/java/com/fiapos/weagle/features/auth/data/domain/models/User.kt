@@ -5,4 +5,5 @@ data class User (
     val name: String,
     val email: String,
     val role: UserRole,
+    val token: String? = null,
 )

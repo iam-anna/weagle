@@ -10,10 +10,13 @@ import com.fiapos.weagle.features.projects.data.entities.ProjectEntity
 import com.fiapos.weagle.features.projects.data.relations.toProject
 import java.time.LocalDate
 import java.time.ZoneId
+import com.fiapos.weagle.data.remote.ProjectRequest
+import com.fiapos.weagle.data.remote.WeagleApi
 
 class ProjectRepository(
     private val projectDao: ProjectDao,
-    private val ideaDao: IdeaDao
+    private val ideaDao: IdeaDao,
+    private val api: WeagleApi? = null
 ) {
     private val projects = mutableStateOf<List<Project>>(
         emptyList()
@@ -30,6 +33,18 @@ class ProjectRepository(
         ownedBy: String,
         ideaIds: List<Int>
     ) {
+
+        if (api != null) {
+            api.createProject(
+                ProjectRequest(
+                    name = name,
+                    description = description,
+                    progress = if (status == ProjectStatus.ACTIVE) 1 else 0,
+                    investment = investment.toDouble()
+                )
+            )
+            return
+        }
 
         val projectId = projectDao.insert(
             ProjectEntity(
@@ -63,6 +78,9 @@ class ProjectRepository(
 
 
     suspend fun getProjects(): List<Project> {
+        if (api != null) {
+            return api.getProjects().map { it.toDomain() }
+        }
         return projectDao.getAll()
             .map {
                 it.toProject()
@@ -70,8 +88,27 @@ class ProjectRepository(
     }
 
     suspend fun getProject(projectId: Int): Project {
+        if (api != null) {
+            return api.getProject(projectId.toString()).toDomain()
+        }
         return projectDao
             .getById(projectId)
             .toProject()
     }
+
+    private fun com.fiapos.weagle.data.remote.ProjectResponse.toDomain() = Project(
+        id = id,
+        name = name,
+        description = description,
+        status = if (progress > 0) ProjectStatus.ACTIVE else ProjectStatus.INACTIVE,
+        startDate = createdAt?.take(10)?.let { runCatching { LocalDate.parse(it) }.getOrDefault(LocalDate.now()) }
+            ?: LocalDate.now(),
+        endDate = updatedAt?.take(10)?.let { runCatching { LocalDate.parse(it) }.getOrDefault(LocalDate.now()) }
+            ?: LocalDate.now(),
+        investment = investment.toFloat(),
+        ideaList = emptyList(),
+        ownedBy = "backend",
+        createdAt = createdAt?.take(10)?.let { runCatching { LocalDate.parse(it) }.getOrDefault(LocalDate.now()) }
+            ?: LocalDate.now()
+    )
 }

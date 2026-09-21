@@ -11,6 +11,8 @@ public record IdeaResponse(
         String createdBy,
         boolean approved,
         boolean highPriority,
+        Integer aiScore,
+        String aiJustification,
         LocalDateTime createdAt
 ){
 
@@ -22,6 +24,8 @@ public record IdeaResponse(
                 idea.getCreatedBy(),
                 idea.isApproved(),
                 idea.isHighPriority(),
+                idea.getAiScore(),
+                idea.getAiJustification(),
                 idea.getCreatedAt()
         );
     }

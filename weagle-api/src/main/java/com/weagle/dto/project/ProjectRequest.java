@@ -20,5 +20,13 @@ public record ProjectRequest(
         @Max(100)
         int progress,
 
-        String results
+        String results,
+
+        double investment,
+
+        double financialReturn,
+
+        double productivityIncrease,
+
+        double costReduction
 ) { }

@@ -9,29 +9,19 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
-@Document(collection = "ideas")
+@Document(collection = "strategy_history")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Idea {
-
+public class StrategyHistory {
     @Id
     private String id;
-
-    private String title;
-
+    private String strategyId;
+    private String name;
     private String description;
-
-    private String createdBy;
-
-    private boolean approved;
-
-    private boolean highPriority;
-
-    private Integer aiScore;
-
-    private String aiJustification;
-
-    private LocalDateTime createdAt;
+    private String category;
+    private String campaign;
+    private String action;
+    private LocalDateTime recordedAt;
 }

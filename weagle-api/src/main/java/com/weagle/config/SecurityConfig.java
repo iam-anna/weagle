@@ -135,7 +135,18 @@ public class SecurityConfig {
                                 HttpMethod.PATCH,
                                 "/api/projects/*/progress",
                                 "/api/projects/*/results"
+                        ).hasRole("MANAGER")
+
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/dashboard",
+                                "/api/dashboard/**"
                         ).hasRole("LEADER")
+
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/ai/**"
+                        ).hasAnyRole("MANAGER", "LEADER")
 
                         .anyRequest().authenticated()
                 );

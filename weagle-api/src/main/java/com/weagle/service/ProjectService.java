@@ -46,6 +46,10 @@ public class ProjectService {
         project.setIdeaId(updatedProject.getIdeaId());
         project.setProgress(updatedProject.getProgress());
         project.setResults(updatedProject.getResults());
+        project.setInvestment(updatedProject.getInvestment());
+        project.setFinancialReturn(updatedProject.getFinancialReturn());
+        project.setProductivityIncrease(updatedProject.getProductivityIncrease());
+        project.setCostReduction(updatedProject.getCostReduction());
         project.setUpdatedAt(LocalDateTime.now());
 
         return projectRepository.save(project);

@@ -31,6 +31,14 @@ public class Project {
 
     private String results;
 
+    private double investment;
+
+    private double financialReturn;
+
+    private double productivityIncrease;
+
+    private double costReduction;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;

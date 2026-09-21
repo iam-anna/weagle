@@ -53,7 +53,7 @@ public class IdeaController {
         return IdeaResponse.fromEntity(idea);
     }
 
-    @PutMapping("/id")
+        @PutMapping("/{id}")
     public IdeaResponse update (
             @PathVariable String id,
             @Valid @RequestBody IdeaRequest request,
