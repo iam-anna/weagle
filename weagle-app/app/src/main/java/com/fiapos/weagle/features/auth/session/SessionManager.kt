@@ -30,6 +30,17 @@ class SessionManager(
             .apply()
     }
 
+    fun saveUserProfile(name: String, email: String) {
+        prefs.edit()
+            .putString("user_name", name)
+            .putString("user_email", email)
+            .apply()
+    }
+
+    fun getUserName(): String? = prefs.getString("user_name", null)
+
+    fun getUserEmail(): String? = prefs.getString("user_email", null)
+
     fun saveToken(token: String) {
         prefs.edit()
             .putString("token", token)

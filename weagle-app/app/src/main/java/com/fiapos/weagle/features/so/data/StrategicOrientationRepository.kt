@@ -51,12 +51,14 @@ class StrategicOrientationRepository(
             }
     }
 
-    suspend fun getOrientationById(id: Int): StrategicOrientation? {
-        if (api != null) {
-            return runCatching { api.getStrategy(id.toString()).toDomain() }.getOrNull()
+    suspend fun getOrientationById(id: String): StrategicOrientation? {
+        api?.let { remoteApi ->
+            return runCatching { remoteApi.getStrategy(id).toDomain() }.getOrNull()
         }
-        return dao.getById(id)?.toStrategicOrientation()
+        return id.toIntOrNull()?.let { dao.getById(it)?.toStrategicOrientation() }
     }
+
+    suspend fun getOrientationById(id: Int): StrategicOrientation? = getOrientationById(id.toString())
 
     suspend fun updateOrientation(
         orientation: StrategicOrientation

@@ -8,6 +8,7 @@ import com.fiapos.weagle.features.ideas.domain.Idea
 import com.fiapos.weagle.features.ideas.domain.IdeaStatus
 import com.fiapos.weagle.features.ideas.domain.IdeaType
 import com.fiapos.weagle.data.remote.IdeaRequest
+import com.fiapos.weagle.data.remote.IdeaAnalysisResponse
 import com.fiapos.weagle.data.remote.WeagleApi
 import java.time.LocalDate
 
@@ -53,12 +54,14 @@ class IdeaRepository(
             }
     }
 
-    suspend fun getIdeaById(id: Int): Idea? {
-        if (api != null) {
-            return runCatching { api.getIdea(id.toString()).toDomain() }.getOrNull()
+    suspend fun getIdeaById(id: String): Idea? {
+        api?.let { remoteApi ->
+            return runCatching { remoteApi.getIdea(id).toDomain() }.getOrNull()
         }
-        return dao.getById(id)?.toIdea()
+        return id.toIntOrNull()?.let { dao.getById(it)?.toIdea() }
     }
+
+    suspend fun getIdeaById(id: Int): Idea? = getIdeaById(id.toString())
 
     suspend fun updateIdea(
         idea: Idea
@@ -70,6 +73,18 @@ class IdeaRepository(
         dao.update(
             idea = idea.toEntity()
         )
+    }
+
+    suspend fun analyzeIdea(id: String): IdeaAnalysisResponse {
+        return api?.analyzeIdea(id)
+            ?: throw IllegalStateException("A análise de IA requer o backend")
+    }
+
+    suspend fun approveIdea(id: String): Idea? {
+        api?.let { remoteApi ->
+            return remoteApi.approveIdea(id).toDomain()
+        }
+        return id.toIntOrNull()?.let { dao.getById(it)?.toIdea() }
     }
 
     private fun com.fiapos.weagle.data.remote.IdeaResponse.toDomain() = Idea(

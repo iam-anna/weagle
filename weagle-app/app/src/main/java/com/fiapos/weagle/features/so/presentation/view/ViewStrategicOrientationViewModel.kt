@@ -30,9 +30,7 @@ class ViewStrategicOrientationViewModel(
     private fun loadOrientation() {
 
         viewModelScope.launch {
-            orientation = repository.getOrientationById(
-                orientationId.toInt()
-            )
+            orientation = repository.getOrientationById(orientationId)
 
             val currentUserId = sessionManager.getUserId()
 

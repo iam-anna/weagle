@@ -17,7 +17,7 @@ public record ProjectRequest(
 
         String ideaId,
 
-        ProjectStatus projectStatus,
+        ProjectStatus status,
 
         @Min(0)
         @Max(100)

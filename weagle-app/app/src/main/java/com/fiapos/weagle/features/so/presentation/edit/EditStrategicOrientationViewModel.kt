@@ -32,9 +32,7 @@ class EditStrategicOrientationViewModel(
 
         viewModelScope.launch {
 
-            orientation = repository.getOrientationById(
-                orientationId.toInt()
-            )
+            orientation = repository.getOrientationById(orientationId)
         }
     }
 

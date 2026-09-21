@@ -55,11 +55,7 @@ public class ProjectService {
         project.setStatus(updatedProject.getStatus());
         project.setProgress(updatedProject.getProgress());
         project.setInvestment(updatedProject.getInvestment());
-        project.setReturnValue(updatedProject.getReturnValue());
-        project.setProductivityGain(updatedProject.getProductivityGain());
-        project.setCostReduction(updatedProject.getCostReduction());
         project.setResults(updatedProject.getResults());
-        project.setInvestment(updatedProject.getInvestment());
         project.setFinancialReturn(updatedProject.getFinancialReturn());
         project.setProductivityIncrease(updatedProject.getProductivityIncrease());
         project.setCostReduction(updatedProject.getCostReduction());

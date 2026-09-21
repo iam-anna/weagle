@@ -31,9 +31,7 @@ class ViewProjectViewModel(
     private fun loadProject() {
 
         viewModelScope.launch {
-            project = repository.getProject(
-                projectId.toInt()
-            )
+            project = repository.getProject(projectId)
 
             val currentUserId = sessionManager.getUserId()
 

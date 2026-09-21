@@ -153,6 +153,21 @@ fun ViewIdeaScreen(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
 
+                    if (viewModel.canApprove) {
+                        CustomButton(
+                            text = if (viewModel.aiLoading) "Analisando..." else "Analisar com IA",
+                            onClick = viewModel::analyzeWithAi
+                        )
+                    }
+
+                    viewModel.aiAnalysis?.let { analysis ->
+                        Text(
+                            text = analysis,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.secondary
+                        )
+                    }
+
                     VoteFragment(
                         votes = viewModel.votes,
                         onUpvote = {

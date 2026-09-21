@@ -18,8 +18,6 @@ public class DataInitializer {
     ) {
         return args -> {
 
-            userRepository.deleteAll();
-
             User anna = userRepository.findByEmail("anna@weagle.com")
                     .orElse(
                             User.builder()

@@ -30,6 +30,12 @@ class ViewIdeaViewModel(
     var canApprove by mutableStateOf(false)
         private set
 
+    var aiAnalysis by mutableStateOf<String?>(null)
+        private set
+
+    var aiLoading by mutableStateOf(false)
+        private set
+
     init {
         loadIdea()
     }
@@ -38,9 +44,7 @@ class ViewIdeaViewModel(
 
         viewModelScope.launch {
 
-            idea = repository.getIdeaById(
-                ideaId.toInt()
-            )
+            idea = repository.getIdeaById(ideaId)
 
             val currentUserId = sessionManager.getUserId()
 
@@ -62,10 +66,7 @@ class ViewIdeaViewModel(
 
         viewModelScope.launch {
             idea?.let {
-
-                repository.updateIdea(it)
-
-                idea = repository.getIdeaById(ideaId.toInt())
+                idea = repository.approveIdea(it.id) ?: it
             }
         }
     }
@@ -116,6 +117,17 @@ class ViewIdeaViewModel(
                     it
                 )
             }
+        }
+    }
+
+    fun analyzeWithAi() {
+        aiLoading = true
+        viewModelScope.launch {
+            aiAnalysis = runCatching {
+                val result = repository.analyzeIdea(ideaId)
+                "Score: ${result.score}/100\n${result.justification}"
+            }.getOrElse { it.message ?: "Não foi possível analisar a ideia" }
+            aiLoading = false
         }
     }
 }

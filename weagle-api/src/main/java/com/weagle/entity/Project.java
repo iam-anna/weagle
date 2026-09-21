@@ -33,21 +33,13 @@ public class Project {
 
     private double investment;
 
-    private double returnValue;
-
-    private double productivityGain;
-
-    private double costReduction;
-
-    private String results;
-
-    private double investment;
-
     private double financialReturn;
 
     private double productivityIncrease;
 
     private double costReduction;
+
+    private String results;
 
     private LocalDateTime createdAt;
 

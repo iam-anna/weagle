@@ -88,6 +88,7 @@ class MainActivity : ComponentActivity() {
                 AppNavGraph(
                     authRepository = auth,
                     sessionManager = session,
+                    api = api,
                     userRepository = userRepository,
                     ideaRepository = ideaRepository,
                     projectRepository = projectRepository,

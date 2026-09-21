@@ -4,12 +4,10 @@ import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fiapos.weagle.features.auth.data.domain.models.User
-import com.fiapos.weagle.features.auth.data.UserRepository
 import com.fiapos.weagle.features.auth.session.SessionManager
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val repository: UserRepository,
     private val sessionManager: SessionManager
 ) : ViewModel() {
 
@@ -26,8 +24,13 @@ class HomeViewModel(
 
         viewModelScope.launch {
             val currentUserId = sessionManager.getUserId()
+            val currentUserName = sessionManager.getUserName()
+            val currentUserEmail = sessionManager.getUserEmail()
+            val currentUserRole = sessionManager.getUserRole()
 
-            user = repository.getUserById(currentUserId?.toInt() ?: 0)
+            if (currentUserId != null && currentUserName != null && currentUserEmail != null && currentUserRole != null) {
+                user = User(currentUserId, currentUserName, currentUserEmail, currentUserRole)
+            }
         }
     }
 

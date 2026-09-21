@@ -39,6 +39,7 @@ class ProjectRepository(
                 ProjectRequest(
                     name = name,
                     description = description,
+                    status = if (status == ProjectStatus.ACTIVE) "IN_PROGRESS" else "PLANNED",
                     progress = if (status == ProjectStatus.ACTIVE) 1 else 0,
                     investment = investment.toDouble()
                 )
@@ -87,20 +88,21 @@ class ProjectRepository(
             }
     }
 
-    suspend fun getProject(projectId: Int): Project {
+    suspend fun getProject(projectId: String): Project {
         if (api != null) {
-            return api.getProject(projectId.toString()).toDomain()
+            return api.getProject(projectId).toDomain()
         }
-        return projectDao
-            .getById(projectId)
-            .toProject()
+        return projectId.toIntOrNull()?.let { projectDao.getById(it).toProject() }
+            ?: throw IllegalArgumentException("Projeto inválido")
     }
+
+    suspend fun getProject(projectId: Int): Project = getProject(projectId.toString())
 
     private fun com.fiapos.weagle.data.remote.ProjectResponse.toDomain() = Project(
         id = id,
         name = name,
         description = description,
-        status = if (progress > 0) ProjectStatus.ACTIVE else ProjectStatus.INACTIVE,
+        status = if (status == "COMPLETED" || status == "IN_PROGRESS") ProjectStatus.ACTIVE else ProjectStatus.INACTIVE,
         startDate = createdAt?.take(10)?.let { runCatching { LocalDate.parse(it) }.getOrDefault(LocalDate.now()) }
             ?: LocalDate.now(),
         endDate = updatedAt?.take(10)?.let { runCatching { LocalDate.parse(it) }.getOrDefault(LocalDate.now()) }

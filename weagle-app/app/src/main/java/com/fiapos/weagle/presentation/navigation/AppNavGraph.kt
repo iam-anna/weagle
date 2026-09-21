@@ -17,6 +17,10 @@ import com.fiapos.weagle.features.auth.data.UserRepository
 import com.fiapos.weagle.features.auth.presentation.home.HomeScreen
 import com.fiapos.weagle.features.auth.presentation.home.HomeViewModel
 import com.fiapos.weagle.features.auth.presentation.home.HomeViewModelFactory
+import com.fiapos.weagle.data.remote.WeagleApi
+import com.fiapos.weagle.features.dashboard.DashboardScreen
+import com.fiapos.weagle.features.dashboard.DashboardViewModel
+import com.fiapos.weagle.features.dashboard.DashboardViewModelFactory
 import com.fiapos.weagle.features.ideas.presentation.create.CreateIdeaScreen
 import com.fiapos.weagle.features.ideas.presentation.create.CreateIdeaViewModel
 import com.fiapos.weagle.features.ideas.presentation.create.CreateIdeaViewModelFactory
@@ -63,6 +67,7 @@ fun AppNavGraph(
     ideaRepository: IdeaRepository,
     projectRepository: ProjectRepository,
     strategicOrientationRepository: StrategicOrientationRepository,
+    api: WeagleApi,
     sessionManager: SessionManager
 ) {
     val navController = rememberNavController()
@@ -117,7 +122,6 @@ fun AppNavGraph(
 
             val vm: HomeViewModel = viewModel(
                 factory = HomeViewModelFactory(
-                    userRepository,
                     sessionManager
                 )
             )
@@ -129,7 +133,6 @@ fun AppNavGraph(
 
             val vm: HomeViewModel = viewModel(
                 factory = HomeViewModelFactory(
-                    userRepository,
                     sessionManager
                 )
             )
@@ -141,12 +144,18 @@ fun AppNavGraph(
 
             val vm: HomeViewModel = viewModel(
                 factory = HomeViewModelFactory(
-                    userRepository,
                     sessionManager
                 )
             )
 
             HomeScreen(vm, navController)
+        }
+
+        composable(Routes.DASHBOARD) {
+            val vm: DashboardViewModel = viewModel(
+                factory = DashboardViewModelFactory(api)
+            )
+            DashboardScreen(vm, navController)
         }
 
         composable(Routes.CREATE_IDEA) {

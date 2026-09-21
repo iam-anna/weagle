@@ -31,9 +31,7 @@ class EditIdeaViewModel(
 
         viewModelScope.launch {
 
-            idea = repository.getIdeaById(
-                ideaId.toInt()
-            )
+            idea = repository.getIdeaById(ideaId)
         }
     }
 

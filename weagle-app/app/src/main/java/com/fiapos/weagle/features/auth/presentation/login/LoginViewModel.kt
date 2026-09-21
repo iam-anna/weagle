@@ -38,6 +38,7 @@ class LoginViewModel (
                 sessionManager.saveUserId(user.id)
 
                 sessionManager.saveUserRole(user.role)
+                sessionManager.saveUserProfile(user.name, user.email)
 
                 user.token?.let(sessionManager::saveToken)
 

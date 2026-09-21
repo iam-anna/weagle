@@ -83,6 +83,15 @@ fun HomeScreen(
                     )
                 }
 
+                if (user.role == UserRole.LEADER) {
+                    CustomButton(
+                        text = "Dashboard",
+                        onClick = {
+                            navigationController.navigate(Routes.DASHBOARD)
+                        }
+                    )
+                }
+
                 CustomButton(
                     text = "Orientações Estratégicas",
                     onClick = {
