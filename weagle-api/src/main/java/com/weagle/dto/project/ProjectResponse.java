@@ -1,6 +1,7 @@
 package com.weagle.dto.project;
 
 import com.weagle.entity.Project;
+import com.weagle.entity.ProjectStatus;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -13,7 +14,12 @@ public record ProjectResponse(
         String description,
         String strategyId,
         String ideaId,
+        ProjectStatus status,
         int progress,
+        double invesment,
+        double returnValue,
+        double productivityGain,
+        double costReduction,
         String results,
         double investment,
         double financialReturn,
@@ -30,7 +36,12 @@ public record ProjectResponse(
                 project.getDescription(),
                 project.getStrategyId(),
                 project.getIdeaId(),
+                project.getStatus(),
                 project.getProgress(),
+                project.getInvestment(),
+                project.getReturnValue(),
+                project.getProductivityGain(),
+                project.getCostReduction(),
                 project.getResults(),
                 project.getInvestment(),
                 project.getFinancialReturn(),

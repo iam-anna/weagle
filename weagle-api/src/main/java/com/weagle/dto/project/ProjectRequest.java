@@ -1,5 +1,6 @@
 package com.weagle.dto.project;
 
+import com.weagle.entity.ProjectStatus;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -15,6 +16,8 @@ public record ProjectRequest(
         String strategyId,
 
         String ideaId,
+
+        ProjectStatus projectStatus,
 
         @Min(0)
         @Max(100)

@@ -27,7 +27,17 @@ public class Project {
 
     private String ideaId;
 
+    private ProjectStatus status;
+
     private int progress;
+
+    private double investment;
+
+    private double returnValue;
+
+    private double productivityGain;
+
+    private double costReduction;
 
     private String results;
 

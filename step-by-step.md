@@ -66,43 +66,40 @@ Mocks
 FakeRepository
 por:
 Retrofit
-    ↓
+↓
 Spring API
-    ↓
+↓
 MongoDB
 E manter a arquitetura que vocês já fizeram:
 Compose
-   ↓
+↓
 ViewModel
-   ↓
+↓
 UseCase
-   ↓
+↓
 Repository
-   ↓
+↓
 Retrofit
-   ↓
+↓
 Spring
 
+POST apiauthlogin
 
-
-
-POST   apiauthlogin
-
-GET    apistrategies
-POST   apistrategies
-PUT    apistrategies{id}
+GET apistrategies
+POST apistrategies
+PUT apistrategies{id}
 DELETE apistrategies{id}
 
-GET    apiideas
-POST   apiideas
-PUT    apiideas{id}
+GET apiideas
+POST apiideas
+PUT apiideas{id}
 DELETE apiideas{id}
-PATCH  apiideas{id}approve
-PATCH  apiideas{id}priority
+PATCH apiideas{id}approve
+PATCH apiideas{id}priority
 
-GET    apiprojects
-POST   apiprojects
-PUT    apiprojects{id}
+GET apiprojects
+POST apiprojects
+PUT apiprojects{id}
 DELETE apiprojects{id}
 
 GET    /api/dashboard
