@@ -809,4 +809,3 @@ Projeto apresentou redução de custos e melhoria no tempo de execução do proc
 | `403 Forbidden` | Usuário autenticado não possui permissão |
 | `500 Internal Server Error` | Erro não tratado pela aplicação |
 
-> O tratamento específico de erros `400`, `404` e `500` poderá ser centralizado posteriormente através de um `@RestControllerAdvice`.
